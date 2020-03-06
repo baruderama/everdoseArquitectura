@@ -150,36 +150,6 @@
 
 <h2 align="center">Suppliers</h2>
 
-### Order
-
-> Orders the desired amount of the products listed.
-
-#### Request
-- products:
-  - product_id: Id of the product that is running out.
-  - amount: The desirable amount to order.
-  - key_words: Key words describing the product.
-
-<details>
- <summary>Example</summary>
-
- ```json
- {
-   products:[
-     {
-       product_id: "JABONDOVEAV90GR",
-       key_words: "jabón,dove,90gr,woman",
-       amount: 100,
-     },
-     ...
-   ]
- }
- ```
-</details>
-
-#### Response
-* status: OK, ERROR_CODE
-
 ### Add supplier
 
 #### Request
@@ -258,6 +228,46 @@
 
 #### Response
 * id: Generated id of the drugstore.
+* status: OK, ERROR_CODE
+
+### Order
+
+> Orders the desired amount of the products listed. If okay, the order is saved as pending payment.
+
+#### Request
+- products:
+  - product_id: Id of the product that is running out.
+  - amount: The desirable amount to order.
+  - key_words: Key words describing the product.
+
+<details>
+ <summary>Example</summary>
+
+ ```json
+ {
+   products:[
+     {
+       product_id: "JABONDOVEAV90GR",
+       key_words: "jabón,dove,90gr,woman",
+       amount: 100,
+     },
+     ...
+   ]
+ }
+ ```
+</details>
+
+#### Response
+* status: OK, ERROR_CODE
+
+### Pay suppliers
+
+> Pays all the suppliers with pending payment and changes their states.
+
+#### Request
+Not needed
+
+#### Response
 * status: OK, ERROR_CODE
 
 <h2 align="center">Payments</h2>

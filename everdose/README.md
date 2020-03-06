@@ -13,6 +13,7 @@
 * key_words: Key words related to the product.
 * amount: Total amount to add, it can be the number of boxes, bottles, etc...
 * threshold: Minimum threshold, if reached, the supplier will be contacted.
+* location: PHAR. STOCK
 
 <details>
  <summary>Example</summary>
@@ -23,30 +24,7 @@
  key_words: "levonorgestrel", "1.5mg",
  amount: 0,
  threshold: 40,
- }
- ```
-</details>
-
-
-#### Response
-* status: OK, ERROR_CODE.
-* id: Generated id of the product.
-
-### Supply product
-
-> Adds the amount into the product amount info.
-
-#### Request
-* id: Name of the product.
-* amount: Total amount to add, it can be the number of boxes, bottles, etc...
-
-<details>
- <summary>Example</summary>
-
- ```json
- {
-   id: "LEVONORGESTREL_1P5MG",
-   amount: 40
+ location: STOCK
  }
  ```
 </details>
@@ -555,7 +533,7 @@ Not needed
  ```
 </details>
 
-<h1 align="center">Delivery</h1>
+<h1 align="center">External</h1>
 
 <h2 align="center">Supplier</h2>
 

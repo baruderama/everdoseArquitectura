@@ -1,4 +1,4 @@
-# Pharmate
+# Everdose
 
 <h1 align="center">Microservices</h1>
 

@@ -126,6 +126,32 @@
  ```
 </details>
 
+<h2 align="center">Buy</h2>
+
+### Buy
+
+### Request
+- id: Id of the product
+- amount: Amount of the product
+- financial_information: Information related to the purchase, type defines the payment method
+
+<details>
+ <summary>Example</summary>
+
+ ```json
+ {
+   id: "LEVONORGE",
+   amount: 2,
+   financial_information:{
+    type: "ON_DELIVERY"
+   }
+ }
+ ```
+</details>
+
+### Response
+- status
+
 <h2 align="center">Suppliers</h2>
 
 ### Add supplier

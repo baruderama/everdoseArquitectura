@@ -464,7 +464,7 @@ Not needed
 
  ```json
  {
-   username: "cutepussy"
+   username: "username"
  }
  ```
 </details>
@@ -483,8 +483,8 @@ Not needed
 
  ```json
  {
-   username: "cutepussy",
-   password: "Frambuesa1"
+   username: "username",
+   password: "password"
  }
  ```
 </details>
@@ -507,15 +507,19 @@ Not needed
 ### Request product to supplier
 
 #### Request
-* username:
+* List of products to supply
+* Email
 
 <details>
  <summary>Example</summary>
 
  ```json
  {
-   username: "cutepussy",
-   password: "Frambuesa1"
+   products: [
+    id: "DIFENHIFS150MG",
+    amount: 2,
+   ],
+   email: "supplier1@email.com"
  }
  ```
 </details>

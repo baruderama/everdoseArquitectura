@@ -19,12 +19,12 @@ import com.entities.Product;
 @Stateless
 @LocalBean
 public class StockService implements StockServiceRemote, StockServiceLocal {
-	
+
     /**
-     * Default constructor. 
+     * Default constructor.
      */
     public StockService() {
-    	
+
     }
 
 	@Override
@@ -34,11 +34,11 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public boolean addProduct( String name, String description, String location, String image, float price, int threshold, int amount ) {
-		
+
 		boolean succesfulltransaction = false;
-		
+
 		try {
-			
+
 			Product product = new Product();
 			product.setName(name);
 			product.setDescription(description);
@@ -48,7 +48,9 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 			product.setThreshold(threshold);
 			product.setLocation(location);
 			product.save();
-			
+
+			succesfulltransaction = true;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -61,7 +63,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		try {
 			Product product = Product.getProduct(id);
 			boolean status = product.removeProduct();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

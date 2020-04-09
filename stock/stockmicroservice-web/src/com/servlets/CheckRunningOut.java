@@ -1,6 +1,8 @@
 package com.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -10,22 +12,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.beans.StockService;
+import com.entities.Product;
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class AddProduct
+ * Servlet implementation class CheckRunningOut
  */
-@WebServlet("/AddProduct")
-public class AddProduct extends HttpServlet {
+@WebServlet("/CheckRunningOut")
+public class CheckRunningOut extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@EJB 
 	StockService bean;
 	
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddProduct() {
+    public CheckRunningOut() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,24 +39,24 @@ public class AddProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Adding product if POST");
+		
+		List<Product> products = bean.checkRunningOut();
+		
+		String productsJsonString = new Gson().toJson(products);
+		
+		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		out.print(productsJsonString);
+		out.flush();
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String name = request.getParameter("name");
-		float price = Float.valueOf( request.getParameter("price") ); 
-		String description = request.getParameter("description");
-		String location = request.getParameter("location");
-		String image = request.getParameter("image");
-		int threshold = Integer.valueOf( request.getParameter("threshold") );
-		int amount = Integer.valueOf( request.getParameter("amount") );
-		
-		bean.addProduct(name, description, location, image, price, threshold, amount);
-		
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.beans.StockService;
 
 /**
- * Servlet implementation class AddProduct
+ * Servlet implementation class RemoveProduct
  */
-@WebServlet("/AddProduct")
-public class AddProduct extends HttpServlet {
+@WebServlet("/RemoveProduct")
+public class RemoveProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@EJB 
@@ -24,33 +24,25 @@ public class AddProduct extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddProduct() {
+    public RemoveProduct() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Adding product if POST");
+		response.getWriter().append("Removing product if POST...");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String name = request.getParameter("name");
-		float price = Float.valueOf( request.getParameter("price") ); 
-		String description = request.getParameter("description");
-		String location = request.getParameter("location");
-		String image = request.getParameter("image");
-		int threshold = Integer.valueOf( request.getParameter("threshold") );
-		int amount = Integer.valueOf( request.getParameter("amount") );
-		
-		bean.addProduct(name, description, location, image, price, threshold, amount);
-		
+		// TODO Auto-generated method stub
+		int id = Integer.valueOf( request.getParameter("id") );
+		bean.removeProduct(id);
 		doGet(request, response);
 	}
 

@@ -8,8 +8,8 @@ import com.entities.Product;
 
 @Local
 public interface StockServiceLocal {
-	public List<Product> getProducts();
+	public List<Product> getCatalog();
 	public boolean addProduct(String name, String description, String location, String image, float price, int threshold, int amount );
 	public boolean removeProduct(int id);
-	public boolean checkRunningOut();
+	public List<Product> checkRunningOut();
 }

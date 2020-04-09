@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="everdose-ear">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="stockmicroservice-ejb.jar" deploy-path="/" handle="module:/resource/stockmicroservice-ejb/stockmicroservice-ejb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="stockmicroservice-jpa.jar" deploy-path="/lib" handle="module:/resource/stockmicroservice-jpa/stockmicroservice-jpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="stockmicroservice-web.war" deploy-path="/" handle="module:/resource/stockmicroservice-web/stockmicroservice-web">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

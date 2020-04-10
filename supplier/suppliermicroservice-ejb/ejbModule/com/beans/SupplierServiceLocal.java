@@ -11,6 +11,9 @@ public interface SupplierServiceLocal {
 	public boolean addSupplier( String name, String address, String phone, String email, String uri);
 	public boolean addDrugstore( String name, String address, String phone, String email, String uri);
 	public boolean addSupplierfinancialInformation();
-	public boolean order( String name, String keywords, String amount);
+	public boolean addProductToSupplier( int supplier_id, String name, String keywords, String description, float price );
+	public boolean addProductToDrugstore( int drugstore_id, String name, String keywords, String description, float price );
+	public boolean orderFromDrugstore( String name, String keywords, int amount, String destin_address);
+	public boolean orderFromSupplier( String name, String keywords, int amount);
 	public List<Supplier> paySuppliers();
 }

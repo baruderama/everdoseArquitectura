@@ -12,19 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import com.beans.SupplierService;
 
 /**
- * Servlet implementation class OrderFromDrugstore
+ * Servlet implementation class AddDrugstore
  */
-@WebServlet("/OrderFromDrugstore")
-public class OrderFromDrugstore extends HttpServlet {
+@WebServlet("/AddDrugstore")
+public class AddDrugstore extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       	
+       
 	@EJB 
 	SupplierService bean;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderFromDrugstore() {
+    public AddDrugstore() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,10 +42,11 @@ public class OrderFromDrugstore extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
-		String keywords = request.getParameter("keywords");
-		int amount = Integer.valueOf( request.getParameter("amount" ) );
-		String destin = request.getParameter("destinaddress");
-		bean.orderFromDrugstore(name, keywords, amount, destin);
+		String address = request.getParameter("address");
+		String phone = request.getParameter("phone");
+		String email = request.getParameter("email");
+		String uri = request.getParameter("uri");
+		bean.addDrugstore(name, address, phone, email, uri);
 		doGet(request, response);
 	}
 

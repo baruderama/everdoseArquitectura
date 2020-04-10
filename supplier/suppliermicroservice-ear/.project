@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>everdose-ear</name>
+	<name>suppliermicroservice-ear</name>
 	<comment></comment>
 	<projects>
-		<project>suppliermicroservice-ejb</project>
-		<project>suppliermicroservice-jpa</project>
 		<project>suppliermicroservice-web</project>
+		<project>suppliermicroservice-jpa</project>
+		<project>suppliermicroservice-ejb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

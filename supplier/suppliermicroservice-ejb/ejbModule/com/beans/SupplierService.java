@@ -10,6 +10,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.entities.Drugstore;
+import com.entities.ProductFromDrugstore;
+import com.entities.ProductFromSupplier;
 import com.entities.Supplier;
 
 /**
@@ -54,14 +56,12 @@ boolean succesfulltransaction = false;
 		boolean succesfulltransaction = false;
 		
 		try {
-			
 			Drugstore drugstore = new Drugstore();
 			drugstore.setName(name);
 			drugstore.setAddress(address);
 			drugstore.setPhone(phone);
 			drugstore.setEmail(email);
 			drugstore.setUri(uri);
-			
 			drugstore.save();
 			succesfulltransaction = true;
 			
@@ -79,23 +79,18 @@ boolean succesfulltransaction = false;
 	}
 
 	@Override
-	public boolean order(String name, String keywords, String amount) {
-		List<Supplier> suppliers = Supplier.getSuppliers();
-		for (Supplier supplier : suppliers) {
-			String uri = supplier.getUri();
-//			try {
-//				InputStream is = new URL(uri).openStream();
-//				BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-//		      String jsonText = readAll(rd);
-//		      JSONObject json = new JSONObject(jsonText);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			TO-DO: De la Uri, ver el catálogo y consultar el precio, del supplier con el precio más bajo se crea la orden. 
-			String email = supplier.getEmail();
-//			TO-DO: Se va al servicio de email y se pide el producto.
+	public boolean orderFromSupplier(String name, String keywords, int amount) {
+		List<ProductFromSupplier> products = ProductFromSupplier.getProductsFromSuppliers();
+		String[] eachkeyword = keywords.split(",");
+//		TODO: Si cumple todas las keywords
+		float min = 999999;
+		ProductFromSupplier chosenProduct= null;
+		for (ProductFromSupplier product : products) {
+			if ( product.getName() == product.getName() && product.getPrice() < min) {
+				chosenProduct = product;
+			}
 		}
+//		TODO: Llama al servicio de email para pedir el producto.
 		return false;
 	}
 
@@ -103,6 +98,56 @@ boolean succesfulltransaction = false;
 	public List<Supplier> paySuppliers() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean orderFromDrugstore(String name, String keywords, int amount, String destin_address) {
+		List<ProductFromDrugstore> products = ProductFromDrugstore.getProductsFromDrugstores();
+		String[] eachkeyword = keywords.split(",");
+//		TODO: Si cumple todas las keywords
+		float min = 999999;
+		ProductFromDrugstore chosenProduct= null;
+		for (ProductFromDrugstore product : products) {
+			if ( product.getName() == product.getName() && product.getPrice() < min) {
+				chosenProduct = product;
+			}
+		}
+//		TODO: Llama al servicio de delivery para llevar el producto
+		return true;
+	}
+
+	@Override
+	public boolean addProductToSupplier(int supplier_id, String name, String keywords, String description, float price) {
+		Supplier supplier = Supplier.getSupplier(supplier_id);
+		if ( supplier != null ) {
+			ProductFromSupplier product = new ProductFromSupplier();
+			product.setName(name);
+			product.setSupplier_id(supplier_id);
+			product.setDescription(description);
+			product.setKeywords(keywords);
+			product.setPrice(price);
+			product.save();
+			System.out.println("The product from the supplier was succesfully added.");
+			return true;
+		}
+		System.out.println("Supplier wasn't found");
+		return false;
+	}
+
+	@Override
+	public boolean addProductToDrugstore(int drugstore_id, String name, String keywords, String description, float price) {
+		Drugstore drugstore = Drugstore.getDrugstore(drugstore_id);
+		if (drugstore != null) {
+			ProductFromDrugstore product = new ProductFromDrugstore();
+			product.setName(name);
+			product.setDrugstore_id(drugstore_id);
+			product.setDescription(description);
+			product.setKeywords(keywords);
+			product.setPrice(price);
+			product.save();
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -12,19 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import com.beans.SupplierService;
 
 /**
- * Servlet implementation class OrderFromDrugstore
+ * Servlet implementation class AddProductToSupplier
  */
-@WebServlet("/OrderFromDrugstore")
-public class OrderFromDrugstore extends HttpServlet {
+@WebServlet("/AddProductToSupplier")
+public class AddProductToSupplier extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       	
+     
 	@EJB 
 	SupplierService bean;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrderFromDrugstore() {
+    public AddProductToSupplier() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +34,7 @@ public class OrderFromDrugstore extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("Add product to supplier!");
 	}
 
 	/**
@@ -42,10 +42,11 @@ public class OrderFromDrugstore extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
+		int supplier = Integer.valueOf( request.getParameter("supplier") );
 		String keywords = request.getParameter("keywords");
-		int amount = Integer.valueOf( request.getParameter("amount" ) );
-		String destin = request.getParameter("destinaddress");
-		bean.orderFromDrugstore(name, keywords, amount, destin);
+		String description = request.getParameter("description");
+		float price = Float.valueOf( request.getParameter("price"));
+		bean.addProductToSupplier(supplier, name, keywords, description, price);
 		doGet(request, response);
 	}
 

@@ -5,5 +5,7 @@
 		<jta-data-source>java:jboss/datasources/EverdoseDS</jta-data-source>
 		<class>com.entities.Supplier</class>
 		<class>com.entities.Drugstore</class>
+		<class>com.entities.ProductFromSupplier</class>
+		<class>com.entities.ProductFromDrugstore</class>
 	</persistence-unit>
 </persistence>

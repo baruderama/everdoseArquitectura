@@ -1,13 +1,8 @@
+# Delivery Microservice
+
 ## Endpoints
 
-- **Deliver** 
-  - originAddress
-  - destinAddress
-  - products
-    - name
-    - description
-    - price
-    - amount
+- **Deliver**
 
 ## Tables
 

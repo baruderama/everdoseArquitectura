@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="deliverymicroservice-ear-0.0.1-SNAPSHOT">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="deliverymicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/deliverymicroservice-ejb/deliverymicroservice-ejb">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deliverymicroservice-jpa-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/deliverymicroservice-jpa/deliverymicroservice-jpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="deliverymicroservice-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/deliverymicroservice-web/deliverymicroservice-web">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

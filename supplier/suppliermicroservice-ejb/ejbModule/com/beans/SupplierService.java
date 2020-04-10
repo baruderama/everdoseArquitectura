@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -13,6 +16,7 @@ import com.entities.Drugstore;
 import com.entities.ProductFromDrugstore;
 import com.entities.ProductFromSupplier;
 import com.entities.Supplier;
+import com.entities.SupplierOrder;
 
 /**
  * Session Bean implementation class SupplierService
@@ -85,20 +89,44 @@ boolean succesfulltransaction = false;
 //		TODO: Si cumple todas las keywords
 		float min = 999999;
 		ProductFromSupplier chosenProduct= null;
+		Supplier supplier = null;
 		for (ProductFromSupplier product : products) {
 			if ( product.getName().equals(name) && product.getPrice() < min) {
 				chosenProduct = product;
+				supplier = Supplier.getSupplier( product.getSupplier_id() );
 				min = product.getPrice();
 			}
+		}
+		if (chosenProduct != null ) {
+			SupplierOrder order = new SupplierOrder();
+			order.setProduct_name(chosenProduct.getName());
+			order.setProduct_price(chosenProduct.getPrice());
+			order.setSupplier_id( chosenProduct.getSupplier_id() );
+			order.setAmount(amount);
+			order.save();
 		}
 //		TODO: Llama al servicio de email para pedir el producto.
 		return chosenProduct;
 	}
 
 	@Override
-	public List<Supplier> paySuppliers() {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<ArrayList<SupplierOrder>> paySuppliers() {
+		List<SupplierOrder> orders = SupplierOrder.getSupplierOrders();
+		HashMap<Integer, ArrayList<SupplierOrder> > orders_grouped = new HashMap<Integer, ArrayList<SupplierOrder>>();
+		HashMap<Integer, Float> payment = new HashMap<Integer, Float>();
+		for (SupplierOrder supplierOrder : orders) {
+			ArrayList<SupplierOrder> existingOrders = orders_grouped.get( supplierOrder.getSupplier_id() );
+			if (existingOrders != null) {
+				orders_grouped.get( supplierOrder.getSupplier_id() ).add(supplierOrder);
+			}
+			else {
+				ArrayList<SupplierOrder> temp = new ArrayList<SupplierOrder>();
+				temp.add(supplierOrder);
+				orders_grouped.put( supplierOrder.getSupplier_id()  , temp);
+				payment.put( supplierOrder.getSupplier_id(), supplierOrder.getProduct_price() );
+			}
+		}
+		return orders_grouped.values();
 	}
 
 	@Override
@@ -135,7 +163,9 @@ boolean succesfulltransaction = false;
 			System.out.println("The product from the supplier was succesfully added.");
 			return true;
 		}
-		System.out.println("Supplier wasn't found");
+		else {
+			System.out.println("The supplier wasn't found");
+		}
 		return false;
 	}
 

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.beans.SupplierService;
+import com.entities.ProductFromDrugstore;
+import com.entities.ProductFromSupplier;
 
 /**
  * Servlet implementation class OrderFromSupplier
@@ -34,7 +36,7 @@ public class OrderFromSupplier extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("Order from supplier!");
 	}
 
 	/**
@@ -42,6 +44,19 @@ public class OrderFromSupplier extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String name = request.getParameter("name");
+		String keywords = request.getParameter("keywords");
+		int amount = Integer.valueOf( request.getParameter("amount" ) );
+		ProductFromSupplier product = bean.orderFromSupplier(name, keywords, amount);
+		if ( product != null) {
+			System.out.println("An order from supplier was created...");
+			System.out.println("Product: "+product.getName());
+			System.out.println("Price: "+product.getPrice());
+			System.out.println("Supplier: "+product.getSupplier_id());
+		}
+		else {
+			System.out.println("No product was found for the given requirements.");	
+		}
 		doGet(request, response);
 	}
 

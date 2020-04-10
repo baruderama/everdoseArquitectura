@@ -88,21 +88,16 @@ public class ProductFromSupplier implements Serializable {
 		boolean succesfulltransaction = false;
 		
 		try {
-			System.out.println("Creating et");
 			et = em.getTransaction();
 			et.begin();
 			ProductFromSupplier product = new ProductFromSupplier();
-			System.out.println("Adding fields");
 			product.setName(name);
 			product.setSupplier_id(supplier_id);
 			product.setDescription(description);
 			product.setKeywords(keywords);
 			product.setPrice(price);
-			System.out.println("Persisting...");
 			em.persist(product);
-			System.out.println("Commiting...");
 			et.commit();
-			System.out.println("Added!");
 			succesfulltransaction = true;
 			
 		} catch (Exception e) {

@@ -1,5 +1,7 @@
 package com.beans;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -7,6 +9,7 @@ import javax.ejb.Local;
 import com.entities.ProductFromDrugstore;
 import com.entities.ProductFromSupplier;
 import com.entities.Supplier;
+import com.entities.SupplierOrder;
 
 @Local
 public interface SupplierServiceLocal {
@@ -17,5 +20,5 @@ public interface SupplierServiceLocal {
 	public boolean addProductToDrugstore( int drugstore_id, String name, String keywords, String description, float price );
 	public ProductFromDrugstore orderFromDrugstore( String name, String keywords, int amount, String destin_address);
 	public ProductFromSupplier orderFromSupplier( String name, String keywords, int amount);
-	public List<Supplier> paySuppliers();
+	public Collection<ArrayList<SupplierOrder>> paySuppliers();
 }

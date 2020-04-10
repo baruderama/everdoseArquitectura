@@ -29,13 +29,21 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
      * Default constructor. 
      */
     public SupplierService() {
-        // TODO Auto-generated constructor stub
+        
     }
 
 	@Override
 	public boolean addSupplier(String name, String address, String phone, String email, String uri) {
-boolean succesfulltransaction = false;
-		
+		boolean succesfulltransaction = false;
+		/**
+		 * Adds the supplier to the database. 
+		 *
+		 * @param  name name of the supplier.
+		 * @param address address of the supplier.
+		 * ...
+		 * 
+		 * @return      A state; true if the transaction was successful, false otherwise.
+		 */
 		try {
 			
 			Supplier supplier = new Supplier();
@@ -49,7 +57,7 @@ boolean succesfulltransaction = false;
 			succesfulltransaction = true;
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		
 		return succesfulltransaction;
@@ -70,7 +78,7 @@ boolean succesfulltransaction = false;
 			succesfulltransaction = true;
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		
 		return succesfulltransaction;
@@ -78,12 +86,21 @@ boolean succesfulltransaction = false;
 
 	@Override
 	public boolean addSupplierfinancialInformation() {
-		// TODO Auto-generated method stub
+		// TODO Agregar información financiera, crear entity.
 		return false;
 	}
 
 	@Override
 	public ProductFromSupplier orderFromSupplier(String name, String keywords, int amount) {
+		/**
+		 * Orders from supplier, it searches for the product in the database given the keywords, 
+		 * orders the cheapest product found. An order is generated.
+		 *
+		 * @param  name name of the product.
+		 * @param  keywords keywords separated by commas describing the product.
+		 * @return      The cheapest product that matched the keywords.
+		 * @see SupplierOrder
+		 */
 		List<ProductFromSupplier> products = ProductFromSupplier.getProductsFromSuppliers();
 		String[] eachkeyword = keywords.split(",");
 //		TODO: Si cumple todas las keywords
@@ -111,15 +128,22 @@ boolean succesfulltransaction = false;
 
 	@Override
 	public HashMap< Integer, Float > paySuppliers() {
+		/**
+		 * Pays the supplier given the existing orders in the databases.
+		 *
+		 * @return      A HashMap with suppliers id as keys and payed amount as value.
+		 */
 		List<SupplierOrder> orders = SupplierOrder.getSupplierOrders();
 		HashMap<Integer, ArrayList<SupplierOrder> > orders_grouped = new HashMap<Integer, ArrayList<SupplierOrder>>();
 		HashMap<Integer, Float> payment = new HashMap<Integer, Float>();
 		for (SupplierOrder supplierOrder : orders) {
 			ArrayList<SupplierOrder> existingOrders = orders_grouped.get( supplierOrder.getSupplier_id() );
 			if (existingOrders != null) {
-				orders_grouped.get( supplierOrder.getSupplier_id() ).add(supplierOrder);
-				float total = payment.get(supplierOrder.getSupplier_id()) + supplierOrder.getAmount()*supplierOrder.getProduct_price() ;
-				payment.put( supplierOrder.getSupplier_id(), total);
+				if ( !supplierOrder.isPayed() ) {
+					orders_grouped.get( supplierOrder.getSupplier_id() ).add(supplierOrder);
+					float total = payment.get(supplierOrder.getSupplier_id()) + supplierOrder.getAmount()*supplierOrder.getProduct_price() ;
+					payment.put( supplierOrder.getSupplier_id(), total);
+				}
 			}
 			else {
 				ArrayList<SupplierOrder> temp = new ArrayList<SupplierOrder>();
@@ -128,11 +152,18 @@ boolean succesfulltransaction = false;
 				payment.put( supplierOrder.getSupplier_id(), supplierOrder.getProduct_price() );
 			}
 		}
+//		TODO: Va al servicio de pagos a solicitar el pago, se marca como pagado si fue exitoso.
 		return payment;
 	}
 
 	@Override
 	public ProductFromDrugstore orderFromDrugstore(String name, String keywords, int amount, String destin_address) {
+		/**
+		 * Orders from drugstore, it searches for the product in the database given the keywords, 
+		 * orders the cheapest product found. A delivery service is called, no information is saved.
+		 *
+		 * @return     The cheapest product that matched the keywords.
+		 */
 		List<ProductFromDrugstore> products = ProductFromDrugstore.getProductsFromDrugstores();
 		String[] eachkeyword = keywords.split(",");
 //		TODO: Si cumple todas las keywords

@@ -143,7 +143,6 @@ public class ProductFromDrugstore implements Serializable {
 		List<ProductFromDrugstore> products = null;
 		try {
 			products = tq.getResultList();
-			products.forEach( product -> System.out.println("ProductFromDrugstore") );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

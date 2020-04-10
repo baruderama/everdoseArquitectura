@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import com.entities.ProductFromDrugstore;
+import com.entities.ProductFromSupplier;
 import com.entities.Supplier;
 
 @Local
@@ -13,7 +15,7 @@ public interface SupplierServiceLocal {
 	public boolean addSupplierfinancialInformation();
 	public boolean addProductToSupplier( int supplier_id, String name, String keywords, String description, float price );
 	public boolean addProductToDrugstore( int drugstore_id, String name, String keywords, String description, float price );
-	public boolean orderFromDrugstore( String name, String keywords, int amount, String destin_address);
-	public boolean orderFromSupplier( String name, String keywords, int amount);
+	public ProductFromDrugstore orderFromDrugstore( String name, String keywords, int amount, String destin_address);
+	public ProductFromSupplier orderFromSupplier( String name, String keywords, int amount);
 	public List<Supplier> paySuppliers();
 }

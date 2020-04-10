@@ -79,19 +79,20 @@ boolean succesfulltransaction = false;
 	}
 
 	@Override
-	public boolean orderFromSupplier(String name, String keywords, int amount) {
+	public ProductFromSupplier orderFromSupplier(String name, String keywords, int amount) {
 		List<ProductFromSupplier> products = ProductFromSupplier.getProductsFromSuppliers();
 		String[] eachkeyword = keywords.split(",");
 //		TODO: Si cumple todas las keywords
 		float min = 999999;
 		ProductFromSupplier chosenProduct= null;
 		for (ProductFromSupplier product : products) {
-			if ( product.getName() == product.getName() && product.getPrice() < min) {
+			if ( product.getName().equals(name) && product.getPrice() < min) {
 				chosenProduct = product;
+				min = product.getPrice();
 			}
 		}
 //		TODO: Llama al servicio de email para pedir el producto.
-		return false;
+		return chosenProduct;
 	}
 
 	@Override
@@ -101,19 +102,23 @@ boolean succesfulltransaction = false;
 	}
 
 	@Override
-	public boolean orderFromDrugstore(String name, String keywords, int amount, String destin_address) {
+	public ProductFromDrugstore orderFromDrugstore(String name, String keywords, int amount, String destin_address) {
 		List<ProductFromDrugstore> products = ProductFromDrugstore.getProductsFromDrugstores();
 		String[] eachkeyword = keywords.split(",");
 //		TODO: Si cumple todas las keywords
 		float min = 999999;
 		ProductFromDrugstore chosenProduct= null;
 		for (ProductFromDrugstore product : products) {
-			if ( product.getName() == product.getName() && product.getPrice() < min) {
+			System.out.println("Looking for..."+name);
+			System.out.println(product.getName());
+			System.out.println(product.getPrice());
+			if ( product.getName().equals(name) && product.getPrice() < min) {
 				chosenProduct = product;
+				min = product.getPrice();
 			}
 		}
 //		TODO: Llama al servicio de delivery para llevar el producto
-		return true;
+		return chosenProduct;
 	}
 
 	@Override

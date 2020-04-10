@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.beans.SupplierService;
+import com.entities.ProductFromDrugstore;
 
 /**
  * Servlet implementation class OrderFromDrugstore
@@ -45,7 +46,13 @@ public class OrderFromDrugstore extends HttpServlet {
 		String keywords = request.getParameter("keywords");
 		int amount = Integer.valueOf( request.getParameter("amount" ) );
 		String destin = request.getParameter("destinaddress");
-		bean.orderFromDrugstore(name, keywords, amount, destin);
+		ProductFromDrugstore product = bean.orderFromDrugstore(name, keywords, amount, destin);
+		if ( product != null) {
+			System.out.println("An order from drugstore was created...");
+			System.out.println("Product: "+product.getName());
+			System.out.println("Price: "+product.getPrice());
+			System.out.println("Drugstore: "+product.getDrugstore_id());
+		}
 		doGet(request, response);
 	}
 

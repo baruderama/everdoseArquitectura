@@ -110,7 +110,7 @@ boolean succesfulltransaction = false;
 	}
 
 	@Override
-	public Collection<ArrayList<SupplierOrder>> paySuppliers() {
+	public HashMap< Integer, Float > paySuppliers() {
 		List<SupplierOrder> orders = SupplierOrder.getSupplierOrders();
 		HashMap<Integer, ArrayList<SupplierOrder> > orders_grouped = new HashMap<Integer, ArrayList<SupplierOrder>>();
 		HashMap<Integer, Float> payment = new HashMap<Integer, Float>();
@@ -118,6 +118,8 @@ boolean succesfulltransaction = false;
 			ArrayList<SupplierOrder> existingOrders = orders_grouped.get( supplierOrder.getSupplier_id() );
 			if (existingOrders != null) {
 				orders_grouped.get( supplierOrder.getSupplier_id() ).add(supplierOrder);
+				float total = payment.get(supplierOrder.getSupplier_id()) + supplierOrder.getAmount()*supplierOrder.getProduct_price() ;
+				payment.put( supplierOrder.getSupplier_id(), total);
 			}
 			else {
 				ArrayList<SupplierOrder> temp = new ArrayList<SupplierOrder>();
@@ -126,7 +128,7 @@ boolean succesfulltransaction = false;
 				payment.put( supplierOrder.getSupplier_id(), supplierOrder.getProduct_price() );
 			}
 		}
-		return orders_grouped.values();
+		return payment;
 	}
 
 	@Override

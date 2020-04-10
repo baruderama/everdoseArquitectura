@@ -22,7 +22,16 @@ public class SupplierOrder implements Serializable {
 	private String product_name;
 	private float product_price;
 	private int amount;
+	private boolean payed;
 	
+	public boolean isPayed() {
+		return payed;
+	}
+
+	public void setPayed(boolean payed) {
+		this.payed = payed;
+	}
+
 	public int getAmount() {
 		return amount;
 	}
@@ -128,7 +137,6 @@ public class SupplierOrder implements Serializable {
 		List<SupplierOrder> supplierOrders = null;
 		try {
 			supplierOrders = tq.getResultList();
-			supplierOrders.forEach( SupplierOrder -> System.out.println("SupplierOrder") );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

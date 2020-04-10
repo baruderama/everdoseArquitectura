@@ -1,7 +1,7 @@
 package com.beans;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -20,5 +20,5 @@ public interface SupplierServiceLocal {
 	public boolean addProductToDrugstore( int drugstore_id, String name, String keywords, String description, float price );
 	public ProductFromDrugstore orderFromDrugstore( String name, String keywords, int amount, String destin_address);
 	public ProductFromSupplier orderFromSupplier( String name, String keywords, int amount);
-	public Collection<ArrayList<SupplierOrder>> paySuppliers();
+	public HashMap< Integer, Float> paySuppliers();
 }

@@ -3,8 +3,8 @@
 	<name>emailmicroservice-ear</name>
 	<comment></comment>
 	<projects>
-		<project>emailmicroservice-web</project>
 		<project>emailmicroservice-ejb</project>
+		<project>emailmicroservice-web</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -8,9 +8,9 @@
   <dependencies>
   	<dependency>
   		<groupId>emailmicroservice-ejb</groupId>
-		<artifactId>emailmicroservice-ejb</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<scope>compile</scope>
+	  <artifactId>emailmicroservice-ejb</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	  <scope>compile</scope>
   	</dependency>
   </dependencies>
   <build>

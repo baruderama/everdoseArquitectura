@@ -5,11 +5,6 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 
 import com.entities.Product;
 
@@ -62,8 +57,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		boolean succesfulltransaction = false;
 		try {
 			Product product = Product.getProduct(id);
-			boolean status = product.removeProduct();
-
+			product.removeProduct();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,6 +78,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return productsRunningOut;
 	}
 

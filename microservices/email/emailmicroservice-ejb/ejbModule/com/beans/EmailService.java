@@ -2,14 +2,11 @@ package com.beans;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
 import com.classes.EverdoseEmail;
 import com.classes.Product;
 import com.google.gson.Gson;
-
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
 import javax.mail.*;  

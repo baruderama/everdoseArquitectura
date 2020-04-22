@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ejb" name="paymentsWebApplication:ejb exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/paymentsWebApplication_ejb_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="paymentsWebApplication/ejb/EJB" />
+      <element id="module-output" name="paymentsWebApplication" />
+    </root>
+  </artifact>
+</component>

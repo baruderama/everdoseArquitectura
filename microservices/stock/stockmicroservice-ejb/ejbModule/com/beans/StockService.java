@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.entities.Drugstore;
 import com.entities.Product;
 
 /**
@@ -80,6 +81,33 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		}
 		
 		return productsRunningOut;
+	}
+
+	@Override
+	public boolean addDrugstore(String address, String email, String name, String phone, String uri) {
+		Drugstore drugstore=new Drugstore();
+		drugstore.setAddress(address);
+		drugstore.setEmail(email);
+		drugstore.setName(name);
+		drugstore.setPhone(phone);
+		drugstore.setUri(uri);
+		return drugstore.save();
+	}
+
+	@Override
+	public List<Drugstore> getDrugstores() {
+		return Drugstore.getDrugstores();
+	}
+
+	@Override
+	public boolean modifyDrugstore(int id, String address, String email, String name, String phone, String uri) {
+		return Drugstore.UpdateDrugstoreById(id, address, email, name, phone, uri);
+		
+	}
+
+	@Override
+	public boolean deleteDrugstore(int id) {
+		return Drugstore.deleteById(id);
 	}
 
 }

@@ -8,6 +8,8 @@ import javax.ejb.Stateless;
 
 import com.entities.Drugstore;
 import com.entities.Product;
+import com.entities.ProductFromDrugstore;
+import com.utils.ProductAdapter;
 
 /**
  * Session Bean implementation class StockService
@@ -24,12 +26,12 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
     }
 
 	@Override
-	public List<Product> getCatalog() {
+	public List<Product> getProducts() {
 		return Product.getProducts();
 	}
 
 	@Override
-	public boolean addProduct( String name, String description, String location, String image, float price, int threshold, int amount ) {
+	public boolean addProduct( String name, String description, String location, String image, float price, int threshold, int amount ,String keyword) {
 
 		boolean succesfulltransaction = false;
 
@@ -43,6 +45,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 			product.setImage(image);
 			product.setThreshold(threshold);
 			product.setLocation(location);
+			product.setKeywords(keyword);
 			product.save();
 
 			succesfulltransaction = true;
@@ -59,6 +62,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		try {
 			Product product = Product.getProduct(id);
 			product.removeProduct();
+			succesfulltransaction=true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -108,6 +112,54 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 	@Override
 	public boolean deleteDrugstore(int id) {
 		return Drugstore.deleteById(id);
+	}
+
+	@Override
+	public List<ProductAdapter> getCatalog() {
+		List<ProductAdapter> products=new ArrayList<ProductAdapter>();
+		List<Product> prds=this.getProducts();
+		List<ProductFromDrugstore> prdsfd=this.getProductsFromDrugstore();
+		for(Product p:prds) {
+			products.add(new ProductAdapter(p));
+		}
+		for(ProductFromDrugstore p:prdsfd) {
+			products.add(new ProductAdapter(p));
+		}
+		return products;
+	}
+
+	@Override
+	public List<ProductFromDrugstore> getProductsFromDrugstore() {
+		return ProductFromDrugstore.getProducts();
+	}
+
+	@Override
+	public boolean addProductFromDrugstore(String name, String description, String keywords, float price,int drugstore_id) {
+		boolean succesfulltransaction = false;
+
+		try {
+
+			ProductFromDrugstore product = new ProductFromDrugstore();
+			Drugstore drugstore=Drugstore.getDrugstore(drugstore_id);
+			product.setDrugstore(drugstore);
+			product.setName(name);
+			product.setDescription(description);
+			product.setPrice(price);
+			product.setKeywords(keywords);
+			
+
+			succesfulltransaction = product.save();;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return succesfulltransaction;
+	}
+
+	@Override
+	public boolean modifyProduct(int id, String name, String description, String location, String image, Float price,
+			Integer threshold, Integer amount, String keyword) {
+		return Product.UpdateProductById(id, name, description, location, image, price,threshold, amount,keyword);
 	}
 
 }

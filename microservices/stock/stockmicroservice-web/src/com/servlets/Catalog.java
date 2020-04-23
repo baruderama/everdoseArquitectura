@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.beans.StockService;
 import com.entities.Product;
 import com.google.gson.Gson;
+import com.utils.ProductAdapter;
 
 /**
  * Servlet implementation class Catalog
@@ -38,7 +39,7 @@ public class Catalog extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		List<Product> products = bean.getCatalog();
+		List<ProductAdapter> products = bean.getCatalog();
 		String productsJsonString = new Gson().toJson(products);
 		
 		PrintWriter out = response.getWriter();

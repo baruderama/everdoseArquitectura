@@ -90,6 +90,7 @@ public class Product implements Serializable {
 	private String name;
 	private String image;
 	private String description;
+	private String keywords;
 	private double price;
 	private int threshold;
 	private int amount;
@@ -189,6 +190,37 @@ public class Product implements Serializable {
 			em.close();
 		}
 		return product;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public static boolean UpdateProductById(int id, String name2, String description2, String location2, String image2,
+			Float price2, Integer threshold2, Integer amount2, String keyword) {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		try {
+			Product product=em.find(Product.class, id);
+			em.getTransaction().begin();
+			if(amount2!=null)product.setAmount(amount2);
+			if(description2!=null)product.setDescription(description2);
+			if(image2!=null)product.setImage(image2);
+			if(keyword!=null)product.setKeywords(keyword);
+			if(location2!=null)product.setLocation(location2);
+			if(name2!=null)product.setName(name2);
+			if(price2!=null)product.setPrice(price2);
+			if(threshold2!=null)product.setThreshold(threshold2);
+			em.getTransaction().commit();
+			return true;
+		}catch(Exception ignore) {
+			
+		}
+		
+		return false;
 	}
    
 }

@@ -173,6 +173,25 @@ public class Drugstore implements Serializable {
 		return false;
 	}
 	
+	public static Drugstore getDrugstore( int id) {
+
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		EntityTransaction et = null;
+		Drugstore drugstore = null;
+		try {
+
+			et = em.getTransaction();
+			et.begin();
+			drugstore = em.find( Drugstore.class , id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			em.close();
+		}
+		return drugstore;
+	}
+	
 	public static boolean deleteById(int id) {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		try {

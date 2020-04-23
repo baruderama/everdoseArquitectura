@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.beans.StockService;
 import com.entities.Drugstore;
-import com.entities.Product;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

@@ -9,23 +9,25 @@
         </div>
         <div class="delivery_form">
           <form class="ui form">
-            <div class="two fields">
-              <div class="field">
-                <label>First name</label>
-                <input type="text" name="shipping[first-name]" placeholder="First Name">
-              </div>
-              <div class="field">
-                <label>Last name</label>
-                <input type="text" name="shipping[last-name]" placeholder="Last Name">
+            <div class="field">
+              <div class="two fields">
+                <div class="field">
+                  <label>First name</label>
+                  <input v-model="first_name" type="text" name="shipping[first-name]" placeholder="First Name">
+                </div>
+                <div class="field">
+                  <label>Last name</label>
+                  <input v-model="last_name" type="text" name="shipping[first-name]" placeholder="First Name">
+                </div>
               </div>
             </div>
             <div class="field">
               <label>Address</label>
-              <input type="text" name="address" placeholder="Address">
+              <input v-model="address" type="text" name="address" placeholder="Address">
             </div>
             <div class="field">
               <label>More information</label>
-              <textarea name="name" rows="3" cols="80" placeholder="More information"></textarea>
+              <textarea v-model="more_information" name="name" rows="3" cols="80" placeholder="More information"></textarea>
             </div>
           </form>
         </div>
@@ -53,40 +55,16 @@
         </div>
       </div>
 
-
       <div class="credit_card_form invisible" :class="{visible: credit_card_selected}">
         <form class="ui form">
-          <h4 class="ui dividing header">Credit card information</h4>
-          <div class="two fields">
-            <div class="field">
-              <input type="text" name="shipping[first-name]" placeholder="First Name">
-            </div>
-            <div class="field">
-              <input type="text" name="shipping[last-name]" placeholder="Last Name">
-            </div>
-          </div>
-          <div class="field">
-            <label>Credit card number</label>
-            <input type="text" name="first-name" placeholder="4242 4242 4242 4242">
-          </div>
-          <div class="two fields">
-            <div class="field">
-              <label>Date</label>
-              <input type="text" name="first-name" placeholder="MM/YY">
-            </div>
-            <div class="field">
-              <label>CCV</label>
-              <input type="text" name="last-name" placeholder="123">
-            </div>
 
+
+          <h4 class="ui dividing header">Credit card information</h4>
+          <div class="field">
+            <input v-model="name_cc" type="text" name="shipping[first-name]" placeholder="Name in card">
           </div>
-          <!-- <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" tabindex="0" class="hidden">
-              <label>I agree to the Terms and Conditions</label>
-            </div>
-          </div> -->
-          <div @click="pay" class="ui fluid green button">Validate information</div>
+          <div ref="card"></div>
+
         </form>
 
         <div class="ui positive message invisible">
@@ -113,8 +91,20 @@
       </div>
 
       <div class="proceed_panel">
-        <div class="ui fluid disabled green button">
+        <div @click="pay" class="ui fluid green button">
           Pay
+        </div>
+      </div>
+
+      <div class="on_delivery_panel invisible"  :class="{visible: processing_payment}">
+        <div class="ui success message">
+          You'll have to pay X when you receive your products.
+        </div>
+      </div>
+
+      <div class="on_delivery_panel invisible"  :class="{visible: on_delivery_selected}">
+        <div class="ui success message">
+          You'll have to pay X when you receive your products.
         </div>
       </div>
 
@@ -152,13 +142,26 @@
 
 <script>
 import cookie from '../cookies'
+import axios from 'axios'
+
+/*eslint no-undef: 1*/
+let stripe = Stripe(`pk_test_SCFXDSEiX7vyfh3wYzR9aYaD00eIWW9bUD`),
+    elements = stripe.elements(),
+    card = undefined;
 
 export default {
   data(){
     return {
+
+      name: '',
+      address: '',
+      more_information: '',
+
       products: [],
       credit_card_selected: true,
       on_delivery_selected: false,
+      processing_payment: false,
+
     }
   },
   computed:{
@@ -168,9 +171,45 @@ export default {
         total += product.price * product.amount;
       }
       return total;
+    },
+    financial_information(){
+      return {
+        credit_card: true,
+        cc: {
+          "name" : this.name_cc,
+          "number" : this.number_cc,
+          "date" : this.date_cc,
+          "ccv" : this.ccv_cc
+        }
+      }
+    },
+    delivery_information(){
+      return {
+        "first_name" : this.first_name,
+        "last_name" : this.last_name,
+        "address" : this.address,
+        "more_information" : this.more_information
+      }
     }
   },
   mounted(){
+
+    let style = {
+    base: {
+      border: '1px solid #D8D8D8',
+      borderRadius: '4px',
+      color: "#000",
+    },
+
+    invalid: {
+      // All of the error styles go inside of here.
+    }
+
+  };
+
+    card = elements.create('card', style);
+    card.mount(this.$refs.card);
+    // console.log(Stripe)
     this.products = cookie.getCookie('products');
   },
   methods:{
@@ -185,7 +224,27 @@ export default {
       }
     },
     pay(){
-
+      var thisa = this;
+      console.log("paying")
+      stripe.createToken(card).then(function(result) {
+        console.log('Tokeeen:')
+        console.log(result.token)
+        axios.post('http://localhost:8080/payments-web/Pay', {
+          test: 'Test working...',
+          stripeToken: result.token,
+          financial_info: thisa.financial_info,
+          delivery_information: thisa.delivery_information,
+          products: thisa.products,
+        }
+        )
+        .then(function (response) {
+          if (response.status.ok){
+            thisa.processing_payment = true;
+          }
+        })
+      }).catch(function (error) {
+        console.log(error);
+      });
     }
   }
 }

@@ -56,8 +56,7 @@ public class Pay extends HttpServlet {
         JSONObject json = new JSONObject(body);
         System.out.println(json.get("test"));
 //        StripeToken a = json.getString("stripeToken");
-        
-//        Ejemplo:
+
     }
 
 }

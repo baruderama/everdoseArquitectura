@@ -14,11 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.beans.StockService;
 import com.entities.ProductFromDrugstore;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Servlet implementation class ProductFromDrugstoreServlet
  */
-@WebServlet("/ProductFromDrugstoreServlet")
+@WebServlet("/ProductFromDrugstore")
 public class ProductFromDrugstoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
      
@@ -38,7 +39,8 @@ public class ProductFromDrugstoreServlet extends HttpServlet {
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<ProductFromDrugstore> products = bean.getProductsFromDrugstore();
-		String productsJsonString = new Gson().toJson(products);
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		String productsJsonString = gson.toJson(products);
 		
 		PrintWriter out = response.getWriter();
 		response.setContentType("application/json");
@@ -70,5 +72,46 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		
 		response.getWriter().append("product added");
 	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
+		int id=0;
+		try {
+			id=Integer.valueOf(request.getParameter("id"));
+		}catch (Exception ignore) { 
+			response.getWriter().append("no id");
+			return;
+		}
+		if(bean.removeProductFromDrugstore(id)) {
+			response.getWriter().append("success");
+		}else {
+			response.getWriter().append("failed");
+		}	
+	}
 
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Float price=(float) -1;
+		Integer threshold=-1; 
+		Integer amount=-1;
+		int id=-1;
+		try {
+			id=Integer.valueOf( request.getParameter("product_id") );
+		}catch(Exception e) {
+				response.getWriter().append("invalid format");
+				return;
+		}
+		try{price = Float.valueOf( request.getParameter("price") );}catch(Exception e){price=null;}
+		
+		String name = request.getParameter("name");
+		String description = request.getParameter("description");
+		
+		String keywords=request.getParameter("keywords");
+		
+		if(bean.modifyProductFromDrugstore(id,name, description, price, keywords)) {
+			response.getWriter().append("product modifyed");
+		}else {
+			response.getWriter().append("failed");
+		}
+		
+	}
 }

@@ -162,4 +162,21 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		return Product.UpdateProductById(id, name, description, location, image, price,threshold, amount,keyword);
 	}
 
+	@Override
+	public boolean removeProductFromDrugstore(int id) {
+		boolean succesfulltransaction = false;
+		try {
+			ProductFromDrugstore product = ProductFromDrugstore.getProduct(id);
+			succesfulltransaction=product.removeProduct();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return succesfulltransaction;
+	}
+
+	@Override
+	public boolean modifyProductFromDrugstore(int id, String name, String description, Float price, String keywords) {
+		return ProductFromDrugstore.UpdateProductById(id, name, description,price,keywords);
+	}
+
 }

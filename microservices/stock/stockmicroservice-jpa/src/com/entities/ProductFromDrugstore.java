@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  * The persistent class for the ProductFromDrugstore database table.
@@ -17,15 +19,15 @@ public class ProductFromDrugstore implements Serializable {
 	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("stockmicroservice-jpa");
 
 	@Id
-	private int id;
+	@Expose private int id;
 
-	private String description;
+	@Expose private String description;
 
-	private String keywords;
+	@Expose private String keywords;
 
-	private String name;
+	@Expose private String name;
 
-	private float price;
+	@Expose private float price;
 
 	//bi-directional many-to-one association to Drugstore
 	@ManyToOne
@@ -136,12 +138,12 @@ public class ProductFromDrugstore implements Serializable {
 	
 	public static List<ProductFromDrugstore> getProducts() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		String query = "SELECT c FROM Product c WHERE c.id IS NOT NULL";
+		String query = "SELECT p FROM ProductFromDrugstore p WHERE p.id IS NOT NULL";
 		TypedQuery<ProductFromDrugstore> tq = em.createQuery(query, ProductFromDrugstore.class);
 		List<ProductFromDrugstore> products = null;
 		try {
 			products = tq.getResultList();
-			products.forEach( product -> System.out.println("Product") );
+			products.forEach( product -> System.out.println("ProductFromDrugstore") );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -149,6 +151,49 @@ public class ProductFromDrugstore implements Serializable {
 			em.close();
 		}
 		return products;
+	}
+
+	public boolean removeProduct() {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		EntityTransaction et = null;
+		boolean succesfulltransaction = false;
+		try {
+			
+			et = em.getTransaction();
+			et.begin();
+			ProductFromDrugstore product = em.find( ProductFromDrugstore.class , this.id);
+			em.remove(product);
+			et.commit();
+			succesfulltransaction = true;
+			
+		} catch (Exception e) {
+			if (et != null) {
+				et.rollback();
+			}
+		}
+		finally {
+			em.close();
+		}
+		return succesfulltransaction;
+	}
+
+	public static boolean UpdateProductById(int id2, String name2, String description2, Float price2,
+			String keywords2) {
+	EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+	try {
+		ProductFromDrugstore product=em.find(ProductFromDrugstore.class, id2);
+		em.getTransaction().begin();
+		if(description2!=null)product.setDescription(description2);
+		if(keywords2!=null)product.setKeywords(keywords2);
+		if(name2!=null)product.setName(name2);
+		if(price2!=null)product.setPrice(price2);
+		em.getTransaction().commit();
+		return true;
+	}catch(Exception e) {
+		e.printStackTrace();
+	}
+	
+		return false;
 	}
 
 }

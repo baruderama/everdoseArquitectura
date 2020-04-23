@@ -144,6 +144,11 @@
 import cookie from '../cookies'
 import axios from 'axios'
 
+/*eslint no-undef: 1*/
+let stripe = Stripe(`pk_test_SCFXDSEiX7vyfh3wYzR9aYaD00eIWW9bUD`),
+    elements = stripe.elements(),
+    card = undefined;
+
 export default {
   data(){
     return {
@@ -188,10 +193,6 @@ export default {
     }
   },
   mounted(){
-    /*eslint no-undef: 1*/
-    let stripe = Stripe(`pk_test_SCFXDSEiX7vyfh3wYzR9aYaD00eIWW9bUD`),
-        elements = stripe.elements(),
-        card = undefined;
 
     let style = {
     base: {
@@ -224,13 +225,18 @@ export default {
     },
     pay(){
       var thisa = this;
+      console.log("paying")
       stripe.createToken(card).then(function(result) {
-        axios.post('http://localhost:8080/buymicroservice-web/Buy', {
+        console.log('Tokeeen:')
+        console.log(result.token)
+        axios.post('http://localhost:8080/payments-web/Pay', {
+          test: 'Test working...',
           stripeToken: result.token,
           financial_info: thisa.financial_info,
           delivery_information: thisa.delivery_information,
           products: thisa.products,
-        })
+        }
+        )
         .then(function (response) {
           if (response.status.ok){
             thisa.processing_payment = true;

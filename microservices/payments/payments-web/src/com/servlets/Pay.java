@@ -1,6 +1,8 @@
 package com.servlets;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -8,6 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
+import org.apache.commons.io.IOUtils;
+import org.json.HTTP;
+import org.json.JSONException;
 
 import com.beans.PaymentsService;
 
@@ -41,8 +48,16 @@ public class Pay extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String token =request.getParameter("stripeToken");
-        response.getWriter().append(bean.creditPayment(token));
+    	
+        StringBuffer jb = new StringBuffer();
+        String line = null;
+        String body = IOUtils.toString(request.getReader());
+        System.out.println(body);
+        JSONObject json = new JSONObject(body);
+        System.out.println(json.get("test"));
+//        StripeToken a = json.getString("stripeToken");
+        
+//        Ejemplo:
     }
 
 }

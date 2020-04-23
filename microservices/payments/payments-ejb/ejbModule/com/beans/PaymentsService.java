@@ -25,11 +25,12 @@ public class PaymentsService implements PaymentsServiceRemote, PaymentsServiceLo
     public String creditPayment(String token) {
         Stripe.apiKey = "sk_test_wMKd3NzoEEIRcXB5WdLGP0uV00gWNpE8Xm";
 
+        System.out.println(token);
         try {
             Charge charge = Charge.retrieve(token);
             charge = charge.capture();
             return "success";
-        } catch (StripeException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

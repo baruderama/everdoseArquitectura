@@ -189,7 +189,7 @@ export default {
   },
   mounted(){
     /*eslint no-undef: 1*/
-    let stripe = Stripe(`pk_test_uTpF5UsbVh9DTxG2sFGOlDlw00y7tHz9Lb`),
+    let stripe = Stripe(`pk_test_SCFXDSEiX7vyfh3wYzR9aYaD00eIWW9bUD`),
         elements = stripe.elements(),
         card = undefined;
 
@@ -226,7 +226,7 @@ export default {
       var thisa = this;
       stripe.createToken(card).then(function(result) {
         axios.post('http://localhost:8080/buymicroservice-web/Buy', {
-          stripe_token: result.token,
+          stripeToken: result.token,
           financial_info: thisa.financial_info,
           delivery_information: thisa.delivery_information,
           products: thisa.products,

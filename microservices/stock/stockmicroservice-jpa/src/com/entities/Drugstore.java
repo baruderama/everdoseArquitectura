@@ -165,7 +165,8 @@ public class Drugstore implements Serializable {
 			if(uri!=null)drugstore.setUri(uri);
 			em.getTransaction().commit();
 			return true;
-		}catch(Exception ignore) {
+		}
+		catch(Exception ignore) {
 			
 		}
 		

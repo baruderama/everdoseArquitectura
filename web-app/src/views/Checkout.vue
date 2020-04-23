@@ -98,13 +98,7 @@
 
       <div class="on_delivery_panel invisible"  :class="{visible: processing_payment}">
         <div class="ui success message">
-          You'll have to pay X when you receive your products.
-        </div>
-      </div>
-
-      <div class="on_delivery_panel invisible"  :class="{visible: on_delivery_selected}">
-        <div class="ui success message">
-          You'll have to pay X when you receive your products.
+          If your payment is succesful, you'll receive an email.
         </div>
       </div>
 
@@ -227,8 +221,6 @@ export default {
       var thisa = this;
       console.log("paying")
       stripe.createToken(card).then(function(result) {
-        console.log('Tokeeen:')
-        console.log(result.token)
         axios.post('http://localhost:8080/payments-web/Pay', {
           test: 'Test working...',
           stripeToken: result.token,
@@ -237,10 +229,9 @@ export default {
           products: thisa.products,
         }
         )
-        .then(function (response) {
-          if (response.status.ok){
-            thisa.processing_payment = true;
-          }
+        .then(function () {
+          thisa.processing_payment = true;
+          console.log('Done')
         })
       }).catch(function (error) {
         console.log(error);

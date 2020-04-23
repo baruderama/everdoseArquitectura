@@ -14,8 +14,8 @@ import com.beans.StockService;
 /**
  * Servlet implementation class AddProduct
  */
-@WebServlet("/AddProduct")
-public class AddProduct extends HttpServlet {
+@WebServlet("/Product")
+public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@EJB 
@@ -24,7 +24,7 @@ public class AddProduct extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddProduct() {
+    public ProductServlet() {
         super();
     }
 
@@ -32,7 +32,7 @@ public class AddProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		response.getWriter().append("Adding product if POST");
 	}
 
@@ -51,7 +51,7 @@ public class AddProduct extends HttpServlet {
 		
 		bean.addProduct(name, description, location, image, price, threshold, amount);
 		
-		doGet(request, response);
+		response.getWriter().append("product added");
 	}
 
 }

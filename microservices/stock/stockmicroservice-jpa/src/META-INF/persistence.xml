@@ -4,5 +4,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<jta-data-source>java:jboss/datasources/EverdoseDS</jta-data-source>
 		<class>com.entities.Product</class>
+		<class>com.entities.Drugstore</class>
+		<class>com.entities.ProductFromDrugstore</class>
 	</persistence-unit>
 </persistence>

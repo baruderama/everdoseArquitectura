@@ -48,13 +48,8 @@ public class ProductFromDrugstore implements Serializable {
 			
 			et = em.getTransaction();
 			et.begin();
-			ProductFromDrugstore product = new ProductFromDrugstore();
-			product.setDrugstore(drugstore);
-			product.setName(name);
-			product.setDescription(description);
-			product.setPrice(price);
-			product.setKeywords(keywords);
-			em.persist(product);
+			if(ProductFromDrugstore.getProduct(this.id)==null)
+				em.persist(this);
 			et.commit();
 			succesfulltransaction = true;
 			

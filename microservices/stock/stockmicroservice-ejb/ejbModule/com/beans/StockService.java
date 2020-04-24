@@ -115,15 +115,19 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 	}
 
 	@Override
-	public List<ProductAdapter> getCatalog() {
+	public List<ProductAdapter> getCatalog(String keywords) {
 		List<ProductAdapter> products=new ArrayList<ProductAdapter>();
 		List<Product> prds=this.getProducts();
 		List<ProductFromDrugstore> prdsfd=this.getProductsFromDrugstore();
 		for(Product p:prds) {
-			products.add(new ProductAdapter(p));
+			if(keywords==null||(p.getKeywords()!=null&&p.getKeywords().contains(keywords))) {
+				products.add(new ProductAdapter(p));
+			}
 		}
 		for(ProductFromDrugstore p:prdsfd) {
-			products.add(new ProductAdapter(p));
+			if(keywords==null||(p.getKeywords()!=null&&p.getKeywords().contains(keywords))) {
+				products.add(new ProductAdapter(p));
+			}
 		}
 		return products;
 	}
@@ -177,6 +181,41 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 	@Override
 	public boolean modifyProductFromDrugstore(int id, String name, String description, Float price, String keywords) {
 		return ProductFromDrugstore.UpdateProductById(id, name, description,price,keywords);
+	}
+
+	@Override
+	public boolean consumeProducts(List<ProductAdapter> products) {
+		for(ProductAdapter p:products) {
+			System.out.println(p.getType());
+			if(p.getType().equals("drugstore")) {
+				if(ProductFromDrugstore.getProduct(p.getId())==null) {
+					System.out.println("no existe PD:"+p.getId());
+					return false;
+				}
+			}else {
+				Product product=Product.getProduct(p.getId());
+				if(product==null) {
+					System.out.println("no existe P:"+p.getId());
+					return false;
+				}
+				int amount=product.getAmount()-p.getAmount();
+				if(amount<0) {
+					System.out.println("no suficiente P:"+p.getId());
+					return false;
+				}
+			}
+		}
+		for(ProductAdapter p:products) {
+			if(p.getType().equals("drugstore")) {
+				//TODO: pedir a farmacia
+			}else {
+				Product product=Product.getProduct(p.getId());
+				int amount=product.getAmount()-p.getAmount();
+				product.setAmount((amount>=0)?amount:0);
+				product.save();
+			}
+		}
+		return true;
 	}
 
 }

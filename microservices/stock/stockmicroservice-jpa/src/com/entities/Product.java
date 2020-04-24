@@ -109,15 +109,8 @@ public class Product implements Serializable {
 			
 			et = em.getTransaction();
 			et.begin();
-			Product product = new Product();
-			product.setName(name);
-			product.setDescription(description);
-			product.setAmount(amount);
-			product.setPrice(price);
-			product.setImage(image);
-			product.setThreshold(threshold);
-			product.setLocation(location);
-			em.persist(product);
+			if(Product.getProduct(this.id)==null)
+				em.persist(this);
 			et.commit();
 			succesfulltransaction = true;
 			

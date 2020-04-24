@@ -16,22 +16,52 @@ public class ProductAdapter {
 	
 	private String type;
 	
+	private int amount;
+	
 	public ProductAdapter(Product product) {
-		this.id=product.getId();
+		this.setId(product.getId());
 		this.description=product.getDescription();
 		this.keywords=product.getKeywords();
 		this.name=product.getName();
 		this.price=product.getPrice();
-		this.type="inventary";
+		this.setType("inventary");
+		this.setAmount(product.getAmount());
 	}
 	
 	public ProductAdapter(ProductFromDrugstore product) {
-		this.id=product.getId();
+		this.setId(product.getId());
 		this.description=product.getDescription();
 		this.keywords=product.getKeywords();
 		this.name=product.getName();
 		this.price=product.getPrice();
-		this.type="drugstore";
+		this.setType("drugstore");
+		this.setAmount(0);
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	
+	
 	
 }

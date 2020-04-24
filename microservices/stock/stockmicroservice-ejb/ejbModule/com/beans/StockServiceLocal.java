@@ -11,7 +11,11 @@ import com.utils.ProductAdapter;
 
 @Local
 public interface StockServiceLocal {
-	public List<ProductAdapter> getCatalog();
+	public List<ProductAdapter> getCatalog(String keywords);
+	
+	public List<Product> checkRunningOut();
+	
+	public boolean consumeProducts(List<ProductAdapter> products);
 	
 	public List<ProductFromDrugstore> getProductsFromDrugstore();
 	public boolean removeProductFromDrugstore(int id);
@@ -22,8 +26,6 @@ public interface StockServiceLocal {
 	public boolean addProduct(String name, String description, String location, String image, float price, int threshold, int amount,String keyword );
 	public boolean removeProduct(int id);
 	public boolean modifyProduct(int id,String name, String description, String location, String image, Float price, Integer threshold, Integer amount,String keyword );
-	
-	public List<Product> checkRunningOut();
 	
 	public boolean addDrugstore(String address, String email,String name,String phone,String uri);
 	public List<Drugstore> getDrugstores();

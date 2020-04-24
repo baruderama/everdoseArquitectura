@@ -37,9 +37,10 @@ public class Catalog extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		List<ProductAdapter> products = bean.getCatalog();
+		String keywords=request.getParameter("keywords");
+		List<ProductAdapter> products = bean.getCatalog(keywords);
 		String productsJsonString = new Gson().toJson(products);
 		
 		PrintWriter out = response.getWriter();
@@ -53,9 +54,9 @@ public class Catalog extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		doPost(request, response);
 	}
 
 }

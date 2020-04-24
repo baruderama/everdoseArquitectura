@@ -51,7 +51,8 @@ public class Drugstore implements Serializable {
 			
 			et = em.getTransaction();
 			et.begin();
-			em.persist(this);
+			if(Drugstore.getDrugstore(this.id)==null)
+				em.persist(this);
 			et.commit();
 			succesfulltransaction = true;
 			

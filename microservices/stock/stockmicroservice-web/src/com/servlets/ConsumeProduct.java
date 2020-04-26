@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import com.beans.StockService;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -52,10 +54,12 @@ public class ConsumeProduct extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String json=Utils.getJSON(request);
+		JSONObject jsonObj=new JSONObject(Utils.getJSON(request));
+		String destiny_address=jsonObj.get("destiny_address").toString();
+		String json=jsonObj.get("products").toString();
 		Type listType = new TypeToken<ArrayList<ProductAdapter>>(){}.getType();
 		List<ProductAdapter> products = new Gson().fromJson(json, listType);
-		if(bean.consumeProducts(products)) {
+		if(bean.consumeProducts(products,destiny_address)) {
 			response.getWriter().append("succes");
 		}else {
 			response.getWriter().append("failed");

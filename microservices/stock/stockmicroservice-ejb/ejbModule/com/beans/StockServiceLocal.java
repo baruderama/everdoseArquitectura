@@ -15,7 +15,7 @@ public interface StockServiceLocal {
 	
 	public List<Product> checkRunningOut();
 	
-	public boolean consumeProducts(List<ProductAdapter> products);
+	public boolean consumeProducts(List<ProductAdapter> products,String destiny_address);
 	
 	public List<ProductFromDrugstore> getProductsFromDrugstore();
 	public boolean removeProductFromDrugstore(int id);

@@ -6,10 +6,15 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import org.json.JSONObject;
+
 import com.entities.Drugstore;
 import com.entities.Product;
 import com.entities.ProductFromDrugstore;
+import com.google.gson.Gson;
+import com.utils.DeliveryProduct;
 import com.utils.ProductAdapter;
+import com.utils.Utils;
 
 /**
  * Session Bean implementation class StockService
@@ -21,6 +26,8 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
     /**
      * Default constructor.
      */
+	private static String DELIVERY_URL="http://127.0.0.1:8080/deliverymicroservice-web-0.0.1-SNAPSHOT/DeliverOrder";
+	
     public StockService() {
 
     }
@@ -184,14 +191,19 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 	}
 
 	@Override
-	public boolean consumeProducts(List<ProductAdapter> products) {
+	public boolean consumeProducts(List<ProductAdapter> products,String destiny_address) {
+		List<DeliveryProduct> deliveryOrder=new ArrayList<DeliveryProduct>();
+		ProductAdapter pa;
 		for(ProductAdapter p:products) {
-			System.out.println(p.getType());
 			if(p.getType().equals("drugstore")) {
-				if(ProductFromDrugstore.getProduct(p.getId())==null) {
+				ProductFromDrugstore product = ProductFromDrugstore.getProduct(p.getId());
+				if(product==null) {
 					System.out.println("no existe PD:"+p.getId());
 					return false;
 				}
+				pa=new ProductAdapter(product);
+				pa.setAmount(p.getAmount());
+				deliveryOrder.add(new DeliveryProduct(pa));
 			}else {
 				Product product=Product.getProduct(p.getId());
 				if(product==null) {
@@ -203,12 +215,22 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 					System.out.println("no suficiente P:"+p.getId());
 					return false;
 				}
+				pa=new ProductAdapter(product);
+				pa.setAmount(p.getAmount());
+				deliveryOrder.add(new DeliveryProduct(pa));
 			}
+			
+		}
+		String order_json=new Gson().toJson(deliveryOrder);
+		JSONObject json=new JSONObject();
+		json.put("destiny_address", destiny_address);
+		json.put("products", order_json);
+		if(!Utils.sendJson(DELIVERY_URL, json.toString())) {
+			System.out.println("fallo el envio del delivery");
+			return false;
 		}
 		for(ProductAdapter p:products) {
-			if(p.getType().equals("drugstore")) {
-				//TODO: pedir a farmacia
-			}else {
+			if(p.getType().equals(ProductAdapter.INVENTARY)) {
 				Product product=Product.getProduct(p.getId());
 				int amount=product.getAmount()-p.getAmount();
 				product.setAmount((amount>=0)?amount:0);

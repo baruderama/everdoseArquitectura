@@ -21,10 +21,10 @@ public class DeliveryProduct implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	
 	private String name;
 	private String description;
 	private float price;
+	private String origin_address;
 	private int amount;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -168,6 +168,14 @@ public class DeliveryProduct implements Serializable {
 			em.close();
 		}
 		return deliveryProduct;
+	}
+
+	public String getOrigin_address() {
+		return origin_address;
+	}
+
+	public void setOrigin_address(String origin_address) {
+		this.origin_address = origin_address;
 	}
    
 }

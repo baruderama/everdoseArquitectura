@@ -16,14 +16,14 @@ import model.Usuario;
  */
 @Stateless
 @LocalBean
-public class ServiciosUsuario implements ServiciosUsuarioRemote, ServiciosUsuarioLocal {
+public class UserService implements UserServiceRemote, UserServiceLocal {
 	@PersistenceContext(unitName="Entidades",type=PersistenceContextType.TRANSACTION)
 	private EntityManager entityManager;
 
     /**
      * Default constructor. 
      */
-    public ServiciosUsuario() {
+    public UserService() {
         // TODO Auto-generated constructor stub
     }
     

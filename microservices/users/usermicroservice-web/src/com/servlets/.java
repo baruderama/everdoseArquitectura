@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.beans.StockService;
 
 /**
- * Servlet implementation class AddUser
+ * Servlet implementation class AddProduct
  */
 @WebServlet("/AddProduct")
 public class AddProduct extends HttpServlet {

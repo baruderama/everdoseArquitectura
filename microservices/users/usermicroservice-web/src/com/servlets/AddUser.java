@@ -12,19 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import com.beans.StockService;
 
 /**
- * Servlet implementation class AddUser
+ * Servlet implementation class AddProduct
  */
-@WebServlet("/AddProduct")
-public class AddProduct extends HttpServlet {
+@WebServlet("/AddUser")
+public class AddUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@EJB 
-	StockService bean;
+	UserService bean;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddProduct() {
+    public AddUser() {
         super();
     }
 
@@ -42,14 +42,12 @@ public class AddProduct extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String name = request.getParameter("name");
-		float price = Float.valueOf( request.getParameter("price") ); 
-		String description = request.getParameter("description");
-		String location = request.getParameter("location");
-		String image = request.getParameter("image");
-		int threshold = Integer.valueOf( request.getParameter("threshold") );
-		int amount = Integer.valueOf( request.getParameter("amount") );
 		
-		bean.addProduct(name, description, location, image, price, threshold, amount);
+		String password1 = request.getParameter("password1");
+		String password2 = request.getParameter("password2");
+		
+		
+		bean.addUsuario(name, password2);
 		
 		doGet(request, response);
 	}

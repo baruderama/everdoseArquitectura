@@ -1,4 +1,4 @@
-package serviciosDB;
+package com.beans;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import model.Usuario;
 @Stateless
 @LocalBean
 public class UserService implements UserServiceRemote, UserServiceLocal {
-	@PersistenceContext(unitName="Entidades",type=PersistenceContextType.TRANSACTION)
+	@PersistenceContext(unitName="entities",type=PersistenceContextType.TRANSACTION)
 	private EntityManager entityManager;
 
     /**
@@ -39,13 +39,13 @@ public class UserService implements UserServiceRemote, UserServiceLocal {
     }
     
     @Override
-    public String addUsuario() {
+    public String addUsuario(String userName, String password) {
     Usuario newUsuario = new Usuario();
     newUsuario.setIdusuario(4);
     //newUsuario.setNombres("hola");
     //newUsuario.setApellidos("loco");
-    newUsuario.setUsername("hola");
-    newUsuario.setPassword("hola");
+    newUsuario.setUsername(userName);
+    newUsuario.setPassword(password);
     Usuario user = entityManager.find(Usuario.class, newUsuario.getIdusuario());
     if (user == null) {
     entityManager.persist(newUsuario);

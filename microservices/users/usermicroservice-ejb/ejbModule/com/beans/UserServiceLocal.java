@@ -9,8 +9,8 @@ import com.entities.Product;
 import model.Usuario;
 
 @Local
-public interface StockServiceLocal {
+public interface UserServiceLocal {
 	public List<Usuario> findUsuario(String userName, String password);
-	 public String addUsuario();
+	 public String addUsuario(String userName, String password);
 	 public List<Usuario> getAllUsuarios();
 }

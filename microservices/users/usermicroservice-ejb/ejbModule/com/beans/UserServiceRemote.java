@@ -3,6 +3,6 @@ package com.beans;
 import javax.ejb.Remote;
 
 @Remote
-public interface StockServiceRemote {
+public interface UserServiceRemote {
 
 }

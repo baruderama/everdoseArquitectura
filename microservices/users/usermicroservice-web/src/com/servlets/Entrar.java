@@ -15,16 +15,16 @@ import com.beans.StockService;
  * Servlet implementation class AddProduct
  */
 @WebServlet("/AddProduct")
-public class AddProduct extends HttpServlet {
+public class Entrar extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@EJB 
-	StockService bean;
+	UserService bean;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddProduct() {
+    public Entrar() {
         super();
     }
 
@@ -33,7 +33,14 @@ public class AddProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Adding product if POST");
+		String name = request.getParameter("username");
+		String password = request.getParameter("password");
+		List <Usuario> usuario=bean.findUsuario(name,password);
+		if(usuario.size()==1) {
+			response.getWriter().append("Existe");
+		}
+		
+		response.getWriter().append("t");
 	}
 
 	/**
@@ -41,15 +48,7 @@ public class AddProduct extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String name = request.getParameter("name");
-		float price = Float.valueOf( request.getParameter("price") ); 
-		String description = request.getParameter("description");
-		String location = request.getParameter("location");
-		String image = request.getParameter("image");
-		int threshold = Integer.valueOf( request.getParameter("threshold") );
-		int amount = Integer.valueOf( request.getParameter("amount") );
 		
-		bean.addProduct(name, description, location, image, price, threshold, amount);
 		
 		doGet(request, response);
 	}

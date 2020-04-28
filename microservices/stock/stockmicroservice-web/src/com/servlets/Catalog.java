@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.beans.StockService;
-import com.entities.Product;
 import com.google.gson.Gson;
 import com.utils.ProductAdapter;
 

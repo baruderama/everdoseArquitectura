@@ -91,8 +91,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Float price=(float) -1;
-		Integer threshold=-1; 
-		Integer amount=-1;
 		int id=-1;
 		try {
 			id=Integer.valueOf( request.getParameter("product_id") );

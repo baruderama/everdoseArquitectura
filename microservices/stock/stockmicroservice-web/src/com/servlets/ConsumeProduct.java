@@ -1,6 +1,5 @@
 package com.servlets;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import org.json.JSONObject;
 
 import com.beans.StockService;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.untils.Utils;
 import com.utils.ProductAdapter;

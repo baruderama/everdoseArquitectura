@@ -10,7 +10,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class Drugstore implements Serializable {
 
 	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("suppliermicroservice-jpa");
@@ -138,7 +137,7 @@ public class Drugstore implements Serializable {
 	public static List<Drugstore> getDrugstores() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT c FROM Drugstore c WHERE c.id IS NOT NULL";
-		TypedQuery<Drugstore> tq = em.createQuery(query, Drugstore.class);
+		TypedQuery<Drugstore> tq = em.createQuery(query,  Drugstore.class);
 		List<Drugstore> drugstores = null;
 		try {
 			drugstores = tq.getResultList();

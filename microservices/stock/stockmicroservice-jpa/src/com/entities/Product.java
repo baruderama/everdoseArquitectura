@@ -152,11 +152,11 @@ public class Product implements Serializable {
 	public static List<Product> getProducts() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT c FROM Product c WHERE c.id IS NOT NULL";
-		TypedQuery<Product> tq = em.createQuery(query, Product.class);
+		TypedQuery<Product> tq = em.createQuery(query,  Product.class);
 		List<Product> products = null;
 		try {
 			products = tq.getResultList();
-			products.forEach( product -> System.out.println("Product") );
+			products.forEach( product -> System.out.println("Returning product "+product.getId()) );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
     <wb-module deploy-name="suppliermicroservice-ear-0.0.1-SNAPSHOT">
+                
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+                
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
         <dependent-module archiveName="suppliermicroservice-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/suppliermicroservice-web/suppliermicroservice-web">
             <dependency-type>uses</dependency-type>
@@ -8,8 +11,16 @@
         <dependent-module archiveName="suppliermicroservice-jpa-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/suppliermicroservice-jpa/suppliermicroservice-jpa">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="persistence-api-1.0.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="suppliermicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/suppliermicroservice-ejb/suppliermicroservice-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="ejb-api-3.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/ejb/ejb-api/3.0/ejb-api-3.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+            
     </wb-module>
+    
 </project-modules>

@@ -6,7 +6,6 @@
 		<class>com.entities.Supplier</class>
 		<class>com.entities.Drugstore</class>
 		<class>com.entities.ProductFromSupplier</class>
-		<class>com.entities.ProductFromDrugstore</class>
 		<class>com.entities.SupplierOrder</class>
 	</persistence-unit>
 </persistence>

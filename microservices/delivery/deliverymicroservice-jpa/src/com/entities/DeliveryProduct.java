@@ -137,7 +137,7 @@ public class DeliveryProduct implements Serializable {
 	public static List<DeliveryProduct> getDeliveryProducts() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT c FROM DeliveryProduct c WHERE c.id IS NOT NULL";
-		TypedQuery<DeliveryProduct> tq = em.createQuery(query, DeliveryProduct.class);
+		TypedQuery<DeliveryProduct> tq = em.createQuery(query,  DeliveryProduct.class);
 		List<DeliveryProduct> deliveryProducts = null;
 		try {
 			deliveryProducts = tq.getResultList();

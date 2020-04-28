@@ -12,8 +12,9 @@ import java.util.List;
  * The persistent class for the Drugstore database table.
  * 
  */
-@Entity
+
 @NamedQuery(name="Drugstore.findAll", query="SELECT d FROM Drugstore d")
+@Entity
 public class Drugstore implements Serializable {
 	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("stockmicroservice-jpa");
 	private static final long serialVersionUID = 1L;
@@ -140,7 +141,7 @@ public class Drugstore implements Serializable {
 	public static List<Drugstore> getDrugstores() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT d FROM Drugstore d WHERE d.id IS NOT NULL";
-		TypedQuery<Drugstore> tq = em.createQuery(query, Drugstore.class);
+		TypedQuery<Drugstore> tq = em.createQuery(query,  Drugstore.class);
 		List<Drugstore> drugstore = null;
 		try {
 			drugstore = tq.getResultList();

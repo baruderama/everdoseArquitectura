@@ -11,7 +11,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class DeliveryOrder implements Serializable {
 
 	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("deliverymicroservice-jpa");
@@ -100,7 +99,7 @@ public class DeliveryOrder implements Serializable {
 	public static List<DeliveryOrder> getDeliveryOrders() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT c FROM DeliveryOrder c WHERE c.id IS NOT NULL";
-		TypedQuery<DeliveryOrder> tq = em.createQuery(query, DeliveryOrder.class);
+		TypedQuery<DeliveryOrder> tq = em.createQuery(query,  DeliveryOrder.class);
 		List<DeliveryOrder> deliveryOrders = null;
 		try {
 			deliveryOrders = tq.getResultList();

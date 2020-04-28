@@ -6,6 +6,19 @@
   <packaging>ejb</packaging>
   <name>deliverymicroservice-ejb</name>
   <dependencies>
+  <dependency>
+    <groupId>javax</groupId>
+    <artifactId>javaee-api</artifactId>
+    <version>8.0.1</version>
+    <scope>compile</scope>
+</dependency>
+<!-- https://mvnrepository.com/artifact/javax.ejb/ejb-api -->
+<dependency>
+    <groupId>javax.ejb</groupId>
+    <artifactId>ejb-api</artifactId>
+    <version>3.0</version>
+    <scope>compile</scope>
+</dependency>
   	<dependency>
   		<groupId>deliverymicroservice-jpa</groupId>
 	  <artifactId>deliverymicroservice-jpa</artifactId>

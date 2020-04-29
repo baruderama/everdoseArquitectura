@@ -30,6 +30,7 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
     
     @Override
     public List<Supplier> findSupplier(String name) {
+    	
     String consulta = "SELECT s FROM supplier s WHERE s.supplier_name=:userName";
     TypedQuery<Supplier> query = entityManager.createQuery(consulta, Supplier.class);
     query.setParameter("userName", name);

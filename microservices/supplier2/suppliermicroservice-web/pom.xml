@@ -20,6 +20,28 @@
   	          <version>4.0.1</version> 
   	              <scope>compile</scope> 
   	              </dependency>
+  	              
+  	              <!-- https://mvnrepository.com/artifact/org.jboss.modules/jboss-modules -->
+<dependency>
+    <groupId>org.jboss.modules</groupId>
+    <artifactId>jboss-modules</artifactId>
+    <version>1.10.0.Final</version>
+</dependency>
+  	              
+  	              
+  	      <dependency>
+    	<groupId>org.apache.httpcomponents</groupId>
+    	<artifactId>httpclient</artifactId>
+    	<version>4.5</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.jboss/jboss-ejb-client -->
+<dependency>
+    <groupId>org.jboss</groupId>
+    <artifactId>jboss-ejb-client</artifactId>
+    <version>4.0.30.Final</version>
+</dependency>
+		
   	
   	<dependency>
 	  <groupId>com.google.code.gson</groupId>

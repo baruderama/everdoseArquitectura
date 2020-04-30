@@ -11,6 +11,7 @@
       <artifactId>suppliermicroservice-jpa</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
+    
     <dependency>
       <groupId>suppliermicroservice-ejb</groupId>
       <artifactId>suppliermicroservice-ejb</artifactId>

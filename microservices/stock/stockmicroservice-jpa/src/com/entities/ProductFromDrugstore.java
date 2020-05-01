@@ -31,7 +31,7 @@ public class ProductFromDrugstore implements Serializable {
 
 	//bi-directional many-to-one association to Drugstore
 	@ManyToOne
-	@JoinColumn(name="drusgstore_id")
+	@JoinColumn(name="drugstore_id")
 	private Drugstore drugstore;
 
 	public ProductFromDrugstore() {
@@ -134,11 +134,11 @@ public class ProductFromDrugstore implements Serializable {
 	public static List<ProductFromDrugstore> getProducts() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT p FROM ProductFromDrugstore p WHERE p.id IS NOT NULL";
-		TypedQuery<ProductFromDrugstore> tq = em.createQuery(query, ProductFromDrugstore.class);
+		TypedQuery<ProductFromDrugstore> tq = em.createQuery(query,  ProductFromDrugstore.class);
 		List<ProductFromDrugstore> products = null;
 		try {
 			products = tq.getResultList();
-			products.forEach( product -> System.out.println("ProductFromDrugstore") );
+			products.forEach( product -> System.out.println("ProductFromDrugstore "+product.getName()) );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -174,20 +174,19 @@ public class ProductFromDrugstore implements Serializable {
 
 	public static boolean UpdateProductById(int id2, String name2, String description2, Float price2,
 			String keywords2) {
-	EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-	try {
-		ProductFromDrugstore product=em.find(ProductFromDrugstore.class, id2);
-		em.getTransaction().begin();
-		if(description2!=null)product.setDescription(description2);
-		if(keywords2!=null)product.setKeywords(keywords2);
-		if(name2!=null)product.setName(name2);
-		if(price2!=null)product.setPrice(price2);
-		em.getTransaction().commit();
-		return true;
-	}catch(Exception e) {
-		e.printStackTrace();
-	}
-	
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		try {
+			ProductFromDrugstore product=em.find(ProductFromDrugstore.class, id2);
+			em.getTransaction().begin();
+			if(description2!=null)product.setDescription(description2);
+			if(keywords2!=null)product.setKeywords(keywords2);
+			if(name2!=null)product.setName(name2);
+			if(price2!=null)product.setPrice(price2);
+			em.getTransaction().commit();
+			return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return false;
 	}
 

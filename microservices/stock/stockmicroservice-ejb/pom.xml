@@ -7,6 +7,18 @@
   <name>stockmicroservice-ejb</name>
   
   <dependencies>
+  <dependency>
+	    <groupId>javax</groupId>
+	    <artifactId>javaee-api</artifactId>
+	    <version>8.0.1</version>
+	    <scope>provided</scope>
+	</dependency>
+	<dependency>
+	    <groupId>javax.ejb</groupId>
+	    <artifactId>ejb-api</artifactId>
+	    <version>3.0</version>
+	    <scope>compile</scope>
+	</dependency>
   	<dependency>
 		<groupId>stockmicroservice-jpa</groupId>
  			<artifactId>stockmicroservice-jpa</artifactId>

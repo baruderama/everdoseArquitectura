@@ -13,7 +13,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.entities.Drugstore;
-import com.entities.ProductFromDrugstore;
 import com.entities.ProductFromSupplier;
 import com.entities.Supplier;
 import com.entities.SupplierOrder;
@@ -157,32 +156,6 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 	}
 
 	@Override
-	public ProductFromDrugstore orderFromDrugstore(String name, String keywords, int amount, String destin_address) {
-		/**
-		 * Orders from drugstore, it searches for the product in the database given the keywords, 
-		 * orders the cheapest product found. A delivery service is called, no information is saved.
-		 *
-		 * @return     The cheapest product that matched the keywords.
-		 */
-		List<ProductFromDrugstore> products = ProductFromDrugstore.getProductsFromDrugstores();
-		String[] eachkeyword = keywords.split(",");
-//		TODO: Si cumple todas las keywords
-		float min = 999999;
-		ProductFromDrugstore chosenProduct= null;
-		for (ProductFromDrugstore product : products) {
-			System.out.println("Looking for..."+name);
-			System.out.println(product.getName());
-			System.out.println(product.getPrice());
-			if ( product.getName().equals(name) && product.getPrice() < min) {
-				chosenProduct = product;
-				min = product.getPrice();
-			}
-		}
-//		TODO: Llama al servicio de delivery para llevar el producto
-		return chosenProduct;
-	}
-
-	@Override
 	public boolean addProductToSupplier(int supplier_id, String name, String keywords, String description, float price) {
 		Supplier supplier = Supplier.getSupplier(supplier_id);
 		if ( supplier != null ) {
@@ -198,22 +171,6 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 		}
 		else {
 			System.out.println("The supplier wasn't found");
-		}
-		return false;
-	}
-
-	@Override
-	public boolean addProductToDrugstore(int drugstore_id, String name, String keywords, String description, float price) {
-		Drugstore drugstore = Drugstore.getDrugstore(drugstore_id);
-		if (drugstore != null) {
-			ProductFromDrugstore product = new ProductFromDrugstore();
-			product.setName(name);
-			product.setDrugstore_id(drugstore_id);
-			product.setDescription(description);
-			product.setKeywords(keywords);
-			product.setPrice(price);
-			product.save();
-			return true;
 		}
 		return false;
 	}

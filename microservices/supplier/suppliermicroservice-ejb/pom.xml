@@ -6,6 +6,19 @@
   <packaging>ejb</packaging>
   <name>suppliermicroservice-ejb</name>
   <dependencies>
+  <!-- https://mvnrepository.com/artifact/javax.ejb/ejb-api -->
+<dependency>
+    <groupId>javax.ejb</groupId>
+    <artifactId>ejb-api</artifactId>
+    <version>3.0</version>
+    <scope>compile</scope>
+</dependency>
+<dependency>
+    <groupId>javax</groupId>
+    <artifactId>javaee-api</artifactId>
+    <version>8.0.1</version>
+    <scope>provided</scope>
+</dependency>
   	<dependency>
   	<groupId>suppliermicroservice-jpa</groupId>
   <artifactId>suppliermicroservice-jpa</artifactId>

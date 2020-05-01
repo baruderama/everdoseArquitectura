@@ -46,7 +46,6 @@ public class AddProductToDrugstore extends HttpServlet {
 		String keywords = request.getParameter("keywords");
 		String description = request.getParameter("description");
 		float price = Float.valueOf( request.getParameter("price"));
-		bean.addProductToDrugstore( drugstore, name, keywords, description, price);
 		doGet(request, response);
 	}
 

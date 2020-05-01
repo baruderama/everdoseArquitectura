@@ -139,7 +139,7 @@ static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityMan
 	public static List<Supplier> getSuppliers() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT c FROM Supplier c WHERE c.id IS NOT NULL";
-		TypedQuery<Supplier> tq = em.createQuery(query, Supplier.class);
+		TypedQuery<Supplier> tq = em.createQuery(query,  Supplier.class);
 		List<Supplier> suppliers = null;
 		try {
 			suppliers = tq.getResultList();

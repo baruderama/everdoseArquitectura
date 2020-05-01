@@ -5,7 +5,11 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>stockmicroservice-jpa</name>
   <dependencies>
-  
+  <dependency>
+    <groupId>javax.persistence</groupId>
+    <artifactId>persistence-api</artifactId>
+    <version>1.0.2</version>
+</dependency>
   	<dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>

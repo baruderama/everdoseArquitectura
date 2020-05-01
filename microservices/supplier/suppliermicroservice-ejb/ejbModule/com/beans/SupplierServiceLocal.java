@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import com.entities.ProductFromDrugstore;
 import com.entities.ProductFromSupplier;
 import com.entities.Supplier;
 import com.entities.SupplierOrder;
@@ -17,8 +16,6 @@ public interface SupplierServiceLocal {
 	public boolean addDrugstore( String name, String address, String phone, String email, String uri);
 	public boolean addSupplierfinancialInformation();
 	public boolean addProductToSupplier( int supplier_id, String name, String keywords, String description, float price );
-	public boolean addProductToDrugstore( int drugstore_id, String name, String keywords, String description, float price );
-	public ProductFromDrugstore orderFromDrugstore( String name, String keywords, int amount, String destin_address);
 	public ProductFromSupplier orderFromSupplier( String name, String keywords, int amount);
 	public HashMap< Integer, Float> paySuppliers();
 }

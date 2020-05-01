@@ -39,6 +39,7 @@ public class Catalog extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String keywords=request.getParameter("keywords");
+		System.out.println(keywords);
 		List<ProductAdapter> products = bean.getCatalog(keywords);
 		String productsJsonString = new Gson().toJson(products);
 		

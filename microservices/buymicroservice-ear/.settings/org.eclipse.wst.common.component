@@ -8,6 +8,15 @@
         <dependent-module archiveName="buymicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/buymicroservice-ejb/buymicroservice-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="microserviceslocator-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/microserviceslocator/microserviceslocator">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="payments-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/payments-ejb/payments-ejb">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="stripe-java-19.2.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/stripe/stripe-java/19.2.0/stripe-java-19.2.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="json-20190722.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/json/json/20190722/json-20190722.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>

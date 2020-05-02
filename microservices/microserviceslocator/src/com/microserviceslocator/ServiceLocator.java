@@ -32,7 +32,7 @@ public class ServiceLocator {
 			}
           PaymentsServiceRemote bean;
 			try {
-				bean = (PaymentsServiceRemote)ctx.lookup("ejb:paymentsmicroservice-ear-0.0.1-SNAPSHOT/payments-ejb/PaymentsService!com.beans.PaymentsServiceRemote?stateful");
+				bean = (PaymentsServiceRemote)ctx.lookup("ejb:payments-ear-0.0.1-SNAPSHOT/payments-ejb-0.0.1-SNAPSHOT/PaymentsService!com.beans.PaymentsServiceRemote");
 				return bean;
 			} catch (NamingException e) {
 				// TODO Auto-generated catch block

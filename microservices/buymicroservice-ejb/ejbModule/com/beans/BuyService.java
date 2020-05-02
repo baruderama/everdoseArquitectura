@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import com.classes.Card;
 import com.classes.StripeToken;
 import com.google.gson.Gson;
+import com.microserviceslocator.ServiceLocator;
 
 /**
  * Session Bean implementation class BuyService
@@ -39,6 +40,8 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
         String stripeToken_str = json.get("stripeToken").toString();
         StripeToken stripeToken = g.fromJson(stripeToken_str, StripeToken.class);
         
+        ServiceLocator sloc = new ServiceLocator();
+        sloc.getPaymenntsServiceRemote().creditPayment(stripeToken.getId());
         return false;
 	}
 

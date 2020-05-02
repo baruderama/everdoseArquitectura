@@ -102,4 +102,16 @@ public class User implements Serializable {
 		return succesfulltransaction;
 	}
 
+	public static boolean deleteByUsername(String username) {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		try {
+			User user=em.find(User.class, username);
+			em.remove(user);
+			return true;
+		}catch(Exception ignore) {
+			
+		}
+		return false;
+	}
+
 }

@@ -32,11 +32,26 @@ public class UserServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
+    
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String username=request.getParameter("username");
+		String email=request.getParameter("email");
+		String name=request.getParameter("name");
+		String password=request.getParameter("password");
+		String newPassword=request.getParameter("newPasword");
+		if(bean.getToken(username, password)!=null) {
+			if(bean.updateUser(username,email,name,newPassword)) {
+				response.getWriter().append("success");
+				
+			}else {
+				response.getWriter().append("failed");
+			}
+			
+		}else {
+			response.getWriter().append("incorrect password");
+		}
+		
+    }
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -51,6 +66,21 @@ public class UserServlet extends HttpServlet {
 		}else {
 			response.getWriter().append("failed");
 		}
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username=request.getParameter("username");
+		String password=request.getParameter("password");
+		if(bean.getToken(username, password)!=null) {
+			if(bean.deleteUser(username)) {
+				response.getWriter().append("success");
+			}else {
+				response.getWriter().append("failed");
+			}
+		}else {
+			response.getWriter().append("incorrect password");
+		}
+	
 	}
 
 }

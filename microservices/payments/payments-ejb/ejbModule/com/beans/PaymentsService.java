@@ -22,18 +22,20 @@ public class PaymentsService implements PaymentsServiceRemote, PaymentsServiceLo
         // TODO Auto-generated constructor stub
     }
 
-    public String creditPayment(String token) {
+	@Override
+    public boolean creditPayment(String token) {
         Stripe.apiKey = "sk_test_wMKd3NzoEEIRcXB5WdLGP0uV00gWNpE8Xm";
 
         System.out.println(token);
         try {
             Charge charge = Charge.retrieve(token);
             charge = charge.capture();
-            return "success";
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return "error";
+        return false;
     }
+
 }

@@ -1,8 +1,6 @@
 package com.servlets;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

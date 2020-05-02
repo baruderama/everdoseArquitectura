@@ -53,7 +53,7 @@ export default {
     console.log("Mounting")
     this.products_in_cart = cookie.getCookie('products')
     var thisa = this;
-    axios.get('http://localhost:8080/stockmicroservice-web/Catalog')
+    axios.get('http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog')
      .then(function (response) {
        // handle success
        thisa.products = response.data;

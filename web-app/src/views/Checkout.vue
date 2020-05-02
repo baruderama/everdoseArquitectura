@@ -91,8 +91,8 @@
       </div>
 
       <div class="proceed_panel">
-        <div @click="pay" class="ui fluid green button">
-          Pay
+        <div @click="buy" class="ui fluid green button">
+          Buy
         </div>
       </div>
 
@@ -217,11 +217,11 @@ export default {
         this.on_delivery_selected = true;
       }
     },
-    pay(){
+    buy(){
       var thisa = this;
-      console.log("paying")
+      console.log("paying2")
       stripe.createToken(card).then(function(result) {
-        axios.post('http://localhost:8080/payments-web/Pay', {
+        axios.post('http://localhost:8080/buymicroservice-web-0.0.1-SNAPSHOT/Buy', {
           test: 'Test working...',
           stripeToken: result.token,
           financial_info: thisa.financial_info,

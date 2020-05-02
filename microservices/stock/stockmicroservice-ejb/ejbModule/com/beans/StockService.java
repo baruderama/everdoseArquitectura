@@ -225,6 +225,8 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		JSONObject json=new JSONObject();
 		json.put("destiny_address", destiny_address);
 		json.put("products", order_json);
+		System.out.println("Json:");
+		System.out.println(json.toString());
 		if(!Utils.sendJson(DELIVERY_URL, json.toString())) {
 			System.out.println("fallo el envio del delivery");
 			return false;

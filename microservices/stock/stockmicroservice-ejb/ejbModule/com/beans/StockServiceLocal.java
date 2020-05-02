@@ -13,10 +13,8 @@ import com.utils.ProductAdapter;
 public interface StockServiceLocal {
 	public List<ProductAdapter> getCatalog(String keywords);
 	
-	public List<Product> checkRunningOut();
-	
-	public boolean consumeProducts(List<ProductAdapter> products,String destiny_address);
-	
+	public List<Product> checkRunningOut();	
+
 	public List<ProductFromDrugstore> getProductsFromDrugstore();
 	public boolean removeProductFromDrugstore(int id);
 	public boolean addProductFromDrugstore(String name, String description,String keywords,float price,int drugstore_id);

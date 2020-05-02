@@ -6,10 +6,10 @@
         <dependent-module archiveName="buymicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/buymicroservice-ejb/buymicroservice-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="microserviceslocator-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/microserviceslocator/microserviceslocator">
+        <dependent-module archiveName="stockmicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/stockmicroservice-ejb/stockmicroservice-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="payments-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/payments-ejb/payments-ejb">
+        <dependent-module archiveName="stockmicroservice-jpa-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/stockmicroservice-jpa/stockmicroservice-jpa">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="buymicroservice-web"/>

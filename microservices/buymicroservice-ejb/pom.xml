@@ -6,11 +6,12 @@
   <packaging>ejb</packaging>
   <name>buymicroservice-ejb</name>
   <dependencies>
-	  <dependency>
-	  	<groupId>microserviceslocator</groupId>
-	  <artifactId>microserviceslocator</artifactId>
+  	<dependency>
+	  	<groupId>stockmicroservice-ejb</groupId>
+	  <artifactId>stockmicroservice-ejb</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
-	  </dependency>
+	  <scope>compile</scope>
+  	</dependency>
 	<dependency>
 	    <groupId>org.json</groupId>
 	    <artifactId>json</artifactId>

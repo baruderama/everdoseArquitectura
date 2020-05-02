@@ -18,11 +18,12 @@
     <artifactId>javax.servlet-api</artifactId>
     <version>4.0.1</version>
     <scope>compile</scope>
-</dependency>
+	</dependency>
   	<dependency>
 	  <groupId>com.google.code.gson</groupId>
 	  <artifactId>gson</artifactId>
 	  <version>2.8.6</version>
+	  <scope>compile</scope>
 	</dependency>
 	
 	<dependency>
@@ -30,7 +31,12 @@
     <artifactId>ejb-api</artifactId>
     <version>3.0</version>
     <scope>provided</scope>
-    
+	</dependency>
+	
+	<dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.9</version>
 </dependency>
 	
   </dependencies>

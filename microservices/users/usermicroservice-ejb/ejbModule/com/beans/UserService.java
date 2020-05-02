@@ -29,7 +29,7 @@ public class UserService {
     	if(user.getPassword().equals(password)) {
     		Calendar date = Calendar.getInstance();
     		long t= date.getTimeInMillis();
-    		Date expirationTime=new Date(t + (10 * ONE_MINUTE_IN_MILLIS));
+    		Date expirationTime=new Date(t + (2 * ONE_MINUTE_IN_MILLIS));
     		token=new Token(username,expirationTime);
     	}
     	return token;

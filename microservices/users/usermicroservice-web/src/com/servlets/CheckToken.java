@@ -12,22 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 import com.beans.UserService;
 import com.google.gson.Gson;
 import com.utils.Token;
+import com.utils.Utils;
+
+
 
 /**
- * Servlet implementation class GetToken
+ * Servlet implementation class CheckToken
  */
-@WebServlet("/GetToken")
-public class GetToken extends HttpServlet {
+@WebServlet("/CheckToken")
+public class CheckToken extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
 	
 	@EJB
 	UserService bean;
-	
-    public GetToken() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CheckToken() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,14 +46,13 @@ public class GetToken extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String password=request.getParameter("password");
-		String username=request.getParameter("username");
-		Token token=bean.getToken(username, password);
-		if(token!=null){
-			String token_json=new Gson().toJson(token);
-			response.getWriter().append(token_json);
+		String token_json=Utils.getJSON(request);
+		Gson gson=new Gson();
+		Token token=gson.fromJson(token_json, Token.class);
+		if(bean.checkToken(token)) {
+			response.getWriter().append("valid");
 		}else {
-			response.getWriter().append("failed");
+			response.getWriter().append("invalid");
 		}
 	}
 

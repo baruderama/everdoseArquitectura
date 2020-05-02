@@ -60,7 +60,6 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 
 	@Override
 	public boolean buy(String data) {
-		   
         Gson g = new Gson(); 
         JSONObject json = new JSONObject(data);
         String stripeToken_str = json.get("stripeToken").toString();
@@ -73,7 +72,6 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
         FinancialInfo financialInfo = g.fromJson(financialInformation_str, FinancialInfo.class);
         
         String destinyAddress = deliveryInfo.getAddress();
-
         boolean succesfulPayment = false;
         String url = "";
         String toJson = "";
@@ -89,7 +87,9 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
     	succesfulPayment = true;
         if (succesfulPayment) {
         	url = "http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/ConsumeProduct"; 
-        	toJson = "{ \"destiny_address\":\""+destinyAddress+"\", products:"+productsList_str+"}";
+        	toJson = "{ \"destiny_address\":\""+destinyAddress+"\", \"products\":"+productsList_str+"}";
+        	System.out.println("Json desde BuyService");
+        	System.out.println(toJson);
         	try {
         		StringEntity entity = new StringEntity(toJson);
 				post(url, entity);

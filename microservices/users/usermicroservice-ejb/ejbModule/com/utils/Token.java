@@ -13,7 +13,7 @@ public class Token {
 	private static final int SECRET_HASH_KEY=47686128;
 	private String username;
 	private Date expirationTime;
-	private byte[] hash;
+	private String hash;
 	
 	public Token(String username, Date expirationTime) {
 		this.username=username;
@@ -24,7 +24,7 @@ public class Token {
 			md = MessageDigest.getInstance("SHA-512");
 			md.update(hashedKey);
 			String hashString=username+expirationTime.toString();
-			this.hash = md.digest(hashString.getBytes(StandardCharsets.UTF_8));
+			this.hash = md.digest(hashString.getBytes(StandardCharsets.UTF_8)).toString();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
@@ -38,8 +38,8 @@ public class Token {
 			md = MessageDigest.getInstance("SHA-512");
 			md.update(hashedKey);
 			String hashString=this.username+this.expirationTime.toString();
-			byte[] hashTest = md.digest(hashString.getBytes(StandardCharsets.UTF_8));
-			if(!Arrays.equals(hashTest,this.hash)) {
+			String hashTest = md.digest(hashString.getBytes(StandardCharsets.UTF_8)).toString();
+			if(hashTest.equals(this.hash)) {
 				return false;
 			}else {
 				return true;

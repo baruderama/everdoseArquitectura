@@ -227,11 +227,8 @@ export default {
     },
     buy(){
       var thisa = this;
-      console.log("paying2")
-      console.log(thisa.productsToCheckout)
       stripe.createToken(card).then(function(result) {
         axios.post('http://localhost:8080/buymicroservice-web-0.0.1-SNAPSHOT/Buy', {
-          test: 'Test working...',
           stripeToken: result.token,
           financial_information: thisa.financial_information,
           delivery_information: thisa.delivery_information,

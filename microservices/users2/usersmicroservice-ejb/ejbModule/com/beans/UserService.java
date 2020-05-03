@@ -26,6 +26,10 @@ public class UserService {
     public Token getToken(String username,String password) {
     	Token token=null;
     	User user=User.getUser(username);
+//    	If user doesn't exist
+    	if (user == null) {
+    		return null;
+    	}
     	if(user.getPassword().equals(password)) {
     		Calendar date = Calendar.getInstance();
     		long t= date.getTimeInMillis();

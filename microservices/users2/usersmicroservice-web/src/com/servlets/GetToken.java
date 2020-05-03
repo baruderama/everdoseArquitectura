@@ -48,15 +48,11 @@ public class GetToken extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 //		https://stackoverflow.com/questions/49673010/how-to-receive-form-parameters-values-in-server
 		String data = IOUtils.toString(request.getReader());
 		JSONObject json = new JSONObject(data);
 		String password= json.get("password").toString();
 		String username= json.get("username").toString();
-		System.out.println("data");
-		System.out.println(username);
-		System.out.println(password);
 		Token token=bean.getToken(username, password);
 		if(token!=null){
 			String token_json=new Gson().toJson(token);
@@ -64,7 +60,7 @@ public class GetToken extends HttpServlet {
 			response.addCookie(cookie);
 			response.getWriter().append(token_json);
 		}else {
-			response.getWriter().append("failed");
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 	}
 

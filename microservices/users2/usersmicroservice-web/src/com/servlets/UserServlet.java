@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
+
 import com.beans.UserService;
 
 /**
@@ -56,14 +59,20 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username=request.getParameter("username");
-		String email=request.getParameter("email");
-		String name=request.getParameter("name");
-		String password=request.getParameter("password");
+		String data = IOUtils.toString(request.getReader());
+		JSONObject json = new JSONObject(data);
+		String username=json.get("username").toString();
+		String email=json.get("email").toString();
+		String name=json.get("name").toString();
+		String password=json.get("password").toString();
+		
+//		TO-DO: Phone 
+		String phone=request.getParameter("phone");
 		
 		if(bean.createUser(username, email, name, password)) {
 			response.getWriter().append("user created");
 		}else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().append("failed");
 		}
 	}

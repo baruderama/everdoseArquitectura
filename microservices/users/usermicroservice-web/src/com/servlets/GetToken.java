@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +50,8 @@ public class GetToken extends HttpServlet {
 		Token token=bean.getToken(username, password);
 		if(token!=null){
 			String token_json=new Gson().toJson(token);
-			response.getWriter().append(token_json);
+			Cookie cookie=new Cookie("auth_token",token_json);
+			response.addCookie(cookie);
 		}else {
 			response.getWriter().append("failed");
 		}

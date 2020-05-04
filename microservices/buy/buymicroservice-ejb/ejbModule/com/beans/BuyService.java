@@ -62,6 +62,8 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 	public boolean buy(String data) {
         Gson g = new Gson(); 
         JSONObject json = new JSONObject(data);
+        System.out.println("JSON:");
+        System.out.println(json.toString());
         String stripeToken_str = json.get("stripeToken").toString();
         String productsList_str = json.get("products").toString();
         String deliveryInformation_str = json.get("delivery_information").toString();

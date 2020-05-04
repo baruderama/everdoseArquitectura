@@ -63,7 +63,7 @@ export default {
   methods:{
     signup(){
       var thisa = this;
-      axios.post('http://localhost:8080/usersmicroservice-web/Signup', {
+      axios.post('http://localhost:8080/usersmicroservice-web-0.0.1-SNAPSHOT/UserServlet', {
         username: thisa.username,
         password: thisa.password,
         firstname: thisa.firstname,

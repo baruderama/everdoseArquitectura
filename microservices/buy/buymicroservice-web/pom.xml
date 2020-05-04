@@ -6,8 +6,8 @@
   <packaging>war</packaging>
   <name>buymicroservice-web</name>
   <dependencies>
-  
-  	<dependency>
+ 
+ 	  	<dependency>
 		<groupId>buymicroservice-ejb</groupId>
 		<artifactId>buymicroservice-ejb</artifactId>
 		<version>0.0.1-SNAPSHOT</version>

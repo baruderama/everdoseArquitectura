@@ -2,8 +2,13 @@
   <div class="home">
     <Nav search="true" account="true" cart="true" :products_len="products_len" />
     <div class="catalog">
+      {{ products }}
+      <div class="">
+        ashil
+      </div>
+      {{ products_in_cart }}
       <div class="product">
-        <Product v-for="product in products" :key="product.id" :id="product.id" :name="product.name" :image="product.image" :description="product.description" :price="product.price" :add="addToCart"/>
+        <Product v-for="product in products" :key="product.id" :id="product.id" :name="product.name" :image="product.image" :description="product.description" :price="product.price" :type="product.type" :add="addToCart"/>
       </div>
     </div>
     <div class="pagination">
@@ -53,7 +58,7 @@ export default {
     console.log("Mounting")
     this.products_in_cart = cookie.getCookie('products')
     var thisa = this;
-    axios.get('http://localhost:8080/stockmicroservice-web/Catalog')
+    axios.get('http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog')
      .then(function (response) {
        // handle success
        thisa.products = response.data;

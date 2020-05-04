@@ -58,7 +58,6 @@
       <div class="credit_card_form invisible" :class="{visible: credit_card_selected}">
         <form class="ui form">
 
-
           <h4 class="ui dividing header">Credit card information</h4>
           <div class="field">
             <input v-model="name_cc" type="text" name="shipping[first-name]" placeholder="Name in card">
@@ -91,8 +90,8 @@
       </div>
 
       <div class="proceed_panel">
-        <div @click="pay" class="ui fluid green button">
-          Pay
+        <div @click="buy" class="ui fluid green button">
+          Buy
         </div>
       </div>
 
@@ -155,6 +154,7 @@ export default {
       credit_card_selected: true,
       on_delivery_selected: false,
       processing_payment: false,
+      name_cc: '',
 
     }
   },
@@ -171,9 +171,6 @@ export default {
         credit_card: true,
         cc: {
           "name" : this.name_cc,
-          "number" : this.number_cc,
-          "date" : this.date_cc,
-          "ccv" : this.ccv_cc
         }
       }
     },
@@ -184,6 +181,17 @@ export default {
         "address" : this.address,
         "more_information" : this.more_information
       }
+    },
+    productsToCheckout(){
+      var temp = []
+      for (var product of this.products){
+        temp.push({
+          "id" : product.id,
+          "type" : product.type,
+          "amount" : product.amount
+        })
+      }
+      return temp;
     }
   },
   mounted(){
@@ -217,16 +225,14 @@ export default {
         this.on_delivery_selected = true;
       }
     },
-    pay(){
+    buy(){
       var thisa = this;
-      console.log("paying")
       stripe.createToken(card).then(function(result) {
-        axios.post('http://localhost:8080/payments-web/Pay', {
-          test: 'Test working...',
+        axios.post('http://localhost:8080/buymicroservice-web-0.0.1-SNAPSHOT/Buy', {
           stripeToken: result.token,
-          financial_info: thisa.financial_info,
+          financial_information: thisa.financial_information,
           delivery_information: thisa.delivery_information,
-          products: thisa.products,
+          products: thisa.productsToCheckout,
         }
         )
         .then(function () {

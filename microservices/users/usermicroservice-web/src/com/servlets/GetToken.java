@@ -53,7 +53,7 @@ public class GetToken extends HttpServlet {
 			Cookie cookie=new Cookie("auth_token",token_json);
 			response.addCookie(cookie);
 		}else {
-			response.getWriter().append("failed");
+			response.setStatus(401);
 		}
 	}
 

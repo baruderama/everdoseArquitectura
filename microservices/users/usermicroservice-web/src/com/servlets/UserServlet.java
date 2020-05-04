@@ -33,22 +33,24 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     
+    
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String username=request.getParameter("username");
 		String email=request.getParameter("email");
 		String name=request.getParameter("name");
 		String password=request.getParameter("password");
 		String newPassword=request.getParameter("newPasword");
+		String lastname=request.getParameter("lastname");
+		String phone=request.getParameter("phone");
 		if(bean.getToken(username, password)!=null) {
-			if(bean.updateUser(username,email,name,newPassword)) {
+			if(bean.updateUser(username,email,name,newPassword,lastname,phone)) {
 				response.getWriter().append("success");
-				
 			}else {
 				response.getWriter().append("failed");
 			}
 			
 		}else {
-			response.getWriter().append("incorrect password");
+			response.setStatus(401);;
 		}
 		
     }
@@ -60,8 +62,10 @@ public class UserServlet extends HttpServlet {
 		String email=request.getParameter("email");
 		String name=request.getParameter("name");
 		String password=request.getParameter("password");
+		String phone=request.getParameter("phone");
+		String lastname=request.getParameter("lastname");
 		
-		if(bean.createUser(username, email, name, password)) {
+		if(bean.createUser(username, email, name, password,lastname,phone)) {
 			response.getWriter().append("user created");
 		}else {
 			response.getWriter().append("failed");
@@ -78,7 +82,7 @@ public class UserServlet extends HttpServlet {
 				response.getWriter().append("failed");
 			}
 		}else {
-			response.getWriter().append("incorrect password");
+			response.setStatus(401);;
 		}
 	
 	}

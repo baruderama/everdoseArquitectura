@@ -3,9 +3,6 @@
 	<name>usermicroservice-EAR</name>
 	<comment></comment>
 	<projects>
-		<project>usermicroservice-jpa</project>
-		<project>usermicroservice-web</project>
-		<project>usermicroservice-ejb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -52,7 +52,7 @@ public class CheckToken extends HttpServlet {
 		if(bean.checkToken(token)) {
 			response.getWriter().append("valid");
 		}else {
-			response.getWriter().append("invalid");
+			response.setStatus(401);
 		}
 	}
 

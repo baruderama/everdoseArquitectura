@@ -39,25 +39,38 @@ public class UserService {
     	return token.isValid();
     }
     
-    public boolean createUser(String username, String email,String name,String password) {
+    public boolean createUser(String username, String email,String name,String password,String lastname,String phone) {
     	User user=new User();
     	user.setEmail(email);
     	user.setUsername(username);
     	user.setPassword(password);
     	user.setName(name);
+    	user.setLastname(lastname);
+    	user.setPhone(phone);
     	return user.save();
     }
 
-	public boolean updateUser(String username, String email, String name, String newPassword) {
+	public boolean updateUser(String username, String email, String name, String newPassword,String lastname,String phone) {
 		User user=User.getUser(username);
 		if(email!=null) {user.setEmail(email);}
 		if(name!=null) {user.setName(name);}
 		if(newPassword!=null) {user.setPassword(newPassword);}
+		if(lastname!=null) {user.setLastname(lastname);}
+		if(phone!=null) {user.setPhone(phone);}
 		return user.save();
 	}
 
 	public boolean deleteUser(String username) {
 		return User.deleteByUsername(username);
+	}
+
+	public User getUserInfo(String username, String password) {
+		User user=User.getUser(username);
+		if(this.getToken(username, password)!=null) {
+			return user;
+		}else {
+			return null;
+		}
 	}
     
 }

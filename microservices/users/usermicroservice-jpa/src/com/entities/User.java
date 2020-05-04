@@ -3,6 +3,8 @@ package com.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.google.gson.annotations.Expose;
+
 
 /**
  * The persistent class for the User database table.
@@ -15,13 +17,22 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Expose
 	private String username;
-
+	
+	@Expose
 	private String email;
-
+	
+	@Expose
 	private String name;
 
 	private String password;
+	
+	@Expose
+	private String lastname;
+	
+	@Expose
+	private String phone;
 
 	public User() {
 	}
@@ -112,6 +123,22 @@ public class User implements Serializable {
 			
 		}
 		return false;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 }

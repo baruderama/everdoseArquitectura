@@ -51,7 +51,7 @@ public class GetToken extends HttpServlet {
 			String token_json=new Gson().toJson(token);
 			response.getWriter().append(token_json);
 		}else {
-			response.getWriter().append("failed");
+			response.setStatus(401);
 		}
 	}
 

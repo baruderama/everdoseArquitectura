@@ -10,26 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.beans.UserService;
+import com.entities.User;
 import com.google.gson.Gson;
-import com.utils.Token;
-import com.utils.Utils;
-
-
+import com.google.gson.GsonBuilder;
 
 /**
- * Servlet implementation class CheckToken
+ * Servlet implementation class GetUserInfo
  */
-@WebServlet("/CheckToken")
-public class CheckToken extends HttpServlet {
+@WebServlet("/GetUserInfo")
+public class GetUserInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	
 	@EJB
 	UserService bean;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckToken() {
+    public GetUserInfo() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,12 +44,15 @@ public class CheckToken extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String token_json=Utils.getJSON(request);
-		Gson gson=new Gson();
-		Token token=gson.fromJson(token_json, Token.class);
-		if(bean.checkToken(token)) {
-			response.getWriter().append("valid");
-		}else {
+		// TODO Auto-generated method stub
+		String username=request.getParameter("username");
+		String password=request.getParameter("password");
+		User user=bean.getUserInfo(username,password);
+		if(user!=null) {
+			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+			String json=gson.toJson(user);
+			response.getWriter().append(json);
+		}else{
 			response.setStatus(401);
 		}
 	}

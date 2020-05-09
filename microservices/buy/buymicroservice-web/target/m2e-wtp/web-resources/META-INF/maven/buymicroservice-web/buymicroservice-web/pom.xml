@@ -6,8 +6,13 @@
   <packaging>war</packaging>
   <name>buymicroservice-web</name>
   <dependencies>
-  
-  	<dependency>
+ 	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>4.0.1</version>
+	    <scope>compile</scope>
+	</dependency>
+ 	<dependency>
 		<groupId>buymicroservice-ejb</groupId>
 		<artifactId>buymicroservice-ejb</artifactId>
 		<version>0.0.1-SNAPSHOT</version>

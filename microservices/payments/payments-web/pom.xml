@@ -7,16 +7,16 @@
   <name>payments-web</name>
   <dependencies>
   	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>4.0.1</version>
+	    <scope>compile</scope>
+	</dependency>
+  	<dependency>
 	  	<groupId>payments-ejb</groupId>
 	  	<artifactId>payments-ejb</artifactId>
 	  	<version>0.0.1-SNAPSHOT</version>
   	</dependency>
-  	<dependency>
-	   <groupId>javax.servlet</groupId>
-	   <artifactId>javax.servlet-api</artifactId>
-	   <version>3.0.1</version>
-	   <scope>provided</scope>
-	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.json/json -->
 	<dependency>
 	    <groupId>org.json</groupId>

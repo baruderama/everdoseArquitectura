@@ -3,8 +3,8 @@
 	<name>buymicroservice-ear</name>
 	<comment></comment>
 	<projects>
-		<project>buymicroservice-jpa</project>
 		<project>buymicroservice-ejb</project>
+		<project>buymicroservice-jpa</project>
 		<project>buymicroservice-web</project>
 	</projects>
 	<buildSpec>

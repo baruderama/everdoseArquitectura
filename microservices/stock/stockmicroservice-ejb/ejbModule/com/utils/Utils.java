@@ -1,7 +1,5 @@
 package com.utils;
 
-import java.net.http.HttpClient;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;

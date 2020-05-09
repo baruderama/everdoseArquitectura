@@ -24,8 +24,4 @@
 | Field          | Type             | Null | Key | Default | Extra          |
 |----------------|------------------|------|-----|---------|----------------|
 | id             | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
-<<<<<<< HEAD
 | destin_address | varchar(50)      | YES  |     | NULL    |                |
-=======
-| destin_address | varchar(50)      | YES  |     | NULL    |                |
->>>>>>> a48a75fb099ac92cfd74ad493b61488043764b35

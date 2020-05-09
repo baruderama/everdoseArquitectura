@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SupplierOrder {
+	
 	private List<SupplierProduct> products;
 
 	public SupplierOrder() {

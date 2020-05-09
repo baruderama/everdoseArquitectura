@@ -5,7 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import com.classes.EverdoseEmail;
-import com.classes.Product;
+import com.classes.SupplierProduct;
 import com.google.gson.Gson;
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
@@ -27,10 +27,7 @@ public class EmailService implements EmailServiceRemote, EmailServiceLocal {
     }
 
 	@Override
-	public boolean supplyProduct(String emailTo, String supplierName, String productsString ) {
-		
-		Type type = new TypeToken<List<Product>>(){}.getType();
-		List<Product> products = new Gson().fromJson( productsString, type );
+	public boolean supplyProduct(String emailTo, String supplierName, List<SupplierProduct> products ) {
 		
 		String template = EverdoseEmail.supplyProductsTemplate;
 		
@@ -38,15 +35,12 @@ public class EmailService implements EmailServiceRemote, EmailServiceLocal {
 		
 		String productsEmailString = "";
 		
-		for (Product product : products) {
+		for (SupplierProduct product : products) {
 			productsEmailString+="Cantidad: ";
-			productsEmailString+=product.getThreshold();
+			productsEmailString+=product.getAmount();
 			productsEmailString+="\n";
 			productsEmailString+="Nombre: ";
 			productsEmailString+=product.getName();
-			productsEmailString+="\n";
-			productsEmailString+="Descripción: ";
-			productsEmailString+=product.getDescription();
 			productsEmailString+="\n";
 			productsEmailString+="\n";
 		}

@@ -5,6 +5,18 @@
         <dependent-module archiveName="deliverymicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/deliverymicroservice-ejb/deliverymicroservice-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="javax.servlet-api-4.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/javax.servlet-api/4.0.1/javax.servlet-api-4.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="javaee-api-8.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/javaee-api/8.0.1/javaee-api-8.0.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="javax.mail-1.6.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/sun/mail/javax.mail/1.6.2/javax.mail-1.6.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="activation-1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/activation/activation/1.1/activation-1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="deliverymicroservice-jpa-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/deliverymicroservice-jpa/deliverymicroservice-jpa">
             <dependency-type>uses</dependency-type>
         </dependent-module>

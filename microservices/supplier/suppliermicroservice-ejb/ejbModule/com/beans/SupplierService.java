@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.classes.SupplierProduct;
 import com.entities.Drugstore;
 import com.entities.ProductFromSupplier;
 import com.entities.Supplier;
@@ -90,7 +91,7 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 	}
 
 	@Override
-	public ProductFromSupplier orderFromSupplier(String name, String keywords, int amount) {
+	public int orderFromSupplier(List<SupplierProduct> productsToOrder) {
 		/**
 		 * Orders from supplier, it searches for the product in the database given the keywords, 
 		 * orders the cheapest product found. An order is generated.
@@ -101,28 +102,33 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 		 * @see SupplierOrder
 		 */
 		List<ProductFromSupplier> products = ProductFromSupplier.getProductsFromSuppliers();
-		String[] eachkeyword = keywords.split(",");
-//		TODO: Si cumple todas las keywords
-		float min = 999999;
-		ProductFromSupplier chosenProduct= null;
-		Supplier supplier = null;
-		for (ProductFromSupplier product : products) {
-			if ( product.getName().equals(name) && product.getPrice() < min) {
-				chosenProduct = product;
-				supplier = Supplier.getSupplier( product.getSupplier_id() );
-				min = product.getPrice();
+		for (SupplierProduct productToOrder: productsToOrder) {
+			String keywords = productToOrder.getKeywords();
+			String name = productToOrder.getName();
+			int amount = productToOrder.getAmount();
+			String[] eachkeyword = keywords.split(",");
+			float min = 999999;
+			ProductFromSupplier chosenProduct= null;
+			Supplier supplier = null;
+			for (ProductFromSupplier product : products) {
+				if ( product.getName().equals(name) && product.getPrice() < min) {
+					chosenProduct = product;
+					supplier = Supplier.getSupplier( product.getSupplier_id() );
+					min = product.getPrice();
+				}
 			}
-		}
-		if (chosenProduct != null ) {
-			SupplierOrder order = new SupplierOrder();
-			order.setProduct_name(chosenProduct.getName());
-			order.setProduct_price(chosenProduct.getPrice());
-			order.setSupplier_id( chosenProduct.getSupplier_id() );
-			order.setAmount(amount);
-			order.save();
+			if (chosenProduct != null ) {
+				SupplierOrder order = new SupplierOrder();
+				order.setProduct_name(chosenProduct.getName());
+				order.setProduct_price(chosenProduct.getPrice());
+				order.setSupplier_id( chosenProduct.getSupplier_id() );
+				order.setAmount(amount);
+				order.save();
+			}
+			
 		}
 //		TODO: Llama al servicio de email para pedir el producto.
-		return chosenProduct;
+		return 0;
 	}
 
 	@Override

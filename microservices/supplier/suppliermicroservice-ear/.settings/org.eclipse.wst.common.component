@@ -20,6 +20,15 @@
         <dependent-module archiveName="ejb-api-3.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/ejb/ejb-api/3.0/ejb-api-3.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="gson-2.8.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-io-2.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.6/commons-io-2.6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="json-20190722.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/json/json/20190722/json-20190722.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
             
     </wb-module>
     

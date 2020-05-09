@@ -15,6 +15,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
 
 import com.classes.DeliveryOrder;
+import com.classes.SupplierOrder;
+import com.classes.SupplierProduct;
 import com.entities.Drugstore;
 import com.entities.Product;
 import com.entities.ProductFromDrugstore;
@@ -50,6 +52,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
      * Default constructor.
      */
 	private static String DELIVERY_URL="http://127.0.0.1:8080/deliverymicroservice-web-0.0.1-SNAPSHOT/DeliverOrder";
+	private static String SUPPLYPRODUCT_URL="http://127.0.0.1:8080/suppliermicroservice-web-0.0.1-SNAPSHOT/OrderFromSupplier";
 	
     public StockService() {
 
@@ -103,15 +106,35 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 	public List<Product> checkRunningOut() {
 		// TODO Auto-generated method stub
 		ArrayList<Product> productsRunningOut = new ArrayList<Product>();
+		SupplierOrder supplierOrder = new SupplierOrder();
 		try {
 			List<Product> products = Product.getProducts();
 			for (Product product : products) {
 				if (product.getAmount() < product.getThreshold()) {
 					productsRunningOut.add(product);
+					SupplierProduct supplierProduct = new SupplierProduct();
+					supplierProduct.setName(product.getName());
+					supplierProduct.setKeywords(product.getKeywords());
+					supplierProduct.setAmount(product.getThreshold());
+					supplierOrder.addProduct(supplierProduct);
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		
+		Gson gson = new Gson();
+		String supplierOrderJson = gson.toJson(supplierOrder);
+		
+		try {
+			StringEntity entity = new StringEntity(supplierOrderJson);
+			System.out.println("DeliveryOrder: ");
+			System.out.println(supplierOrderJson);
+			System.out.println(133);
+			boolean state = post(SUPPLYPRODUCT_URL, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 		
 		return productsRunningOut;
@@ -254,9 +277,6 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		String deliveryOrderJson = gson.toJson(deliveryOrder);
 		try {
 			StringEntity entity = new StringEntity(deliveryOrderJson);
-			System.out.println("DeliveryOrder: ");
-			System.out.println(deliveryOrderJson);
-			System.out.println(258);
 			post(DELIVERY_URL, entity);
 		} catch (Exception e) {
 			e.printStackTrace();

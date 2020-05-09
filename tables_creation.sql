@@ -8,3 +8,5 @@ CREATE TABLE DeliveryOrder ( id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT, destin_
 ALTER TABLE ProductFromDrugstore ADD FOREIGN KEY (`drugstore_id`) REFERENCES Drugstore(id);
 ALTER TABLE ProductFromSupplier ADD FOREIGN KEY (`supplier_id`) REFERENCES Supplier(id);
 ALTER TABLE DeliveryProduct ADD FOREIGN KEY (`deliveryOrder_id`) REFERENCES DeliveryOrder(id);
+
+ CREATE TABLE SupplierOrder ( id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT, supplier_id INT UNSIGNED, product_name VARCHAR(50), product_price FLOAT, amount INT, payed FLOAT, FOREIGN KEY (supplier_id) REFERENCES Supplier(id) ON DELETE CASCADE);

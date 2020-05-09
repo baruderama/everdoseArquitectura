@@ -48,7 +48,7 @@
 | price        | float            | YES  |     | NULL    |                |
 | keywords     | varchar(40)      | YES  |     | NULL    |                |
 | drugstore_id | int(11)          | YES  |     | NULL    |                |
-
+| image        | varchar(200)     | YES  |     | NULL    |                |
 
 ### Product
 

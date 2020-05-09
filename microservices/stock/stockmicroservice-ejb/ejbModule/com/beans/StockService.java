@@ -1,16 +1,25 @@
 package com.beans;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
 
+import com.classes.DeliveryOrder;
 import com.entities.Drugstore;
 import com.entities.Product;
 import com.entities.ProductFromDrugstore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.utils.DeliveryProduct;
 import com.utils.ProductAdapter;
@@ -23,6 +32,20 @@ import com.utils.Utils;
 @LocalBean
 public class StockService implements StockServiceRemote, StockServiceLocal {
 
+	public boolean post(String url, StringEntity entity) throws Exception {
+		HttpPost post = new HttpPost(url);
+        post.setEntity(entity);
+        
+        try (CloseableHttpClient httpClient = HttpClients.createDefault();
+             CloseableHttpResponse response = httpClient.execute(post)) {
+        	int code = response.getStatusLine().getStatusCode();
+        	if (code >= 200 && code < 300) {
+        		return true;
+        	}
+        }
+        return false;
+	}
+	
     /**
      * Default constructor.
      */
@@ -192,7 +215,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public boolean consumeProducts(List<ProductAdapter> products,String destiny_address) {
-		List<DeliveryProduct> deliveryOrder=new ArrayList<DeliveryProduct>();
+		List<DeliveryProduct> deliveryProducts=new ArrayList<DeliveryProduct>();
 		ProductAdapter pa;
 		for(ProductAdapter p:products) {
 			if(p.getType().equals("drugstore")) {
@@ -203,7 +226,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 				}
 				pa=new ProductAdapter(product);
 				pa.setAmount(p.getAmount());
-				deliveryOrder.add(new DeliveryProduct(pa));
+				deliveryProducts.add(new DeliveryProduct(pa));
 			}else {
 				Product product=Product.getProduct(p.getId());
 				if(product==null) {
@@ -217,20 +240,29 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 				}
 				pa=new ProductAdapter(product);
 				pa.setAmount(p.getAmount());
-				deliveryOrder.add(new DeliveryProduct(pa));
+				deliveryProducts.add(new DeliveryProduct(pa));
 			}
 			
 		}
-		String order_json=new Gson().toJson(deliveryOrder);
-		JSONObject json=new JSONObject();
-		json.put("destiny_address", destiny_address);
-		json.put("products", order_json);
-		System.out.println("Json:");
-		System.out.println(json.toString());
-		if(!Utils.sendJson(DELIVERY_URL, json.toString())) {
-			System.out.println("fallo el envio del delivery");
+		
+		
+		DeliveryOrder deliveryOrder = new DeliveryOrder();
+		deliveryOrder.setProducts(deliveryProducts);
+		deliveryOrder.setDestin_address(destiny_address);
+		
+		Gson gson = new Gson();
+		String deliveryOrderJson = gson.toJson(deliveryOrder);
+		try {
+			StringEntity entity = new StringEntity(deliveryOrderJson);
+			System.out.println("DeliveryOrder: ");
+			System.out.println(deliveryOrderJson);
+			System.out.println(258);
+			post(DELIVERY_URL, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
+		
 		for(ProductAdapter p:products) {
 			if(p.getType().equals(ProductAdapter.INVENTARY)) {
 				Product product=Product.getProduct(p.getId());

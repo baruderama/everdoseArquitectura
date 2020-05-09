@@ -29,6 +29,9 @@
         <dependent-module archiveName="deliverymicroservice-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/deliverymicroservice-web/deliverymicroservice-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="gson-2.8.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
             
     </wb-module>
     

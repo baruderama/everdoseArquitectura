@@ -8,8 +8,8 @@
   <dependencies>
     <dependency>
       <groupId>payments-web</groupId>
-      <artifactId>payments-web</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+	  <artifactId>payments-web</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
       <type>war</type>
     </dependency>
   </dependencies>

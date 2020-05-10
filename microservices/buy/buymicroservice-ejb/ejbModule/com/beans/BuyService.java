@@ -1,34 +1,19 @@
 package com.beans;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import com.classes.DeliveryInfo;
 import com.classes.FinancialInfo;
 import com.classes.StripeToken;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.utils.ProductAdapter;
-import com.utils.Utils;
-
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
-
 
 /**
  * Session Bean implementation class BuyService
@@ -75,7 +60,8 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
         boolean succesfulPayment = false;
         String url = "";
         String toJson = "";
-        
+
+//        TODO: Connect payment
 //        url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 
 //        toJson = "{ \"StripeToken\":\""+stripeToken.getId()+"\"}";
 //    	try {
@@ -84,6 +70,7 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
+        
     	succesfulPayment = true;
         if (succesfulPayment) {
         	url = "http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/ConsumeProduct"; 

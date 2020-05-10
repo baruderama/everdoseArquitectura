@@ -10,7 +10,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class DeliveryProduct implements Serializable {
 
 	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("deliverymicroservice-jpa");

@@ -6,12 +6,6 @@
   <packaging>ear</packaging>
   <name>buymicroservice-ear</name>
   <dependencies>
-  <dependency>
-	  <groupId>buymicroservice-web</groupId>
-	  <artifactId>buymicroservice-web</artifactId>
-	  <version>0.0.1-SNAPSHOT</version>
-	  <type>war</type>
-  </dependency>
     <dependency>
       <groupId>buymicroservice-ejb</groupId>
       <artifactId>buymicroservice-ejb</artifactId>
@@ -22,6 +16,12 @@
       <groupId>buymicroservice-jpa</groupId>
       <artifactId>buymicroservice-jpa</artifactId>
       <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>buymicroservice-web</groupId>
+      <artifactId>buymicroservice-web</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <type>war</type>
     </dependency>
   </dependencies>
   <build>

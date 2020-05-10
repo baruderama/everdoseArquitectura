@@ -52,8 +52,15 @@ public class Pay extends HttpServlet {
         String body = IOUtils.toString(request.getReader());
         System.out.println(body);
         JSONObject json = new JSONObject(body);
-        System.out.println(json.get("test"));
-//        StripeToken a = json.getString("stripeToken");
+        String token=json.get("token").toString();
+        int amount=Integer.valueOf(json.get("amount").toString());
+        String description=json.get("description").toString();
+        System.out.println(token);
+        if(bean.creditPayment(token,amount,description)) {
+        	response.getWriter().append("success");
+        }else {
+        	response.setStatus(401);
+        }
 
     }
 

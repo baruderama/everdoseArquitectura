@@ -176,9 +176,9 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 			list.add(supplierProduct);
 		}
 		
-		System.out.println(157);
+		System.out.println(157);//TODO: borrar
 		Iterator<Entry<Integer, List<SupplierProduct>>> it = pfEmail.entrySet().iterator();
-		System.out.println(159);
+		System.out.println(159);//TODO: borrar
 		while (it.hasNext()) {
 			Map.Entry<Integer, List<SupplierProduct>> pair = (Map.Entry<Integer, List<SupplierProduct>>) it.next();
 			EmailOrder emailOrder = new EmailOrder();

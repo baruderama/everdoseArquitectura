@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
+
 import com.beans.UserService;
 import com.google.gson.Gson;
 import com.utils.Token;
@@ -45,16 +48,38 @@ public class GetToken extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String password=request.getParameter("password");
-		String username=request.getParameter("username");
+		String body = IOUtils.toString(request.getReader());
+		Gson g = new Gson(); 
+        JSONObject json = new JSONObject(body);
+        
+		String username=json.get("username").toString();
+		String password=json.get("password").toString();
+		
 		Token token=bean.getToken(username, password);
 		if(token!=null){
 			String token_json=new Gson().toJson(token);
 			Cookie cookie=new Cookie("auth_token",token_json);
 			response.addCookie(cookie);
+			System.out.println(token_json);
+			System.out.println("Cooki added");
 		}else {
 			response.setStatus(401);
 		}
+		setAccessControlHeaders(response);
 	}
+	
+	@Override
+	  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+	          throws ServletException, IOException {
+	      setAccessControlHeaders(resp);
+	      resp.setStatus(HttpServletResponse.SC_OK);
+	  }
+	
+	  private void setAccessControlHeaders(HttpServletResponse resp) {
+	      resp.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+	      resp.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
+	      resp.setHeader("Access-Control-Allow-Credentials", "true");
+	      resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	  }
 
 }

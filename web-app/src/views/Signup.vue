@@ -41,6 +41,9 @@
           </div>
           <div class="ui fluid blue button" @click="signup">Sign up</div>
         </form>
+        <div class="message error invisible" :class="{visible: errors}">
+          No se puede crear el usuario, revise los campos.
+        </div>
       </div>
     </div>
   </div>
@@ -58,6 +61,7 @@ export default {
       lastname: '',
       email: '',
       phone:'',
+      errors: false,
     }
   },
   methods:{
@@ -72,7 +76,11 @@ export default {
         phone: thisa.phone,
       })
       .then(function () {
-        console.log('Done')
+        thisa.$router.push('home');
+      })
+      .catch(function(error){
+        console.log(error)
+        thisa.errors = true;
       })
     }
   }
@@ -100,5 +108,13 @@ export default {
   margin: 0px;
   font-weight: 500 !important;
   text-align: left;
+}
+.signup .message.error{
+  margin: 10px;
+  background-color: #ffcccc;
+  color: #662222;
+  padding: 15px;
+  border-radius: 10px;
+
 }
 </style>

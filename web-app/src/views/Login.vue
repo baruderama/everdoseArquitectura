@@ -34,20 +34,21 @@ export default {
       const url = 'http://localhost:8080/usersmicroservice-web-0.0.1-SNAPSHOT/GetToken';
       const options = {
         method: 'POST',
-        headers: { 'content-type': 'application/x-www-form-urlencoded' },
         data: {
-          username: this.username,
-          password: this.password,
-        },
-        params:{
           username: this.username,
           password: this.password,
         },
         url,
       };
-      axios(options).then(function () {
+      axios(options).then(function (response) {
         thisa.processing_payment = true;
         console.log('Done')
+        console.log(document.cookie);
+        console.log(response)
+      })
+      .catch(function (error){
+        console.log('Failed')
+        console.log(error)
       })
     }
   }

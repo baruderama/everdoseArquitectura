@@ -26,6 +26,9 @@ public class UserService {
     public Token getToken(String username,String password) {
     	Token token=null;
     	User user=User.getUser(username);
+    	if (user == null) {
+    		return null;
+    	}
     	if(user.getPassword().equals(password)) {
     		Calendar date = Calendar.getInstance();
     		long t= date.getTimeInMillis();
@@ -40,6 +43,10 @@ public class UserService {
     }
     
     public boolean createUser(String username, String email,String name,String password,String lastname,String phone) {
+    	System.out.println("Creating user");
+    	if (User.getUser(username) != null) {
+    		return false;
+    	}
     	User user=new User();
     	user.setEmail(email);
     	user.setUsername(username);

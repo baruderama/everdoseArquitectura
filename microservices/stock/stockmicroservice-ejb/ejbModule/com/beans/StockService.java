@@ -96,7 +96,6 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public List<Product> checkRunningOut() {
-		// TODO Auto-generated method stub
 		ArrayList<Product> productsRunningOut = new ArrayList<Product>();
 		SupplierOrder supplierOrder = new SupplierOrder();
 		try {

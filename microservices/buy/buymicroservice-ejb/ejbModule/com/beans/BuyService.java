@@ -42,7 +42,6 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
      * Default constructor. 
      */
     public BuyService() {
-        // TODO Auto-generated constructor stub
     }
 
 	@Override

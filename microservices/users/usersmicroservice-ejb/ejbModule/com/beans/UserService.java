@@ -20,7 +20,6 @@ public class UserService {
      * Default constructor. 
      */
     public UserService() {
-        // TODO Auto-generated constructor stub
     }
     
     public Token getToken(String username,String password) {

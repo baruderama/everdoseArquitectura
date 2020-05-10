@@ -36,14 +36,12 @@ public class ConsumeProduct extends HttpServlet {
 	
     public ConsumeProduct() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -51,7 +49,6 @@ public class ConsumeProduct extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		JSONObject jsonObj=new JSONObject(Utils.getJSON(request));
 		String destiny_address=jsonObj.get("destiny_address").toString();
 		String json=jsonObj.get("products").toString();

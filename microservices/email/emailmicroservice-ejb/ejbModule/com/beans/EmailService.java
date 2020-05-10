@@ -23,7 +23,6 @@ public class EmailService implements EmailServiceRemote, EmailServiceLocal {
      * Default constructor. 
      */
     public EmailService() {
-        // TODO Auto-generated constructor stub
     }
 
 	@Override

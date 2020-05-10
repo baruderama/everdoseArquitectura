@@ -32,7 +32,6 @@ public class Token {
 			String hashString=username+expirationTime.toString();
 			this.hash = encrypt(hashString);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
@@ -54,7 +53,6 @@ public class Token {
 				return false;
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}

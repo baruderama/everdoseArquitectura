@@ -36,7 +36,6 @@ public class OrderFromSupplier extends HttpServlet {
      */
     public OrderFromSupplier() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

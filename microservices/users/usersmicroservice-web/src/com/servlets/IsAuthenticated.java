@@ -9,23 +9,25 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.io.IOUtils;
-import com.beans.BuyService;
+import com.beans.UserService;
+import com.google.gson.Gson;
+import com.utils.Token;
+import com.utils.Utils;
 
 /**
- * Servlet implementation class Buy
+ * Servlet implementation class IsAuthenticated
  */
-@WebServlet("/Buy")
-public class Buy extends HttpServlet {
+@WebServlet("/IsAuthenticated")
+public class IsAuthenticated extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	@EJB 
-	BuyService bean;
+	@EJB
+	UserService bean;
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Buy() {
+    public IsAuthenticated() {
         super();
     }
 
@@ -41,33 +43,29 @@ public class Buy extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         setAccessControlHeaders(response);
-		String body = IOUtils.toString(request.getReader());
 		Cookie[] cookies = null;
 		Cookie cookie = null;
 		cookies = request.getCookies();
 		
-		String token = null;
+		String token_str = null;
 		System.out.println("Cookies");
 		for (int i = 0; i < cookies.length; i++) {
 			System.out.println("Cookie");
-            cookie = cookies[i];
-            
+            cookie = cookies[i];    
             if( cookie.getName().contentEquals("auth_token")) {
-            	token = cookie.getValue();
+            	token_str = cookie.getValue();
             }
          }
 		
-		if(token != null) {
-			 bean.buy(body, token);
+		if(token_str != null) {
+			String token_json=Utils.getJSON(request);
+			Gson gson=new Gson();
+			Token token=gson.fromJson(token_json, Token.class);
+			bean.checkToken(token);
+//			TODO: Que retorne un User
 		}
+		doGet(request, response);
 	}
-	
-	@Override
-	  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
-	          throws ServletException, IOException {
-	      setAccessControlHeaders(resp);
-	      resp.setStatus(HttpServletResponse.SC_OK);
-	  }
 	
 	  private void setAccessControlHeaders(HttpServletResponse resp) {
 		  System.out.println("Setting headers");
@@ -76,6 +74,5 @@ public class Buy extends HttpServlet {
 	      resp.setHeader("Access-Control-Allow-Credentials", "true");
 	      resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	  }
-
 
 }

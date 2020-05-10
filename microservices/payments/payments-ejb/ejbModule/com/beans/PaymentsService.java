@@ -22,7 +22,6 @@ public class PaymentsService implements PaymentsServiceRemote, PaymentsServiceLo
      * Default constructor. 
      */
     public PaymentsService() {
-        // TODO Auto-generated constructor stub
     }
 
 	@Override

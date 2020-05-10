@@ -30,7 +30,6 @@ public class ProductFromDrugstoreServlet extends HttpServlet {
      */
     public ProductFromDrugstoreServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

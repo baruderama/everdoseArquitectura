@@ -8,12 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
-
 import com.beans.UserService;
-import com.google.gson.Gson;
 
 /**
  * Servlet implementation class UserServlet
@@ -30,7 +27,6 @@ public class UserServlet extends HttpServlet {
      */
     public UserServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -64,7 +60,6 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String body = IOUtils.toString(request.getReader());
-		Gson g = new Gson(); 
         JSONObject json = new JSONObject(body);
         
 		String username=json.get("username").toString();

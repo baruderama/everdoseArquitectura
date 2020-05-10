@@ -30,7 +30,6 @@ public class Catalog extends HttpServlet {
      */
     public Catalog() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**

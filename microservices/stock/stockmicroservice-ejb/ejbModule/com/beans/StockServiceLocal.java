@@ -11,7 +11,7 @@ import com.utils.ProductAdapter;
 
 @Local
 public interface StockServiceLocal {
-	public List<ProductAdapter> getCatalog(String keywords);
+	public List<ProductAdapter> getCatalog(String keywords, int page);
 	
 	public List<Product> checkRunningOut();	
 

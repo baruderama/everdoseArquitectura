@@ -36,20 +36,7 @@ public class Catalog extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String keywords=request.getParameter("keywords");
-		System.out.println(keywords);
-		List<ProductAdapter> products = bean.getCatalog(keywords);
-		Gson gson = new Gson();
-		products.forEach(p -> System.out.println(p.getName()));
-		String productsJsonString = gson.toJson(products);
-		
-		PrintWriter out = response.getWriter();
-		out.print(productsJsonString);
-		out.flush();
-		out.close();
-		System.out.println("65");
-		setAccessControlHeaders(response);
+		doGet(request, response);
 	}
 
 	/**
@@ -58,7 +45,13 @@ public class Catalog extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setAccessControlHeaders(response);
 		String keywords=request.getParameter("keywords");
-		List<ProductAdapter> products = bean.getCatalog(keywords);
+		String pageString = request.getParameter("page");
+		System.out.println("."+pageString+".");
+		int page = 1;
+		if (pageString != null) {
+			page=Integer.parseInt(pageString);
+		}
+		List<ProductAdapter> products = bean.getCatalog(keywords, page);
 		Gson gson = new Gson();
 		products.forEach(p -> System.out.println(p.getName()));
 		String productsJsonString = gson.toJson(products);
@@ -78,7 +71,6 @@ public class Catalog extends HttpServlet {
 	  }
 	
 	  private void setAccessControlHeaders(HttpServletResponse resp) {
-		  System.out.println("Setting headers");
 	      resp.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
 	      resp.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
 	      resp.setHeader("Access-Control-Allow-Credentials", "true");

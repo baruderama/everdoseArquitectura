@@ -9,6 +9,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.jboss.resteasy.util.FindAnnotation;
+
 import com.classes.DeliveryOrder;
 import com.classes.SupplierOrder;
 import com.classes.SupplierProduct;
@@ -159,7 +161,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 	}
 
 	@Override
-	public List<ProductAdapter> getCatalog(String keywords) {
+	public List<ProductAdapter> getCatalog(String keywords, int page) {
 		List<ProductAdapter> products=new ArrayList<ProductAdapter>();
 		List<Product> prds=this.getProducts();
 		List<ProductFromDrugstore> prdsfd=this.getProductsFromDrugstore();
@@ -173,7 +175,21 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 				products.add(new ProductAdapter(p));
 			}
 		}
-		return products;
+		final int PAGE_SIZE = 15;
+		page-= 1;
+		System.out.println("Page:" + page);
+		if(page == 0 && products.size() < PAGE_SIZE) {
+			return products;
+		}
+		if(products.size()>page*PAGE_SIZE) {
+			if(products.size() > page*PAGE_SIZE+PAGE_SIZE) {
+				return products.subList(page*PAGE_SIZE, page*15+15);
+			}
+			else {
+				return products.subList(page*PAGE_SIZE, products.size());
+			}
+		}
+		return new ArrayList<ProductAdapter>();
 	}
 
 	@Override

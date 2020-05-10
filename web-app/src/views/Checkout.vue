@@ -2,7 +2,7 @@
   <div class="checkout">
 
     <div class="panel">
-      <div class="delivery_panel">
+      <div class="delivery_panel" :class="{invisible: succesfulPayment}">
         <div class="title">
           <h1 class="ui header">Delivery</h1>
           <div class="ui divider"/>
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div class="payment_method_panel">
+      <div class="payment_method_panel" :class="{invisible: succesfulPayment}">
         <div class="title">
           <h1 class="ui header">Payment</h1>
           <div class="ui divider"/>
@@ -55,7 +55,7 @@
         </div>
       </div>
 
-      <div class="credit_card_form invisible" :class="{visible: credit_card_selected}">
+      <div class="credit_card_form invisible" :class="{visible: credit_card_selected && !succesfulPayment}">
         <form class="ui form">
 
           <h4 class="ui dividing header">Credit card information</h4>
@@ -66,21 +66,6 @@
 
         </form>
 
-        <div class="ui positive message invisible">
-          <div class="header">
-            The validation was successful
-          </div>
-          <p>Go to your <b>special offers</b> page to see now.</p>
-        </div>
-
-        <div class="ui negative message invisible">
-          <div class="header">
-            The validation wasn't succesful
-          </div>
-            <p>That offer has expired
-          </p>
-        </div>
-
       </div>
 
       <div class="on_delivery_panel invisible"  :class="{visible: on_delivery_selected}">
@@ -90,14 +75,14 @@
       </div>
 
       <div class="proceed_panel">
-        <div @click="buy" class="ui fluid green button">
+        <div @click="buy" class="ui fluid green button" :class="{invisible: succesfulPayment}">
           Buy
         </div>
       </div>
 
       <div class="on_delivery_panel invisible"  :class="{visible: processing_payment}">
         <div class="ui success message">
-          If your payment is succesful, you'll receive an email.
+          If your payment is succesful, you will receive an email.
         </div>
       </div>
 
@@ -145,7 +130,6 @@ let stripe = Stripe(`pk_test_SCFXDSEiX7vyfh3wYzR9aYaD00eIWW9bUD`),
 export default {
   data(){
     return {
-
       name: '',
       address: '',
       more_information: '',
@@ -155,6 +139,7 @@ export default {
       on_delivery_selected: false,
       processing_payment: false,
       name_cc: '',
+      succesfulPayment: false,
 
     }
   },
@@ -240,6 +225,7 @@ export default {
         )
         .then(function () {
           thisa.processing_payment = true;
+          thisa.succesfulPayment = true;
           console.log("Cookies:")
           console.log(document.cookie)
           console.log('Done')

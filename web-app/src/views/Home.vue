@@ -8,13 +8,13 @@
     </div>
     <div class="pagination">
       <div class="ui icon buttons">
-        <button class="ui button">
+        <button class="ui button" @click="backPage">
           <i class="left chevron icon"></i>
         </button>
         <button class="ui button">
-          Current page
+          {{ page }}
         </button>
-        <button class="ui button">
+        <button class="ui button" @click="nextPage">
           <i class="right chevron icon"></i>
         </button>
       </div>
@@ -35,10 +35,11 @@ export default {
   },
   data(){
     return {
-      keywords_pre: "h",
+      keywords_pre: null,
       products:[
       ],
-      products_in_cart : []
+      products_in_cart : [],
+      page: 1,
     }
   },
   computed:{
@@ -96,11 +97,66 @@ export default {
       }
     },
     updateCatalog(keywords_pre){
+      this.keywords_pre = keywords_pre;
       const keywords = keywords_pre.replace(/[' ']/g,",");
       const url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?keywords='+keywords;
       const thisa = this;
       console.log(url)
-      axios.get(url)
+      axios.get(url,{
+        withCredentials: true,
+      })
+       .then(function (response) {
+         thisa.products = response.data;
+       })
+       .catch(function (error) {
+         // handle error
+         console.log(error);
+       })
+       .then(function () {
+         // always executed
+       });
+    },
+    nextPage(){
+      var page = this.page;
+      page = page + 1;
+      this.page = page;
+      var url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?page='+page;
+      if (this.keywords_pre != null ){
+        const keywords = this.keywords_pre.replace(/[' ']/g,",");
+        url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?keywords='+keywords+'&page='+page;
+      }
+      const thisa = this;
+      console.log(url)
+      axios.get(url,{
+        withCredentials: true,
+      })
+       .then(function (response) {
+         thisa.products = response.data;
+       })
+       .catch(function (error) {
+         // handle error
+         console.log(error);
+       })
+       .then(function () {
+         // always executed
+       });
+    },
+    backPage(){
+      var page = this.page;
+      if( page > 1){
+        page = page - 1;
+      }
+      this.page = page;
+      var url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?page='+page;
+      if (this.keywords_pre != null ){
+        const keywords = this.keywords_pre.replace(/[' ']/g,",");
+        url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?keywords='+keywords+'&page='+page;
+      }
+      const thisa = this;
+      console.log(url)
+      axios.get(url,{
+        withCredentials: true,
+      })
        .then(function (response) {
          thisa.products = response.data;
        })

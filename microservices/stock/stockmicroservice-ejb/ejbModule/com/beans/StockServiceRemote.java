@@ -8,6 +8,5 @@ import com.utils.ProductAdapter;
 
 @Remote
 public interface StockServiceRemote {
-	public boolean consumeProducts(List<ProductAdapter> products,String destiny_address);
 	
 }

@@ -5,17 +5,17 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.enterprise.inject.spi.Bean;
-import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 
 import com.beans.DeliveryService;
+import com.entities.DeliveryOrder;
 import com.entities.DeliveryProduct;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -52,17 +52,13 @@ public class Deliver extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Type type = new TypeToken<List<DeliveryProduct>>(){}.getType();
-		JSONObject json=new JSONObject(Utils.getJSON(request));
-		System.out.println(json.toString());
-		String destinAddress=json.get("destiny_address").toString();
-	    String products_json =json.get("products").toString();
-		List<DeliveryProduct> products = new Gson().fromJson( products_json, type );
-		
+		Gson gson = new Gson();
+		DeliveryOrder deliveryOrder = gson.fromJson(request.getReader(), DeliveryOrder.class);
+	    
 		boolean deliveryCreated = false;
 		
-		if ( products != null) {
-			deliveryCreated = bean.deliver( destinAddress, products);
+		if ( deliveryOrder.getProducts() != null) {
+			deliveryCreated = bean.deliver( deliveryOrder.getDestin_address(), deliveryOrder.getProducts());
 		}
 		else {
 			deliveryCreated = false;

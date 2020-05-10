@@ -27,6 +27,16 @@ public class ProductFromDrugstore implements Serializable {
 
 	@Expose private String name;
 
+	@Expose private String image;
+	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Expose private float price;
 
 	//bi-directional many-to-one association to Drugstore

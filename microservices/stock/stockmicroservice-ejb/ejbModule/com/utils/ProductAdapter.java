@@ -18,6 +18,24 @@ public class ProductAdapter {
 	
 	private int amount;
 	
+	private String image;
+	
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public static final String INVENTARY="inventary";
 	public static final String DRUGSTORE="drugstore";
 	
@@ -29,6 +47,7 @@ public class ProductAdapter {
 		this.setPrice(product.getPrice());
 		this.setType(INVENTARY);
 		this.setAmount(product.getAmount());
+		this.setImage(product.getImage());
 	}
 	
 	public ProductAdapter(ProductFromDrugstore product) {
@@ -39,6 +58,7 @@ public class ProductAdapter {
 		this.setPrice(product.getPrice());
 		this.setType(DRUGSTORE);
 		this.setAmount(0);
+		this.setImage(product.getImage());
 	}
 
 	public String getType() {

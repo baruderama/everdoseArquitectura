@@ -30,6 +30,8 @@ public interface StockServiceLocal {
 	public boolean modifyDrugstore(int id,String address, String email,String name,String phone,String uri);
 	public boolean deleteDrugstore(int id);
 	
+	public boolean consumeProducts(List<ProductAdapter> products,String destiny_address);
+
 	
 }
 

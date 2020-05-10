@@ -1,6 +1,9 @@
 package com.servlets;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -9,7 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import com.beans.EmailService;
+import com.classes.EmailOrder;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * Servlet implementation class SupplyProduct
@@ -41,11 +48,11 @@ public class SupplyProduct extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String products = request.getParameter("products");
-		String email = request.getParameter("email");
-		String supplierName = request.getParameter("supplierName");
-		bean.supplyProduct(email, supplierName , products);
+		Gson gson = new Gson();
+		EmailOrder emailOrder = gson.fromJson(request.getReader(), EmailOrder.class);
+
+		System.out.println("Post email");
+		bean.supplyProduct(emailOrder.getEmail(), emailOrder.getName() , emailOrder.getProducts());
 		
 		doGet(request, response);
 	}

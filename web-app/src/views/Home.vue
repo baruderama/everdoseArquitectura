@@ -1,12 +1,7 @@
 <template lang="html">
   <div class="home">
-    <Nav search="true" account="true" cart="true" :products_len="products_len" />
+    <Nav search="true" :onSearch="updateCatalog" account="true" cart="true" :products_len="products_len"/>
     <div class="catalog">
-      {{ products }}
-      <div class="">
-        ashil
-      </div>
-      {{ products_in_cart }}
       <div class="product">
         <Product v-for="product in products" :key="product.id" :id="product.id" :name="product.name" :image="product.image" :description="product.description" :price="product.price" :type="product.type" :add="addToCart"/>
       </div>
@@ -40,6 +35,7 @@ export default {
   },
   data(){
     return {
+      keywords_pre: "h",
       products:[
       ],
       products_in_cart : []
@@ -95,6 +91,23 @@ export default {
         cookie.setCookie('products',JSON.stringify(this.products_in_cart))
         console.log(cookie.getCookie('products'))
       }
+    },
+    updateCatalog(keywords_pre){
+      const keywords = keywords_pre.replace(/[' ']/g,",");
+      const url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?keywords='+keywords;
+      const thisa = this;
+      console.log(url)
+      axios.get(url)
+       .then(function (response) {
+         thisa.products = response.data;
+       })
+       .catch(function (error) {
+         // handle error
+         console.log(error);
+       })
+       .then(function () {
+         // always executed
+       });
     }
   }
 }

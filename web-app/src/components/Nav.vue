@@ -3,7 +3,7 @@
     <div class="main search">
       <div class="ui search invisible" :class="{visible : search}">
         <div class="ui fluid icon input">
-          <input class="prompt" type="text" placeholder="Search products...">
+          <input class="prompt" type="text" placeholder="Search products..." v-model="keywords" @change="onSearch(keywords)">
           <i class="search icon"></i>
         </div>
         <div class="results"></div>
@@ -30,9 +30,10 @@
 import cookie from '../cookies'
 
 export default {
-  props:['search','cart','account','products_len'],
+  props:['search','cart','account','products_len', 'onSearch'],
   data(){
     return {
+      keywords: ""
     }
   },
   mounted(){

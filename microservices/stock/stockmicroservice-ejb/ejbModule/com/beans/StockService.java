@@ -1,31 +1,23 @@
 package com.beans;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.json.JSONObject;
-
 import com.classes.DeliveryOrder;
 import com.classes.SupplierOrder;
 import com.classes.SupplierProduct;
 import com.entities.Drugstore;
 import com.entities.Product;
 import com.entities.ProductFromDrugstore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.utils.DeliveryProduct;
 import com.utils.ProductAdapter;
-import com.utils.Utils;
 
 /**
  * Session Bean implementation class StockService

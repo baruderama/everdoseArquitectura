@@ -233,10 +233,15 @@ export default {
           financial_information: thisa.financial_information,
           delivery_information: thisa.delivery_information,
           products: thisa.productsToCheckout,
+        },{
+
+          withCredentials: true,
         }
         )
         .then(function () {
           thisa.processing_payment = true;
+          console.log("Cookies:")
+          console.log(document.cookie)
           console.log('Done')
         })
       }).catch(function (error) {

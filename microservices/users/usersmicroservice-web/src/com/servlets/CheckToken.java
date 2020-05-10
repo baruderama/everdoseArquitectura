@@ -50,8 +50,10 @@ public class CheckToken extends HttpServlet {
 		Gson gson=new Gson();
 		Token token=gson.fromJson(token_json, Token.class);
 		if(bean.checkToken(token)) {
+			System.out.println("Valid token");
 			response.getWriter().append("valid");
 		}else {
+			System.out.println("Invalid token");
 			response.setStatus(401);
 		}
 	}

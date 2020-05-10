@@ -38,6 +38,7 @@ export default {
           username: this.username,
           password: this.password,
         },
+        withCredentials: true,
         url,
       };
       axios(options).then(function (response) {

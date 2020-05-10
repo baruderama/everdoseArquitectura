@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,8 +43,24 @@ public class Buy extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         setAccessControlHeaders(response);
 		String body = IOUtils.toString(request.getReader());
-        bean.buy(body);
-        
+		Cookie[] cookies = null;
+		Cookie cookie = null;
+		cookies = request.getCookies();
+		
+		String token = null;
+		System.out.println("Cookies");
+		for (int i = 0; i < cookies.length; i++) {
+			System.out.println("Cookie");
+            cookie = cookies[i];
+            
+            if( cookie.getName().contentEquals("auth_token")) {
+            	token = cookie.getValue();
+            }
+         }
+		
+		if(token != null) {
+			 bean.buy(body, token);
+		}
 	}
 	
 	@Override

@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 @LocalBean
 public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 
+	private final String CHECKTOKEN = "http://localhost:8080/usersmicroservice-web-0.0.1-SNAPSHOT/CheckToken";
+	
 	public boolean post(String url, StringEntity entity) throws Exception {
 		HttpPost post = new HttpPost(url);
         post.setEntity(entity);
@@ -44,7 +46,7 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
     }
 
 	@Override
-	public boolean buy(String data) {
+	public boolean buy(String data, String token) {
         Gson g = new Gson(); 
         JSONObject json = new JSONObject(data);
         String stripeToken_str = json.get("stripeToken").toString();
@@ -58,12 +60,25 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
         
         String destinyAddress = deliveryInfo.getAddress();
         boolean succesfulPayment = false;
+        boolean succesfulCheck = true;
         String url = "";
         String toJson = "";
 
-//        TODO: Connect payment
-//        url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 
-//        toJson = "{ \"StripeToken\":\""+stripeToken.getId()+"\"}";
+        url = CHECKTOKEN;
+    	try {
+			StringEntity entity = new StringEntity(token);
+			succesfulCheck = post(url, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	if( !succesfulCheck ) {
+    		return false;
+    	}
+        
+//      TODO: Connect payment
+//      url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 
+//      toJson = "{ \"StripeToken\":\""+stripeToken.getId()+"\"}";
 //    	try {
 //    		StringEntity entity = new StringEntity(toJson);
 //			succesfulPayment = post(url, entity);

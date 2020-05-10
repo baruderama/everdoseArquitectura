@@ -48,8 +48,8 @@ public class GetToken extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		setAccessControlHeaders(response);
 		String body = IOUtils.toString(request.getReader());
-		Gson g = new Gson(); 
         JSONObject json = new JSONObject(body);
         
 		String username=json.get("username").toString();
@@ -59,13 +59,13 @@ public class GetToken extends HttpServlet {
 		if(token!=null){
 			String token_json=new Gson().toJson(token);
 			Cookie cookie=new Cookie("auth_token",token_json);
+			cookie.setDomain("localhost");
+			cookie.setPath("/");
+			cookie.setMaxAge(60*90);
 			response.addCookie(cookie);
-			System.out.println(token_json);
-			System.out.println("Cooki added");
 		}else {
 			response.setStatus(401);
 		}
-		setAccessControlHeaders(response);
 	}
 	
 	@Override

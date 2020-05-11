@@ -12,6 +12,9 @@
             <input v-model="password" type="password" name="password" placeholder="Password">
           </div>
           <div class="ui large fluid black button" @click="login">Login</div>
+          <div class="ui error message" :class="{visible: errorLogin}">
+            Check your credentials
+          </div>
         </form>
       </div>
     </div>
@@ -26,6 +29,7 @@ export default {
      return {
        username: '',
        password: '',
+       errorLogin: false,
      }
   },
   methods:{
@@ -41,15 +45,12 @@ export default {
         withCredentials: true,
         url,
       };
-      axios(options).then(function (response) {
+      axios(options).then(function () {
         thisa.processing_payment = true;
-        console.log('Done')
-        console.log(document.cookie);
-        console.log(response)
+        thisa.$router.push({name: 'home'});
       })
-      .catch(function (error){
-        console.log('Failed')
-        console.log(error)
+      .catch(function (){
+        thisa.errorLogin = true;
       })
     }
   }

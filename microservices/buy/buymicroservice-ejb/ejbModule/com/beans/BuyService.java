@@ -1,5 +1,7 @@
 package com.beans;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -14,6 +16,7 @@ import com.classes.DeliveryInfo;
 import com.classes.FinancialInfo;
 import com.classes.StripeToken;
 import com.google.gson.Gson;
+import com.utils.ProductAdapter;
 
 /**
  * Session Bean implementation class BuyService
@@ -45,18 +48,8 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
     }
 
 	@Override
-	public boolean buy(String data, String token) {
-        Gson g = new Gson(); 
-        JSONObject json = new JSONObject(data);
-        String stripeToken_str = json.get("stripeToken").toString();
-        String productsList_str = json.get("products").toString();
-        String deliveryInformation_str = json.get("delivery_information").toString();
-        String financialInformation_str = json.get("financial_information").toString();
+	public boolean buy(List<ProductAdapter> products, String token, StripeToken stripeToken, DeliveryInfo deliveryInfo, FinancialInfo financialInfo ) {
 
-        StripeToken stripeToken = g.fromJson(stripeToken_str, StripeToken.class);
-        DeliveryInfo deliveryInfo = g.fromJson(deliveryInformation_str, DeliveryInfo.class);
-        FinancialInfo financialInfo = g.fromJson(financialInformation_str, FinancialInfo.class);
-        
         String destinyAddress = deliveryInfo.getAddress();
         boolean succesfulPayment = false;
         boolean succesfulCheck = true;
@@ -87,6 +80,8 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
         
     	succesfulPayment = true;
         if (succesfulPayment) {
+        	Gson g = new Gson(); 
+        	String productsList_str = g.toJson(products);
         	url = "http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/ConsumeProduct"; 
         	toJson = "{ \"destiny_address\":\""+destinyAddress+"\", \"products\":"+productsList_str+"}";
         	try {

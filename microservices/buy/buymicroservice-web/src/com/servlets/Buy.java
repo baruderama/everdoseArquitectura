@@ -1,6 +1,9 @@
 package com.servlets;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -10,7 +13,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
+
 import com.beans.BuyService;
+import com.classes.DeliveryInfo;
+import com.classes.FinancialInfo;
+import com.classes.StripeToken;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.utils.Utils;
+import com.utils.ProductAdapter;
 
 /**
  * Servlet implementation class Buy
@@ -58,7 +70,24 @@ public class Buy extends HttpServlet {
          }
 		
 		if(token != null) {
-			 bean.buy(body, token);
+			
+	        Gson g = new Gson(); 
+	        JSONObject json = new JSONObject(body);
+	        String stripeToken_str = json.get("stripeToken").toString();
+	        String productsList_str = json.get("products").toString();
+	        String deliveryInformation_str = json.get("delivery_information").toString();
+	        String financialInformation_str = json.get("financial_information").toString();
+
+	        StripeToken stripeToken = g.fromJson(stripeToken_str, StripeToken.class);
+	        DeliveryInfo deliveryInfo = g.fromJson(deliveryInformation_str, DeliveryInfo.class);
+	        FinancialInfo financialInfo = g.fromJson(financialInformation_str, FinancialInfo.class);
+	        
+	        
+			Type listType = new TypeToken<ArrayList<ProductAdapter>>(){}.getType();
+			ArrayList<ProductAdapter> products = new Gson().fromJson(productsList_str, listType);
+			String destiny_address=json.get("destiny_address").toString();
+			String productsStr=json.get("products").toString();
+			bean.buy(products, token, stripeToken, deliveryInfo, financialInfo);
 		}
 	}
 	

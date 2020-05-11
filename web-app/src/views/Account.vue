@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="account">
-    <Nav account="true"/>
+    <Nav account="true" :username="username"/>
     <div class="container">
       <div class="ui grid">
         <div class="four wide column">
@@ -72,6 +72,7 @@
 
 <script>
 import Nav from '../components/Nav'
+import cookie from '../cookies'
 
 export default {
   components:{
@@ -79,6 +80,7 @@ export default {
   },
   data(){
     return {
+      username:'',
       // Purchases viene de un request ajax
       purchases:[
         {
@@ -110,6 +112,13 @@ export default {
           ]
         },
       ]
+    }
+  },
+  mounted(){
+    this.products_in_cart = cookie.getCookie('products')
+    var auth_token = cookie.getCookie('auth_token')
+    if( typeof auth_token == "string" ){
+      this.username = JSON.parse(auth_token).username;
     }
   }
 }

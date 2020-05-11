@@ -68,6 +68,13 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
     		return false;
     	}
         
+    	int total = 0;
+    	for (ProductAdapter productAdapter : products) {
+    		total += productAdapter.getAmount()*productAdapter.getPrice();
+		}
+    	
+    	System.out.println("Total: "+total);
+    	
 //      TODO: Connect payment
 //      url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 
 //      toJson = "{ \"StripeToken\":\""+stripeToken.getId()+"\"}";

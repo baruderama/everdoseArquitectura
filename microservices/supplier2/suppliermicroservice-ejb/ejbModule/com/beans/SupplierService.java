@@ -78,6 +78,10 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 		// TODO Auto-generated method stub
 		Supplier supplier = entityManager.find(Supplier.class, id);
 		supplier.setSupplierName(supplier_name);
+		supplier.setAddress(address);
+		supplier.setPhone(phone);
+		supplier.setEmail(email);
+		supplier.setUri(uri);
 
 		  //entityManager.getTransaction().begin();
 		  

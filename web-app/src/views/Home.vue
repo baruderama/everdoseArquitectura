@@ -58,20 +58,16 @@ export default {
     if( typeof auth_token == "string" ){
       this.username = JSON.parse(auth_token).username;
     }
-
-    console.log(62)
     var thisa = this;
     axios.get('http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog',{
       withCredentials: true,
     }
       )
      .then(function (response) {
-       console.log(69)
        // handle success
        thisa.products = response.data;
      })
      .catch(function (error) {
-       console.log(74)
        // handle error
        console.log(error);
      })
@@ -130,7 +126,6 @@ export default {
         url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?keywords='+keywords+'&page='+page;
       }
       const thisa = this;
-      console.log(url)
       axios.get(url,{
         withCredentials: true,
       })
@@ -157,7 +152,6 @@ export default {
         url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?keywords='+keywords+'&page='+page;
       }
       const thisa = this;
-      console.log(url)
       axios.get(url,{
         withCredentials: true,
       })

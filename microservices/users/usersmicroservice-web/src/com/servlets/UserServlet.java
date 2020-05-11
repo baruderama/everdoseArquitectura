@@ -59,6 +59,7 @@ public class UserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		setAccessControlHeaders(response);
 		String body = IOUtils.toString(request.getReader());
         JSONObject json = new JSONObject(body);
         
@@ -90,5 +91,21 @@ public class UserServlet extends HttpServlet {
 		}
 	
 	}
+	
+	@Override
+	  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+	          throws ServletException, IOException {
+	      setAccessControlHeaders(resp);
+	      resp.setStatus(HttpServletResponse.SC_OK);
+	  }
+	
+	  private void setAccessControlHeaders(HttpServletResponse resp) {
+		  System.out.println("Setting headers");
+	      resp.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+	      resp.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
+	      resp.setHeader("Access-Control-Allow-Credentials", "true");
+	      resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	  }
+
 
 }

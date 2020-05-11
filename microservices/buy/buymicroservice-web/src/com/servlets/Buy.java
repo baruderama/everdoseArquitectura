@@ -54,6 +54,8 @@ public class Buy extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         setAccessControlHeaders(response);
 		String body = IOUtils.toString(request.getReader());
+		System.out.println("Body:");
+		System.out.println(body);
 		Cookie[] cookies = null;
 		Cookie cookie = null;
 		cookies = request.getCookies();
@@ -87,7 +89,6 @@ public class Buy extends HttpServlet {
 	        
 			Type listType = new TypeToken<ArrayList<ProductAdapter>>(){}.getType();
 			ArrayList<ProductAdapter> products = new Gson().fromJson(productsList_str, listType);
-			String destiny_address=json.get("destiny_address").toString();
 			String productsStr=json.get("products").toString();
 			succesfulPuchase = bean.buy(products, token, stripeToken, deliveryInfo, financialInfo);
 			

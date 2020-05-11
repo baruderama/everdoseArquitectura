@@ -2,7 +2,7 @@
   <div class="checkout">
 
     <div class="panel">
-      <div class="delivery_panel" :class="{invisible: succesfulPayment}">
+      <div class="delivery_panel" :class="{invisible: processing_payment}">
         <div class="title">
           <h1 class="ui header">Delivery</h1>
           <div class="ui divider"/>
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div class="payment_method_panel" :class="{invisible: succesfulPayment}">
+      <div class="payment_method_panel" :class="{invisible: processing_payment}">
         <div class="title">
           <h1 class="ui header">Payment</h1>
           <div class="ui divider"/>
@@ -55,7 +55,7 @@
         </div>
       </div>
 
-      <div class="credit_card_form invisible" :class="{visible: credit_card_selected && !succesfulPayment}">
+      <div class="credit_card_form invisible" :class="{visible: credit_card_selected && !processing_payment}">
         <form class="ui form">
 
           <h4 class="ui dividing header">Credit card information</h4>
@@ -75,14 +75,20 @@
       </div>
 
       <div class="proceed_panel">
-        <div @click="buy" class="ui fluid green button" :class="{invisible: succesfulPayment}">
+        <div @click="buy" class="ui fluid green button" :class="{invisible: processing_payment}">
           Buy
         </div>
       </div>
 
-      <div class="on_delivery_panel invisible"  :class="{visible: processing_payment}">
+      <div class="on_delivery_panel invisible"  :class="{visible: succesfulPayment}">
         <div class="ui success message">
-          If your payment is succesful, you will receive an email.
+          Your payment was succesful.
+        </div>
+      </div>
+
+      <div class="on_delivery_panel invisible"  :class="{visible: unsuccesfulPayment}">
+        <div class="ui error message">
+          Your payment was unsuccesful.
         </div>
       </div>
 
@@ -140,6 +146,7 @@ export default {
       processing_payment: false,
       name_cc: '',
       succesfulPayment: false,
+      unsuccesfulPayment: false,
 
     }
   },
@@ -212,6 +219,7 @@ export default {
     },
     buy(){
       var thisa = this;
+      thisa.processing_payment = true;
       stripe.createToken(card).then(function(result) {
         axios.post('http://localhost:8080/buymicroservice-web-0.0.1-SNAPSHOT/Buy', {
           stripeToken: result.token,
@@ -219,19 +227,20 @@ export default {
           delivery_information: thisa.delivery_information,
           products: thisa.productsToCheckout,
         },{
-
           withCredentials: true,
         }
         )
         .then(function () {
-          thisa.processing_payment = true;
           thisa.succesfulPayment = true;
-          console.log("Cookies:")
-          console.log(document.cookie)
-          console.log('Done')
+        })
+        .catch(function(){
+          console.log("Error")
+          thisa.unsuccesfulPayment = true;
         })
       }).catch(function (error) {
-        console.log(error);
+        console.log(error)
+        console.log("Error")
+        thisa.unsuccesfulPayment = true;
       });
     }
   }

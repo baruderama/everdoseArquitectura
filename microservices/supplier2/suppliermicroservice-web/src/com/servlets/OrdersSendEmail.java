@@ -43,8 +43,8 @@ public class OrdersSendEmail extends HttpServlet {
 		jndiProperties.put("jboss.naming.client.ejb.context", true);
 		
 		String namespace = "ejb:";
-		String appName = "suppliermicroservice-ear";
-		String moduleName = "suppliermicroservice-ejb";
+		String appName = "suppliermicroservice-ear-0.0.1-SNAPSHOT";
+		String moduleName = "suppliermicroservice-ejb-0.0.1-SNAPSHOT";
 		String distinctName = "";
 		String beanName = "SupplierService";
 		String viewClassName = SupplierServiceRemote.class.getName();

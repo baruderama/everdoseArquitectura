@@ -13,6 +13,12 @@
       <type>ejb</type>
     </dependency>
     
+    <dependency>
+      <groupId>suppliermicroservice-jpa</groupId>
+      <artifactId>suppliermicroservice-jpa</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    
   	<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api --> 
   	<dependency>   
   	  <groupId>javax.servlet</groupId> 

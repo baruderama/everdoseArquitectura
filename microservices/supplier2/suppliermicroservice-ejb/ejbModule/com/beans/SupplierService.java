@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.entities.*;
@@ -28,16 +29,25 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
         // TODO Auto-generated constructor stub
     }
     
+    
+    
+    /*
+     * Supplier
+     */
     @Override
-    public List<Supplier> findSupplier(String name) {
+    public Supplier findSupplier(int id) {
     	
+    	/*
     String consulta = "SELECT s FROM supplier s WHERE s.supplier_name=:userName";
     TypedQuery<Supplier> query = entityManager.createQuery(consulta, Supplier.class);
     query.setParameter("userName", name);
     //query.setParameter("password", password);
     query.setMaxResults(1);
     List<Supplier> resultList = query.getResultList();
-    return resultList;
+    */
+    	
+    Supplier supplier=entityManager.find(Supplier.class, id);
+    return supplier;
     }
     
     @Override
@@ -60,33 +70,75 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
     @Override
     public List<Supplier> getAllSuppliers() {
     // TODO Auto-generated method stub
-    return entityManager.createQuery("SELECT p FROM supplier p", Supplier.class).getResultList();
+    return entityManager.createQuery("SELECT p FROM Supplier p", Supplier.class).getResultList();
     }
 
 	@Override
 	public String updateSupplier(int id, String supplier_name,String address, String phone, String email, String uri) {
 		// TODO Auto-generated method stub
-		String consulta = "UPDATE supplier s SET s.supplier_name=supplier_name,s.address=address,s.phone=phone,s.email=email, s.uri=uri"
+		Supplier supplier = entityManager.find(Supplier.class, id);
+		supplier.setSupplierName(supplier_name);
+
+		  //entityManager.getTransaction().begin();
+		  
+		  //entityManager.getTransaction().commit();
+		  /*
+		String consulta = "UPDATE Supplier s SET s.supplierName= :supplier_name2"
+				+" WHERE s.idsupplier= :id";
+		
+		String consulta2 = "UPDATE supplier s SET s.supplier_name= :supplier_name"
 				+" WHERE u.idsupplier=:id";
-			    TypedQuery<Supplier> query = entityManager.createQuery(consulta, Supplier.class);
+		String consulta3 = "UPDATE supplier s SET s.supplier_name= :supplier_name"
+				+" WHERE u.idsupplier=:id";
+		String consulta4 = "UPDATE supplier s SET s.supplier_name= :supplier_name"
+				+" WHERE u.idsupplier=:id";
+		String consulta5 = "UPDATE supplier s SET s.supplier_name= :supplier_name"
+				+" WHERE u.idsupplier=:id";
+				
+				//entityManager.getTransaction().begin();
+			    Query query = entityManager.createQuery(consulta);
 			    query.setParameter("id", id);
-			    query.setParameter("supplier_name", supplier_name);
+			    query.setParameter("supplier_name2", supplier_name);
+			    
 			    query.setParameter("address", address);
 			    query.setParameter("phone", phone);
 			    query.setParameter("email", email);
 			    query.setParameter("uri", uri);
+			    
 			    int rowsUpdated = query.executeUpdate();
-		return null;
+			    //entityManager.getTransaction().commit();
+			    //entityManager.close();
+			     * */
+			    
+			    
+		return "update";
 	}
 
 	@Override
 	public String deleteSupplier(String name, int supplierId) {
+		
+		Supplier supplier = entityManager.find(Supplier.class, supplierId);
+		entityManager.remove(supplier);
+
+		/*
 		String consulta = "DELETE FROM supplier s WHERE s.idsupplier=:id";
 	    TypedQuery<Supplier> query = entityManager.createQuery(consulta, Supplier.class);
 	    int deleted=query.setParameter("id", supplierId).executeUpdate();
 		// TODO Auto-generated method stub
-		return null;
+		 * */
+		 
+		return "removed";
 	}
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * Products of suppliers
+	 */
 
 	@Override
 	public String addSupplierProduct(String name, String description, float price, String keywords, int supplierId) {
@@ -106,60 +158,74 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 	}
 
 	@Override
-	public List<Productfromsupplier> findSupplierProduct(String name, int supplierProductId) {
+	public Productfromsupplier findSupplierProduct( int supplierProductId) {
 		// TODO Auto-generated method stub
+		/*
 		String consulta = "SELECT u FROM productfromsupplier u WHERE u.idproductfromsupplier=:id";
 	    TypedQuery<Productfromsupplier> query = entityManager.createQuery(consulta, Productfromsupplier.class);
 	    query.setParameter("id", supplierProductId);
 	    //query.setParameter("password", password);
 	    query.setMaxResults(1);
 	    List<Productfromsupplier> resultList = query.getResultList();
-	    return resultList;
+	    */
+	Productfromsupplier supplierPro=entityManager.find(Productfromsupplier.class, supplierProductId);
+	    return supplierPro;
 		//return null;
 	}
 
 	@Override
-	public String updateSupplierProduct(int id,String name, String description, float price, String keywords) {
+	public String updateSupplierProduct(int id,String name, String description, float price, String keywords,int supplierId) {
 		// TODO Auto-generated method stub
-		String consulta = "UPDATE productfromsupplier s SET s.name=name,s.description=description,s.price=price,s.keywords=keywords"
-				+" WHERE u.idproductfromsupplier=:id";
-			    TypedQuery<Productfromsupplier> query = entityManager.createQuery(consulta, Productfromsupplier.class);
-			    query.setParameter("id", id);
-			    query.setParameter("name", name);
-			    query.setParameter("description", description);
-			    query.setParameter("keywords", keywords);
-			    query.setParameter("price", price);
-			    int rowsUpdated = query.executeUpdate();
-		return null;
+		Productfromsupplier supplierPro = entityManager.find(Productfromsupplier.class, id);
+		supplierPro.setName(name);
+		supplierPro.setDescription(description);
+		supplierPro.setPrice(price);
+		supplierPro.setKeywords(keywords);
+		supplierPro.setSupplierId(supplierId);
+		return "updated";
 	}
 
 	@Override
 	public String deleteSupplierProduct(int supplierProductId) {
-		
+		/*
 		String consulta = "DELETE FROM productfromsupplier s WHERE s.idproductfromsupplier=:id";
 	    TypedQuery<Productfromsupplier> query = entityManager.createQuery(consulta, Productfromsupplier.class);
 	    int deleted=query.setParameter("id", supplierProductId).executeUpdate();
+	    */
+		Productfromsupplier supplierPro = entityManager.find(Productfromsupplier.class, supplierProductId);
+		entityManager.remove(supplierPro);
 		// TODO Auto-generated method stub
-		return null;
+		return "removed";
 	}
 
 	@Override
 	public List<Productfromsupplier> getAllSupplierProducts() {
 		// TODO Auto-generated method stub
-		return entityManager.createQuery("SELECT p FROM productfromsupplier p", Productfromsupplier.class).getResultList();
+		return entityManager.createQuery("SELECT p FROM Productfromsupplier p", Productfromsupplier.class).getResultList();
 		
 	}
+	
+	
+	
+	
+	
+	/*
+	 * Supplier Order
+	 */
 
 	@Override
-	public List<Supplierorder> findSupplierOrder(int id) {
+	public Supplierorder findSupplierOrder(int id) {
 		// TODO Auto-generated method stub
+		/*
 		String consulta = "SELECT u FROM supplierorder u WHERE u.idsupplierorder=:id";
 	    TypedQuery<Supplierorder> query = entityManager.createQuery(consulta, Supplierorder.class);
 	    query.setParameter("id", id);
 	    //query.setParameter("password", password);
 	    query.setMaxResults(1);
 	    List<Supplierorder> resultList = query.getResultList();
-	    return resultList;
+	    */
+		Supplierorder supplierOr=entityManager.find(Supplierorder.class, id);
+	    return supplierOr;
 		
 	}
 
@@ -183,6 +249,7 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 	@Override
 	public String updateSupplierOrder(int id,String productName, int supplierId, int productId, float productPrice, int amount,int payed) {
 		//List<Supplierorder> toUpdate=findSupplierOrder(id);
+		/*
 		String consulta = "UPDATE supplierorder s SET s.product_name=productName,s.product_price=productPrice,s.amount=amount,s.payed=payed"
 		+" WHERE u.idsupplierorder=:id";
 	    TypedQuery<Supplierorder> query = entityManager.createQuery(consulta, Supplierorder.class);
@@ -192,26 +259,39 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 	    query.setParameter("amount", amount);
 	    query.setParameter("payed", payed);
 	    int rowsUpdated = query.executeUpdate();
+	    */
+		Supplierorder supplierOr = entityManager.find(Supplierorder.class, id);
+		supplierOr.setProductName(productName);
+		supplierOr.setSupplierId(supplierId);
+		supplierOr.setProductId(productId);
+		supplierOr.setProductPrice(productPrice);
+		supplierOr.setAmount(amount);
+		supplierOr.setPayed(payed);
 		
 		// TODO Auto-generated method stub
-		return null;
+		return "updated";
 	}
 
 	@Override
 	public String deleteSupplierOrder(int supplierOrderId) {
 		// TODO Auto-generated method stub
-		String consulta = "DELETE FROM supplierorder s WHERE s.idsupplierorder=:id";
-	    TypedQuery<Supplierorder> query = entityManager.createQuery(consulta, Supplierorder.class);
-	    int deleted=query.setParameter("id", supplierOrderId).executeUpdate();
+		Supplierorder supplierOr = entityManager.find(Supplierorder.class, supplierOrderId);
+		entityManager.remove(supplierOr);
 	    
-		return null;
+		return "deleted";
 	}
 
 	@Override
 	public List<Supplierorder> getAllSupplierOrders() {
 		// TODO Auto-generated method stub
-		return entityManager.createQuery("SELECT p FROM supplierorder p", Supplierorder.class).getResultList();
+		return entityManager.createQuery("SELECT p FROM Supplierorder p", Supplierorder.class).getResultList();
 	}
+	
+	
+	
+	/*
+	 * Here Starts the supplier pay process
+	 */
 
 	@Override
 	public String paySuppliers() {
@@ -232,6 +312,14 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	
+	
+	
+	/*
+	 * Here is where start the order sending an email
+	 */
 
 	@Override
 	public String orderToSuppliers(String name,int amount) {

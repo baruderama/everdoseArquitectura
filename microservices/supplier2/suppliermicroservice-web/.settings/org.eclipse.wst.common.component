@@ -6,6 +6,9 @@
         <dependent-module archiveName="suppliermicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/suppliermicroservice-ejb/suppliermicroservice-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="suppliermicroservice-jpa-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/suppliermicroservice-jpa/suppliermicroservice-jpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="suppliermicroservice-web"/>
         <property name="java-output-path" value="/suppliermicroservice-web/build/classes"/>
     </wb-module>

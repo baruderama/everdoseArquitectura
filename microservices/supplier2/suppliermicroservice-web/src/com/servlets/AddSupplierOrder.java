@@ -1,6 +1,7 @@
 package com.servlets;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import javax.naming.Context;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.beans.SupplierServiceRemote;
+import com.entities.Supplierorder;
 
 /**
  * Servlet implementation class AddSupplierOrder
@@ -43,8 +45,8 @@ public class AddSupplierOrder extends HttpServlet {
 		jndiProperties.put("jboss.naming.client.ejb.context", true);
 		
 		String namespace = "ejb:";
-		String appName = "suppliermicroservice-ear";
-		String moduleName = "suppliermicroservice-ejb";
+		String appName = "suppliermicroservice-ear-0.0.1-SNAPSHOT";
+		String moduleName = "suppliermicroservice-ejb-0.0.1-SNAPSHOT";
 		String distinctName = "";
 		String beanName = "SupplierService";
 		String viewClassName = SupplierServiceRemote.class.getName();
@@ -63,8 +65,27 @@ public class AddSupplierOrder extends HttpServlet {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		}
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		//Supplierorder order=seriviciosSupplier.findSupplierOrder(1);
+		//String supOr=seriviciosSupplier.addSupplierOrder("med1", 1, 1, 12, 3);
+		//String supOr2=seriviciosSupplier.updateSupplierOrder(1, "med2", 2, 2, 13, 3, 1);
+		String supOr3=seriviciosSupplier.deleteSupplierOrder(1);
+		//List<Supplierorder> suppOrList= seriviciosSupplier.getAllSupplierOrders();
+		
+		/*
+		for (Supplierorder sup : suppOrList) {
+			 System.out.println(sup.getProductName());
+			 response.getWriter().append("Served at: ").append(sup.getProductName());
+			 //response.getWriter().append("Served at: ").append(user.getUsername());
+			 }
+			 System.out.println("Size: " + suppOrList.size());
+			*/ 
+		
+		response.getWriter().append("Served at: ").append(supOr3);
 	}
+	
+	
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

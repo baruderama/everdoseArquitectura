@@ -70,18 +70,22 @@ public class AddSupplier extends HttpServlet {
 		}
 		
 			//List <Supplier> supplier=seriviciosSupplier.getAllSuppliers();
-		String aceptado=seriviciosSupplier.addSupplier("prueba", "prueba", "prueba", "prueba", "prueba");
+		//String aceptado=seriviciosSupplier.addSupplier("prueba", "prueba", "prueba", "prueba", "prueba");
+		//String update=seriviciosSupplier.updateSupplier(3, "prueba2", "prueba2", "prueba2", "prueba2", "prueba2");
+		//String eliminate=seriviciosSupplier.deleteSupplier("prueba", 3);
+			Supplier supp=seriviciosSupplier.findSupplier(2);
+		//
 		/*
 		for (Supplier sup : supplier) {
 			 System.out.println(sup.getSupplierName());
-			 //response.getWriter().append("Served at: ").append(sup.getSupplierName());
+			 response.getWriter().append("Served at: ").append(sup.getSupplierName());
 			 //response.getWriter().append("Served at: ").append(user.getUsername());
 			 }
 			 System.out.println("Size: " + supplier.size());
-			*/ 
+			*/
 			 
 		
-		response.getWriter().append("Served at: ").append(aceptado);
+		response.getWriter().append("Served at: ").append(supp.getSupplierName());
 	}
 
 	/**

@@ -9,7 +9,7 @@
         <div class="results"></div>
       </div>
     </div>
-    <div class="cart_button invisible" :class="{visible : cart}" @click="$router.push('cart')">
+    <div class="cart_button invisible" :class="{visible : cart}" @click="goToCart">
       <div class="ui circular button">
         <a class="item">
           <i class="shopping cart icon"></i>
@@ -19,6 +19,10 @@
       </div>
     </div>
     <div class="account_button invisible" :class="{visible : account}" @click="$router.push('account')">
+      <span v-if="username" class="">
+        {{ username }}
+      </span>
+      <a v-else href="" class="">Log in </a>
       <button class="circular ui icon button">
         <i class="user icon"></i>
       </button>
@@ -30,7 +34,7 @@
 import cookie from '../cookies'
 
 export default {
-  props:['search','cart','account','products_len', 'onSearch'],
+  props:['search','cart','account','products_len', 'onSearch', 'username'],
   data(){
     return {
       keywords: ""
@@ -44,6 +48,22 @@ export default {
       return cookie.getCookie('products')
     },
   },
+  methods:{
+    goToCart(){
+      if(this.username.length){
+        this.$router.push('cart')
+      }
+      else{
+        this.$router.push({
+          name: 'login',
+          query: {
+            nextUrl: 'cart',
+        }
+        }
+        )
+      }
+    }
+  }
 }
 </script>
 
@@ -63,6 +83,10 @@ export default {
   margin-top: 6px;
   display: inline-block;
   float: right;
+}
+.nav .account_button button{
+  margin-right: 10px;
+  margin-left: 10px;
 }
 .nav .account_button i{
   color: black;

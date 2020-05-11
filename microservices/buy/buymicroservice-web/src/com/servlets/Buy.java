@@ -59,6 +59,9 @@ public class Buy extends HttpServlet {
 		cookies = request.getCookies();
 		
 		String token = null;
+		
+		boolean succesfulPuchase = false;
+		
 		System.out.println("Cookies");
 		for (int i = 0; i < cookies.length; i++) {
 			System.out.println("Cookie");
@@ -70,7 +73,6 @@ public class Buy extends HttpServlet {
          }
 		
 		if(token != null) {
-			
 	        Gson g = new Gson(); 
 	        JSONObject json = new JSONObject(body);
 	        String stripeToken_str = json.get("stripeToken").toString();
@@ -87,8 +89,17 @@ public class Buy extends HttpServlet {
 			ArrayList<ProductAdapter> products = new Gson().fromJson(productsList_str, listType);
 			String destiny_address=json.get("destiny_address").toString();
 			String productsStr=json.get("products").toString();
-			bean.buy(products, token, stripeToken, deliveryInfo, financialInfo);
+			succesfulPuchase = bean.buy(products, token, stripeToken, deliveryInfo, financialInfo);
+			
+			if(!succesfulPuchase) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			}
+			
 		}
+		else {
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+		}
+		
 	}
 	
 	@Override

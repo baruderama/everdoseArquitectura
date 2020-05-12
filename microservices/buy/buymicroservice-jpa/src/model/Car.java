@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,7 +13,6 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Car.findAll", query="SELECT c FROM Car c")
 public class Car implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -58,6 +58,13 @@ public class Car implements Serializable {
 
 
 	public List<CartProduct> getProducts() {
+		List<CartProduct> products = new ArrayList<CartProduct>();
+		List<CartProduct> temp = CartProduct.getCartProducts();
+		for (CartProduct cartProduct : temp) {
+			if(cartProduct.getCar().getId() == this.id) {
+				products.add(cartProduct);
+			}
+		}
 		return products;
 	}
 
@@ -87,6 +94,7 @@ public class Car implements Serializable {
 			et.begin();
 			Car car= new Car();
 			car.setUsername(this.username);
+			car.setDate(this.date);
 			em.persist( car );
 			em.flush();
 			et.commit();

@@ -1,20 +1,8 @@
 package com.classes;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import model.Car;
 
-
-/**
- * The persistent class for the ProductAdapter database table.
- * 
- */
-public class CartProduct implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("buymicroservice-jpa");
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CartProductAdapter{
 	private int id;
 
 	private int amount;
@@ -33,12 +21,9 @@ public class CartProduct implements Serializable {
 
 	private String type;
 
-	//bi-directional many-to-one association to Car
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="cart_id")
 	private Car car;
 
-	public CartProduct() {
+	public CartProductAdapter() {
 	}
 
 	public int getProductId() {

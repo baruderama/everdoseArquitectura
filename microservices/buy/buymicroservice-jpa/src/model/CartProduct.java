@@ -1,15 +1,16 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
 /**
- * The persistent class for the ProductAdapter database table.
+ * The persistent class for the CartProductAdapter database table.
  * 
  */
 @Entity
-@NamedQuery(name="CartProduct.findAll", query="SELECT p FROM CartProduct p")
 public class CartProduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -36,7 +37,7 @@ public class CartProduct implements Serializable {
 	private String type;
 
 	//bi-directional many-to-one association to Car
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="cart_id")
 	private Car car;
 
@@ -103,8 +104,8 @@ public class CartProduct implements Serializable {
 		return this.price;
 	}
 
-	public void setPrice(float price) {
-		this.price = price;
+	public void setPrice(float d) {
+		this.price = d;
 	}
 
 	public String getType() {
@@ -146,6 +147,41 @@ public class CartProduct implements Serializable {
 			em.close();
 		}
 		return succesfulltransaction;
+	}
+	
+	public static List<CartProduct> getCartProducts() {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		String query = "SELECT c FROM CartProduct c WHERE c.id IS NOT NULL";
+		TypedQuery<CartProduct> tq = em.createQuery(query,  CartProduct.class);
+		List<CartProduct> products = null;
+		try {
+			products = tq.getResultList();
+			products.forEach( product -> System.out.println("Returning product "+product.getId()) );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			em.close();
+		}
+		return products;
+	}
+	
+	public static CartProduct getProduct( int id) {
+
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		EntityTransaction et = null;
+		CartProduct product = null;
+		try {
+			et = em.getTransaction();
+			et.begin();
+			product = em.find( CartProduct.class , id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			em.close();
+		}
+		return product;
 	}
 
 }

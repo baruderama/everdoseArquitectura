@@ -55,11 +55,11 @@ public class Product implements Serializable {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 
@@ -91,7 +91,7 @@ public class Product implements Serializable {
 	private String image;
 	private String description;
 	private String keywords;
-	private double price;
+	private float price;
 	private int threshold;
 	private int amount;
 	

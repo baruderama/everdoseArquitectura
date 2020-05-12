@@ -131,6 +131,7 @@ export default {
     axios(options).then(function (response) {
       console.log("Yes")
       console.log(response)
+      thisa.purchases = response.data;
     })
     .catch(function (){
       thisa.errorLogin = true;

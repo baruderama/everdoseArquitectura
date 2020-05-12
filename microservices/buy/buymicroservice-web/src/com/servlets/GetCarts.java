@@ -5,24 +5,16 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.IOUtils;
-import org.json.JSONObject;
-
 import com.beans.BuyService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.classes.CartAdapter;
 import com.google.gson.Gson;
 import com.utils.Token;
-import com.utils.Utils;
-
-import model.Car;
 
 /**
  * Servlet implementation class GetCarts
@@ -77,14 +69,12 @@ public class GetCarts extends HttpServlet {
 			Token token = gson.fromJson(token_str, Token.class);
 			System.out.println(token.getUsername());
 			if(token != null) {
-				List<Car> products = bean.getPurchases(token.getUsername());
-				String jsonProducts = gson.toJson(products);
-				System.out.println(81);
-				response.setContentType("application/json");
-				// Get the printwriter object from response to write the required json object to the output stream      
-				PrintWriter out = response.getWriter();
-				// Assuming your json object is **jsonObject**, perform the following, it will return your json object  
-				out.print(products);
+				List<CartAdapter> products = bean.getPurchases(token.getUsername());
+				System.out.println(77);
+				System.out.println(products);
+				String productsJSON = gson.toJson(products);
+				PrintWriter out = response.getWriter(); 
+				out.print(productsJSON);
 				out.flush();
 			}
 		}

@@ -2,6 +2,7 @@ package com.beans;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,12 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import com.classes.AuthToken;
+import com.classes.CartAdapter;
+import com.classes.CartProductAdapter;
 import com.classes.DeliveryInfo;
 import com.classes.FinancialInfo;
 import com.classes.StripeToken;
+import com.entities.Product;
 import com.google.gson.Gson;
 
 import model.Car;
@@ -81,13 +85,12 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 			e.printStackTrace();
 		}
     	
-    	//if( !succesfulCheck ) {return false; 	}
-        
-        System.out.println(87);
         int total = 0;
         String GetPriceUrl="http://127.0.0.1:8080/stockmicroservice-web-0.0.1-SNAPSHOT/GetPrice";
         try {
         	String jsonString="{\"products\":"+productsString+"}";
+        	System.out.println("Proooducts");
+        	System.out.println(productsString);
 			StringEntity getpricejson=new StringEntity(jsonString) ;
 			total=Integer.valueOf(post(GetPriceUrl,getpricejson));
 		} catch (UnsupportedEncodingException e1) {
@@ -101,8 +104,6 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 			e.printStackTrace();
 		}
     	
-    	
-    	
     	System.out.println("Total: "+total);
     	succesfulPayment = true;
     	url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 
@@ -115,30 +116,26 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 			e.printStackTrace();
     		succesfulPayment = false;
 		}
-        
+    	
     	if(succesfulPayment) {
 			Car car =new Car();
     		car.setUsername(username);
-    		int state = car.save();
-    		System.out.println(car.getId());
-			System.out.println("Car saved");
-			System.out.println(state);
-    		
+    		car.setDate(new Timestamp(System.currentTimeMillis()));
+    		car.save();
     		for(CartProduct p:products) {
-            	System.out.println(p.getProductId()+"....."+p.getProductId());
-    	    	CartProduct productEnt= new CartProduct();
-    	    	productEnt.setProductId(p.getId());
-    	    	productEnt.setAmount(p.getAmount());
-    	    	productEnt.setDescription(p.getDescription());
-    	    	productEnt.setImage(p.getImage());
-    	    	productEnt.setKeywords(p.getKeywords());
-    	    	productEnt.setName(p.getName());
-    	    	productEnt.setPrice(p.getPrice());
-    	    	productEnt.setType(p.getType());
-    	    	productEnt.setCar(car);
-    	    	boolean please =productEnt.save();
-    	    	System.out.println("Saved PCart");
-    	    	System.out.println(please);
+            	Product c = Product.getProduct(p.getId());
+            	if( c!= null) {
+        	    	CartProduct productEnt= new CartProduct();
+        	    	productEnt.setProductId(c.getId());
+        	    	productEnt.setAmount(p.getAmount());
+        	    	productEnt.setDescription(c.getDescription());
+        	    	productEnt.setImage(c.getImage());
+        	    	productEnt.setKeywords(c.getKeywords());
+        	    	productEnt.setName(c.getName());
+        	    	productEnt.setPrice(c.getPrice());
+        	    	productEnt.setCar(car);
+        	    	boolean please = productEnt.save();
+            	}
             }
     	}
     	
@@ -158,20 +155,28 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 	}
 
 	@Override
-	public List<Car> getPurchases(String username) {
-		System.out.println("get Purchases");
+	public List<CartAdapter> getPurchases(String username) {	
 		List<Car> allCars = Car.getCars();
-		List<Car> myCars = new ArrayList<Car>();
+		List<CartAdapter> carts = new ArrayList<CartAdapter>();	
 		for (Car car : allCars) {
-			System.out.println("Un car");
-			System.out.println(car.getUsername());
 			if(car.getUsername().contentEquals(username)) {
-				myCars.add(car);
+				CartAdapter cartTemp = new CartAdapter();
+				cartTemp.setUsername(username);
+				cartTemp.setDate(car.getDate());
+				cartTemp.setId(car.getId());
+				carts.add(cartTemp);
+				for (CartProduct cartProduct : car.getProducts()) {
+					CartProductAdapter temp = new CartProductAdapter();
+					temp.setId(cartProduct.getProductId());
+					temp.setAmount(cartProduct.getAmount());
+					temp.setName(cartProduct.getName());
+					temp.setImage(cartProduct.getImage());
+					temp.setPrice(cartProduct.getPrice());
+					cartTemp.addProduct(temp);
+				}
 			}
-			System.out.println(171);
 		}
-		System.out.println(172);
-		return myCars;
+		return carts;
 	}
 
 }

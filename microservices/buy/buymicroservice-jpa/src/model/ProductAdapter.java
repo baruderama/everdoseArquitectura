@@ -12,9 +12,10 @@ import javax.persistence.*;
 @NamedQuery(name="ProductAdapter.findAll", query="SELECT p FROM ProductAdapter p")
 public class ProductAdapter implements Serializable {
 	private static final long serialVersionUID = 1L;
-	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("buymicroservice-jpa");
+	
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int ID_internal;
 
 	private int amount;
@@ -34,39 +35,13 @@ public class ProductAdapter implements Serializable {
 	private String type;
 
 	//bi-directional many-to-one association to Car
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Car car;
 
 	public ProductAdapter() {
 	}
 	
-	public int save() {
-		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		EntityTransaction et = null;
-		
-		try {
-			
-			et = em.getTransaction();
-			et.begin();
-			if(true) {
-				em.persist( this );
-			}
-			
-			em.flush();
-			et.commit();
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (et != null) {
-				et.rollback();
-			}
-		}
-		finally {
-			em.close();
-		}
-		return id;
-	}
+
 
 	public int getID_internal() {
 		return this.ID_internal;

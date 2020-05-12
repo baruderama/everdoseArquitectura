@@ -67,11 +67,12 @@ public class Buy extends HttpServlet {
             	token = cookie.getValue();
             }
          }
-		
-		if(token != null) {
+		boolean has_tok=true;//token != null;TODO
+		if(has_tok) {
 			
 	        Gson g = new Gson(); 
 	        JSONObject json = new JSONObject(body);
+	        System.out.println(json);
 	        String stripeToken_str = json.get("stripeToken").toString();
 	        String productsList_str = json.get("products").toString();
 	        String deliveryInformation_str = json.get("delivery_information").toString();
@@ -84,9 +85,8 @@ public class Buy extends HttpServlet {
 	        
 			Type listType = new TypeToken<ArrayList<ProductAdapter>>(){}.getType();
 			ArrayList<ProductAdapter> products = new Gson().fromJson(productsList_str, listType);
-			String destiny_address=json.get("destiny_address").toString();
 			String productsStr=json.get("products").toString();
-			bean.buy(products, token, stripeToken, deliveryInfo, financialInfo);
+			bean.buy(products, token, stripeToken, deliveryInfo, financialInfo,productsStr);
 		}
 	}
 	

@@ -14,7 +14,6 @@ import java.util.List;
 @NamedQuery(name="Car.findAll", query="SELECT c FROM Car c")
 public class Car implements Serializable {
 	private static final long serialVersionUID = 1L;
-	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("buymicroservice-jpa");
 
 
 	@Id
@@ -31,33 +30,7 @@ public class Car implements Serializable {
 	public Car() {
 	}
 	
-	public int save() {
-		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		EntityTransaction et = null;
-		
-		try {
-			
-			et = em.getTransaction();
-			et.begin();
-			if(true) {
-				em.persist( this );
-			}
-			
-			em.flush();
-			et.commit();
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (et != null) {
-				et.rollback();
-			}
-		}
-		finally {
-			em.close();
-		}
-		return id;
-	}
+
 
 	public int getId() {
 		return this.id;

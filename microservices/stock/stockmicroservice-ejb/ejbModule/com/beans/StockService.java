@@ -301,4 +301,23 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		return true;
 	}
 
+	public Integer getPrice(List<ProductAdapter> products) {
+		double total=0;
+		for(ProductAdapter p:products) {
+			if(p.getType().equals("drugstore")) {
+				ProductFromDrugstore product = ProductFromDrugstore.getProduct(p.getId());
+				if(product!=null) {
+					total+=(product.getPrice()*p.getAmount());
+				}
+			}else {
+				Product product=Product.getProduct(p.getId());
+				if(product!=null) {
+					total+=(product.getPrice()*p.getAmount());
+				}
+			}
+			
+		}
+		return (int)total;
+	}
+
 }

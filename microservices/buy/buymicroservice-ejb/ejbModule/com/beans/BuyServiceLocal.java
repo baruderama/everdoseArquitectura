@@ -12,5 +12,6 @@ import model.ProductAdapter;
 @Local
 public interface BuyServiceLocal {
 
-	public boolean buy(List<ProductAdapter> products, String token, StripeToken stripeToken, DeliveryInfo deliveryInfo, FinancialInfo financialInfo );
+	boolean buy(List<ProductAdapter> products, String token, StripeToken stripeToken, DeliveryInfo deliveryInfo,
+			FinancialInfo financialInfo, String productsString);
 }

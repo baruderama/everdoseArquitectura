@@ -12,6 +12,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
 
+import com.classes.AuthToken;
 import com.classes.DeliveryInfo;
 import com.classes.FinancialInfo;
 import com.classes.StripeToken;
@@ -64,7 +65,9 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
     	try {
 			StringEntity entity = new StringEntity(token);
 			succesfulCheck = post(url, entity);
-			//set username
+			Gson gson=new Gson();
+			AuthToken at=gson.fromJson(token, AuthToken.class);
+			username=at.getUsername();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,17 +83,16 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
     	
     	System.out.println("Total: "+total);
     	succesfulPayment = true;
-//      TODO: Connect payment
-//      url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 
-//      toJson = "{ \"StripeToken\":\""+stripeToken.getId()+"\"}";
-//    	try {
-//    		StringEntity entity = new StringEntity(toJson);
-//			succesfulPayment = post(url, entity);
-//    		succesfulPayment = true;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-    		//succesfulPayment = false;
-//		}
+    	url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 
+    	FinancialInfo fi=new FinancialInfo(stripeToken.getId(),total,"description");
+    	toJson = new Gson().toJson(fi);
+    	try {
+    		StringEntity entity = new StringEntity(toJson);
+			succesfulPayment = post(url, entity);
+		} catch (Exception e) {
+			e.printStackTrace();
+    		succesfulPayment = false;
+		}
         
     	if(succesfulPayment) {
     		Car car =new Car();

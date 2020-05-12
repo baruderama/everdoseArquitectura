@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import com.classes.DeliveryInfo;
 import com.classes.FinancialInfo;
 import com.classes.StripeToken;
-import com.utils.ProductAdapter;
+import model.ProductAdapter;
 
 @Local
 public interface BuyServiceLocal {

@@ -16,7 +16,10 @@ import com.classes.DeliveryInfo;
 import com.classes.FinancialInfo;
 import com.classes.StripeToken;
 import com.google.gson.Gson;
-import com.utils.ProductAdapter;
+
+import jdk.jfr.Timestamp;
+import model.Car;
+import model.ProductAdapter;
 
 /**
  * Session Bean implementation class BuyService
@@ -55,11 +58,13 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
         boolean succesfulCheck = true;
         String url = "";
         String toJson = "";
+        String username="";
 
         url = CHECKTOKEN;
     	try {
 			StringEntity entity = new StringEntity(token);
 			succesfulCheck = post(url, entity);
+			//set username
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,18 +79,29 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 		}
     	
     	System.out.println("Total: "+total);
-    	
+    	succesfulPayment = true;
 //      TODO: Connect payment
 //      url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 
 //      toJson = "{ \"StripeToken\":\""+stripeToken.getId()+"\"}";
 //    	try {
 //    		StringEntity entity = new StringEntity(toJson);
 //			succesfulPayment = post(url, entity);
+//    		succesfulPayment = true;
 //		} catch (Exception e) {
 //			e.printStackTrace();
+    		//succesfulPayment = false;
 //		}
         
-    	succesfulPayment = true;
+    	if(succesfulPayment) {
+    		Car car =new Car();
+    		car.setUsername(username);
+    		car.save();
+    		for(ProductAdapter pa: products) {
+    			pa.setCar(car);
+    			pa.save();
+    		}
+    	}
+    	
         if (succesfulPayment) {
         	Gson g = new Gson(); 
         	String productsList_str = g.toJson(products);

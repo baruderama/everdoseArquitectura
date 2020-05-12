@@ -21,8 +21,7 @@ import com.classes.FinancialInfo;
 import com.classes.StripeToken;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.utils.Utils;
-import com.utils.ProductAdapter;
+import model.ProductAdapter;
 
 /**
  * Servlet implementation class Buy

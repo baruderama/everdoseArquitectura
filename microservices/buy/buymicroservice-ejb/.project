@@ -3,6 +3,7 @@
 	<name>buymicroservice-ejb</name>
 	<comment></comment>
 	<projects>
+		<project>buymicroservice-jpa</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

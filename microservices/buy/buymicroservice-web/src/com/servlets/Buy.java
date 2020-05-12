@@ -90,7 +90,7 @@ public class Buy extends HttpServlet {
 			Type listType = new TypeToken<ArrayList<ProductAdapter>>(){}.getType();
 			ArrayList<ProductAdapter> products = new Gson().fromJson(productsList_str, listType);
 			String productsStr=json.get("products").toString();
-			succesfulPuchase = bean.buy(products, token, stripeToken, deliveryInfo, financialInfo);
+			succesfulPuchase = bean.buy(products, token, stripeToken, deliveryInfo, financialInfo,"2/2/2012",1);
 			
 			if(!succesfulPuchase) {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

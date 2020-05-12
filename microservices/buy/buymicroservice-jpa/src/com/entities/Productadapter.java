@@ -20,9 +20,15 @@ public class Productadapter implements Serializable {
 
 	private String description;
 
+	private String image;
+
+	private String keywords;
+
 	private String name;
 
-	private float price;
+	private double price;
+
+	private String type;
 
 	//bi-directional many-to-one association to Cart
 	@ManyToOne
@@ -56,6 +62,22 @@ public class Productadapter implements Serializable {
 		this.description = description;
 	}
 
+	public String getImage() {
+		return this.image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getKeywords() {
+		return this.keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -64,12 +86,20 @@ public class Productadapter implements Serializable {
 		this.name = name;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Cart getCart() {

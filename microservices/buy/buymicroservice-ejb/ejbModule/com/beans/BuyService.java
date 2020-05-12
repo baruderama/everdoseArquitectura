@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -15,6 +18,8 @@ import org.json.JSONObject;
 import com.classes.DeliveryInfo;
 import com.classes.FinancialInfo;
 import com.classes.StripeToken;
+import com.entities.Cart;
+import com.entities.Productadapter;
 import com.google.gson.Gson;
 import com.utils.ProductAdapter;
 
@@ -24,6 +29,9 @@ import com.utils.ProductAdapter;
 @Stateless
 @LocalBean
 public class BuyService implements BuyServiceRemote, BuyServiceLocal {
+	
+	@PersistenceContext(unitName="buymicroservice-jpa",type=PersistenceContextType.TRANSACTION)
+	private EntityManager entityManager;
 
 	private final String CHECKTOKEN = "http://localhost:8080/usersmicroservice-web-0.0.1-SNAPSHOT/CheckToken";
 	
@@ -46,9 +54,23 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
      */
     public BuyService() {
     }
+    
+    @Override
+	public Cart verHistorial(int id) {
+		// TODO Auto-generated method stub
+		List<Cart> carList=entityManager.createQuery("SELECT c FROM Car c", Cart.class).getResultList();
+		//List<Cart> newCarList = null;
+		for(Cart c: carList) {
+			if(c.getIdUser()==id) {
+				return c;
+			}
+		}
+		
+		return null;
+	}
 
 	@Override
-	public boolean buy(List<ProductAdapter> products, String token, StripeToken stripeToken, DeliveryInfo deliveryInfo, FinancialInfo financialInfo ) {
+	public boolean buy(List<ProductAdapter> products, String token, StripeToken stripeToken, DeliveryInfo deliveryInfo, FinancialInfo financialInfo,String date,int idUser ) {
 
         String destinyAddress = deliveryInfo.getAddress();
         boolean succesfulPayment = false;
@@ -74,6 +96,32 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 		}
     	
     	System.out.println("Total: "+total);
+    	
+    	Cart newCar = new Cart();
+    	List <Productadapter> productEntities = null;
+	    
+	    newCar.setDate(date);
+	    newCar.setIdUser(idUser);
+	    for(ProductAdapter p:products) {
+	    	Productadapter productEnt= new Productadapter();
+	    	productEnt.setAmount(p.getAmount());
+	    	productEnt.setDescription(p.getDescription());
+	    	productEnt.setImage(p.getImage());
+	    	productEnt.setKeywords(p.getKeywords());
+	    	productEnt.setName(p.getName());
+	    	productEnt.setPrice(p.getPrice());
+	    	productEnt.setType(p.getType());
+	    	productEntities.add(productEnt);
+	    } 
+	    newCar.setProductadapters(productEntities);
+	   
+	    Cart car = entityManager.find(Cart.class, newCar.getIdcart());
+	    if (car == null) {
+	    entityManager.persist(newCar);
+	    System.out.println("insertado");
+	    } else
+	    System.out.println("mal");
+	
     	
 //      TODO: Connect payment
 //      url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 

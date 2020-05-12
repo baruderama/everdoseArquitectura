@@ -6,16 +6,32 @@
   <packaging>war</packaging>
   <name>buymicroservice-web</name>
   <dependencies>
+  <!-- https://mvnrepository.com/artifact/org.json/json -->
  	<dependency>
 	    <groupId>javax.servlet</groupId>
 	    <artifactId>javax.servlet-api</artifactId>
 	    <version>4.0.1</version>
 	    <scope>compile</scope>
 	</dependency>
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.11.0</version>
+</dependency>
+
  	<dependency>
 		<groupId>buymicroservice-ejb</groupId>
 		<artifactId>buymicroservice-ejb</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		 <scope>compile</scope>
+	 </dependency>
+	
+	<dependency>
+		<groupId>buymicroservice-jpa</groupId>
+		<artifactId>buymicroservice-jpa</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		 <scope>compile</scope>
 	 </dependency>
 	
 	<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->

@@ -7,10 +7,14 @@ import javax.ejb.Local;
 import com.classes.DeliveryInfo;
 import com.classes.FinancialInfo;
 import com.classes.StripeToken;
-import com.utils.ProductAdapter;
+
+import model.Car;
+import model.CartProduct;
 
 @Local
 public interface BuyServiceLocal {
 
-	public boolean buy(List<ProductAdapter> products, String token, StripeToken stripeToken, DeliveryInfo deliveryInfo, FinancialInfo financialInfo );
+	boolean buy(List<CartProduct> products, String token, StripeToken stripeToken, DeliveryInfo deliveryInfo,
+			FinancialInfo financialInfo, String productsString);
+	List<Car> getPurchases(String username);
 }

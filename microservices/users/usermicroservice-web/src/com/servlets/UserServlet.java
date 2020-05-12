@@ -58,15 +58,20 @@ public class UserServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username=request.getParameter("username");
-		String email=request.getParameter("email");
-		String name=request.getParameter("name");
-		String password=request.getParameter("password");
-		String phone=request.getParameter("phone");
-		String lastname=request.getParameter("lastname");
 		
-		if(bean.createUser(username, email, name, password,lastname,phone)) {
-			response.getWriter().append("user created");
+		setAccessControlHeaders(response);
+		String body = IOUtils.toString(request.getReader());
+        JSONObject json = new JSONObject(body);
+        
+		String username=json.get("username").toString();
+		String email=json.get("email").toString();
+		String firstname=json.get("firstname").toString();
+		String lastname=json.get("lastname").toString();
+		String password=json.get("password").toString();
+		String phone=json.get("phone").toString();
+		System.out.println(67);
+		if(bean.createUser(username, email, firstname, password, lastname, phone)) {
+			response.setStatus(HttpServletResponse.SC_CREATED);
 		}else {
 			response.getWriter().append("failed");
 		}
@@ -86,5 +91,21 @@ public class UserServlet extends HttpServlet {
 		}
 	
 	}
+	
+	@Override
+	  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+	          throws ServletException, IOException {
+	      setAccessControlHeaders(resp);
+	      resp.setStatus(HttpServletResponse.SC_OK);
+	  }
+	
+	  private void setAccessControlHeaders(HttpServletResponse resp) {
+		  System.out.println("Setting headers");
+	      resp.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
+	      resp.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
+	      resp.setHeader("Access-Control-Allow-Credentials", "true");
+	      resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	  }
+
 
 }

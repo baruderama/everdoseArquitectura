@@ -11,11 +11,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home
-  },
-  {
     path: '/cart',
     name: 'cart',
     component: Cart

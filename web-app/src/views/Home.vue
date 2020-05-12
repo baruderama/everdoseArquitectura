@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="home">
-    <Nav search="true" :onSearch="updateCatalog" account="true" cart="true" :products_len="products_len"/>
+    <Nav search="true" :onSearch="updateCatalog" account="true" cart="true" :products_len="products_len" :username="username"/>
     <div class="catalog">
       <div class="product">
         <Product v-for="product in products" :key="product.id" :id="product.id" :name="product.name" :image="product.image" :description="product.description" :price="product.price" :type="product.type" :add="addToCart"/>
@@ -40,6 +40,7 @@ export default {
       ],
       products_in_cart : [],
       page: 1,
+      username: '',
     }
   },
   computed:{
@@ -52,8 +53,11 @@ export default {
     }
   },
   mounted(){
-    console.log("Mounting")
     this.products_in_cart = cookie.getCookie('products')
+    var auth_token = cookie.getCookie('auth_token')
+    if( typeof auth_token == "string" ){
+      this.username = JSON.parse(auth_token).username;
+    }
     var thisa = this;
     axios.get('http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog',{
       withCredentials: true,
@@ -71,7 +75,6 @@ export default {
        // always executed
      });
 
-    console.log(this.products_in_cart)
   },
   methods:{
     addToCart( product ){
@@ -79,12 +82,9 @@ export default {
       for (var global_product of this.products_in_cart ){
         console.log(product.id)
         if (global_product.id == product.id) {
-          console.log("Exists:")
-          console.log(product.id)
              global_product.amount += 1;
              product.amount += 1;
              cookie.setCookie('products',JSON.stringify(this.products_in_cart))
-            console.log(cookie.getCookie('products'))
              added = true;
         }
       }
@@ -126,7 +126,6 @@ export default {
         url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?keywords='+keywords+'&page='+page;
       }
       const thisa = this;
-      console.log(url)
       axios.get(url,{
         withCredentials: true,
       })
@@ -153,7 +152,6 @@ export default {
         url = 'http://localhost:8080/stockmicroservice-web-0.0.1-SNAPSHOT/Catalog?keywords='+keywords+'&page='+page;
       }
       const thisa = this;
-      console.log(url)
       axios.get(url,{
         withCredentials: true,
       })

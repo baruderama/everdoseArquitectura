@@ -4,6 +4,13 @@
   <artifactId>buymicroservice-jpa</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>buymicroservice-jpa</name>
+  <dependencies>
+  	<dependency>
+	    <groupId>javax.persistence</groupId>
+	    <artifactId>persistence-api</artifactId>
+	    <version>1.0.2</version>
+	</dependency>
+  </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <resources>

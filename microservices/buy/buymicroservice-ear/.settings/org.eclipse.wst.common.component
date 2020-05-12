@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
     <wb-module deploy-name="buymicroservice-ear-0.0.1-SNAPSHOT">
+                
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+                
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
         <dependent-module archiveName="buymicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/buymicroservice-ejb/buymicroservice-ejb">
             <dependency-type>uses</dependency-type>
@@ -18,9 +21,6 @@
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="stockmicroservice-jpa-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/stockmicroservice-jpa/stockmicroservice-jpa">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="persistence-api-1.0.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="mysql-connector-java-5.1.47.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/mysql/mysql-connector-java/5.1.47/mysql-connector-java-5.1.47.jar">
@@ -53,8 +53,13 @@
         <dependent-module archiveName="buymicroservice-jpa-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/buymicroservice-jpa/buymicroservice-jpa">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="persistence-api-1.0.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="buymicroservice-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/buymicroservice-web/buymicroservice-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+            
     </wb-module>
+    
 </project-modules>

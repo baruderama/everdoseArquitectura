@@ -219,7 +219,7 @@ export default {
     },
     buy(){
       var thisa = this;
-      thisa.processing_payment = true;
+      // thisa.processing_payment = true;
       stripe.createToken(card).then(function(result) {
         axios.post('http://localhost:8080/buymicroservice-web-0.0.1-SNAPSHOT/Buy', {
           stripeToken: result.token,
@@ -231,6 +231,7 @@ export default {
         }
         )
         .then(function () {
+          console.log("Done")
           thisa.succesfulPayment = true;
         })
         .catch(function(){

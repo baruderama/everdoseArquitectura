@@ -73,6 +73,7 @@
 <script>
 import Nav from '../components/Nav'
 import cookie from '../cookies'
+import axios from 'axios'
 
 export default {
   components:{
@@ -120,6 +121,20 @@ export default {
     if( typeof auth_token == "string" ){
       this.username = JSON.parse(auth_token).username;
     }
+    const thisa = this;
+    const url = "http://localhost:8080/buymicroservice-web-0.0.1-SNAPSHOT/GetCarts"
+    const options = {
+      method: 'POST',
+      withCredentials: true,
+      url,
+    };
+    axios(options).then(function (response) {
+      console.log("Yes")
+      console.log(response)
+    })
+    .catch(function (){
+      thisa.errorLogin = true;
+    })
   }
 }
 </script>

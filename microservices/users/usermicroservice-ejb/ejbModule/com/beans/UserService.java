@@ -24,6 +24,7 @@ public class UserService {
     }
     
     public Token getToken(String username,String password) {
+    	System.out.println("Token del usuario");
     	Token token=null;
     	User user=User.getUser(username);
     	if(user.getPassword().equals(password)) {
@@ -40,6 +41,7 @@ public class UserService {
     }
     
     public boolean createUser(String username, String email,String name,String password,String lastname,String phone) {
+    	System.out.println("Servicio de persistir un usuario");
     	User user=new User();
     	user.setEmail(email);
     	user.setUsername(username);
@@ -51,6 +53,7 @@ public class UserService {
     }
 
 	public boolean updateUser(String username, String email, String name, String newPassword,String lastname,String phone) {
+		System.out.println("Actualizando o modificando un usuario");
 		User user=User.getUser(username);
 		if(email!=null) {user.setEmail(email);}
 		if(name!=null) {user.setName(name);}
@@ -61,10 +64,12 @@ public class UserService {
 	}
 
 	public boolean deleteUser(String username) {
+		System.out.println("removiendo usuario");
 		return User.deleteByUsername(username);
 	}
 
 	public User getUserInfo(String username, String password) {
+		System.out.println("obtener información de usuario");
 		User user=User.getUser(username);
 		if(this.getToken(username, password)!=null) {
 			return user;

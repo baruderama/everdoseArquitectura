@@ -26,6 +26,7 @@ public class PaymentsService implements PaymentsServiceRemote, PaymentsServiceLo
 
 	@Override
     public boolean creditPayment(String token,int amount,String description) {
+		System.out.println("Servico de pagos (externo)");
         Stripe.apiKey = "sk_test_wMKd3NzoEEIRcXB5WdLGP0uV00gWNpE8Xm";
         
         Map<String, Object> params = new HashMap<>();

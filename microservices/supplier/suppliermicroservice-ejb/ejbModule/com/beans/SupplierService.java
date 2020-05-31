@@ -61,6 +61,8 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 
 	@Override
 	public boolean addSupplier(String name, String address, String phone, String email, String uri) {
+		
+		System.out.println("Servicio añadir a un proveedor");
 		boolean succesfulltransaction = false;
 		/**
 		 * Adds the supplier to the database. 
@@ -118,6 +120,7 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 
 	@Override
 	public int orderFromSupplier(List<SupplierProduct> productsToOrder) {
+		System.out.println("Servicio que hace una orden de productos que se necesitan, buscandolo por el menor precio");
 		/**
 		 * Orders from supplier, it searches for the product in the database given the keywords, 
 		 * orders the cheapest product found. An order is generated.
@@ -211,6 +214,7 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 
 	@Override
 	public HashMap< Integer, Float > paySuppliers() {
+		System.out.println("Servicio de pagar a proovedores");
 		/**
 		 * Pays the supplier given the existing orders in the databases.
 		 *
@@ -241,6 +245,7 @@ public class SupplierService implements SupplierServiceRemote, SupplierServiceLo
 
 	@Override
 	public boolean addProductToSupplier(int supplier_id, String name, String keywords, String description, float price) {
+		System.out.println("Servicio añadir productos de proveedores");
 		Supplier supplier = Supplier.getSupplier(supplier_id);
 		if ( supplier != null ) {
 			ProductFromSupplier product = new ProductFromSupplier();

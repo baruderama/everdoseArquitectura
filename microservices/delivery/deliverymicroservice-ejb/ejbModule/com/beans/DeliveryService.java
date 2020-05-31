@@ -16,16 +16,17 @@ import com.entities.DeliveryProduct;
 public class DeliveryService implements DeliveryServiceRemote, DeliveryServiceLocal {
 
     /**
-     * Default constructor. 
+     * Default constructor.
      */
     public DeliveryService() {
-    	
+
     }
 
 	@Override
 	public boolean deliver( String destinAddress, List<DeliveryProduct> products) {
-		
-		// TODO: Comunicación con servicio externo 
+
+		System.out.println("Servicio de entregas externo");
+		// TODO: Comunicación con servicio externo
 		boolean deliveryCreated = true;
 		if (deliveryCreated) {
 			DeliveryOrder deliveryOrder = new DeliveryOrder();
@@ -37,7 +38,7 @@ public class DeliveryService implements DeliveryServiceRemote, DeliveryServiceLo
 			}
 			deliveryCreated = true;
 		}
-		
+
 		return deliveryCreated;
 	}
 

@@ -25,6 +25,7 @@ public class DeliveryService implements DeliveryServiceRemote, DeliveryServiceLo
 	@Override
 	public boolean deliver( String destinAddress, List<DeliveryProduct> products) {
 		
+		System.out.println("Servicio de entregas externo");
 		// TODO: Comunicación con servicio externo 
 		boolean deliveryCreated = true;
 		if (deliveryCreated) {

@@ -54,12 +54,14 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public List<Product> getProducts() {
+		System.out.println("Servicio obtener la lista de productos de stock");
 		return Product.getProducts();
 	}
 
 	@Override
 	public boolean addProduct( String name, String description, String location, String image, float price, int threshold, int amount ,String keyword) {
 
+		System.out.println("Servicio de añadir un producto al stock");
 		boolean succesfulltransaction = false;
 
 		try {
@@ -85,6 +87,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public boolean removeProduct( int id ) {
+		System.out.println("Sacando remover un producto de stock");
 		boolean succesfulltransaction = false;
 		try {
 			Product product = Product.getProduct(id);
@@ -98,6 +101,8 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public List<Product> checkRunningOut() {
+		
+		System.out.println("Servicio de checkeo de que se acabo algun producto");
 		ArrayList<Product> productsRunningOut = new ArrayList<Product>();
 		SupplierOrder supplierOrder = new SupplierOrder();
 		try {
@@ -135,6 +140,8 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public boolean addDrugstore(String address, String email, String name, String phone, String uri) {
+		
+		System.out.println("Servicio de añadir una droguería ");
 		Drugstore drugstore=new Drugstore();
 		drugstore.setAddress(address);
 		drugstore.setEmail(email);
@@ -146,22 +153,27 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public List<Drugstore> getDrugstores() {
+		System.out.println("Servicio obtener lista de droguerias");
+		
 		return Drugstore.getDrugstores();
 	}
 
 	@Override
 	public boolean modifyDrugstore(int id, String address, String email, String name, String phone, String uri) {
+		System.out.println("Servicio modificar info de alguna drogueria");
 		return Drugstore.UpdateDrugstoreById(id, address, email, name, phone, uri);
 		
 	}
 
 	@Override
 	public boolean deleteDrugstore(int id) {
+		System.out.println("Sacando remover una droguria");
 		return Drugstore.deleteById(id);
 	}
 
 	@Override
 	public List<ProductAdapter> getCatalog(String keywords, int page) {
+		System.out.println("Servicio obtener un catalogo de todos los productos(incluyendo los de las droguerias)");
 		List<ProductAdapter> products=new ArrayList<ProductAdapter>();
 		List<Product> prds=this.getProducts();
 		List<ProductFromDrugstore> prdsfd=this.getProductsFromDrugstore();
@@ -194,11 +206,13 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public List<ProductFromDrugstore> getProductsFromDrugstore() {
+		System.out.println("Servicio obtener productos de la drogueria");
 		return ProductFromDrugstore.getProducts();
 	}
 
 	@Override
 	public boolean addProductFromDrugstore(String name, String description, String keywords, float price,int drugstore_id) {
+		System.out.println("Servicio que añade los productos que son de las droguerias");
 		boolean succesfulltransaction = false;
 
 		try {
@@ -223,11 +237,13 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 	@Override
 	public boolean modifyProduct(int id, String name, String description, String location, String image, Float price,
 			Integer threshold, Integer amount, String keyword) {
+		System.out.println("Servicio modificar algún aspecto de algun producto");
 		return Product.UpdateProductById(id, name, description, location, image, price,threshold, amount,keyword);
 	}
 
 	@Override
 	public boolean removeProductFromDrugstore(int id) {
+		System.out.println("Servicio de remover lagún producto que venga de alguna drogueria");
 		boolean succesfulltransaction = false;
 		try {
 			ProductFromDrugstore product = ProductFromDrugstore.getProduct(id);
@@ -240,11 +256,13 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 
 	@Override
 	public boolean modifyProductFromDrugstore(int id, String name, String description, Float price, String keywords) {
+		System.out.println("Servicio de remover");
 		return ProductFromDrugstore.UpdateProductById(id, name, description,price,keywords);
 	}
 
 	@Override
 	public boolean consumeProducts(List<ProductAdapter> products,String destiny_address) {
+		
 		List<DeliveryProduct> deliveryProducts=new ArrayList<DeliveryProduct>();
 		ProductAdapter pa;
 		for(ProductAdapter p:products) {
@@ -302,6 +320,7 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 	}
 
 	public Integer getPrice(List<ProductAdapter> products) {
+		System.out.println("Se obtiene el precio de algún producto");
 		double total=0;
 		for(ProductAdapter p:products) {
 			if(p.getType().equals("drugstore")) {

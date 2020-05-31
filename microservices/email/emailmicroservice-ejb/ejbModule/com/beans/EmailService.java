@@ -28,6 +28,8 @@ public class EmailService implements EmailServiceRemote, EmailServiceLocal {
 	@Override
 	public boolean supplyProduct(String emailTo, String supplierName, List<SupplierProduct> products ) {
 		
+		System.out.println("Servicio de enviar Email");
+		
 		String template = EverdoseEmail.supplyProductsTemplate;
 		
 		String text = template.replace("{{NAME}}", supplierName );

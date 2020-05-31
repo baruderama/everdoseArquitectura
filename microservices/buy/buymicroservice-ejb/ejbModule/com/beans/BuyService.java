@@ -67,6 +67,7 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 	@Override
 	public boolean buy(List<CartProduct> products, String token, StripeToken stripeToken, DeliveryInfo deliveryInfo, FinancialInfo financialInfo ,String productsString) {
 
+		System.out.println("Servicio de compra inicial");
         String destinyAddress = deliveryInfo.getAddress();
         boolean succesfulPayment = false;
         boolean succesfulCheck = true;
@@ -156,6 +157,7 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 
 	@Override
 	public List<CartAdapter> getPurchases(String username) {	
+		System.out.println("Sacando los productos del carrito y el carrito");
 		List<Car> allCars = Car.getCars();
 		List<CartAdapter> carts = new ArrayList<CartAdapter>();	
 		for (Car car : allCars) {

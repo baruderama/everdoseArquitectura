@@ -50,7 +50,6 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
              CloseableHttpResponse response = httpClient.execute(post)) {
         	int code = response.getStatusLine().getStatusCode();
         	String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-        	System.out.println(responseBody);
         	if (code >= 200 && code < 300) {
         		return responseBody;
         	}
@@ -89,8 +88,6 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
         String GetPriceUrl="http://127.0.0.1:8080/stockmicroservice-web-0.0.1-SNAPSHOT/GetPrice";
         try {
         	String jsonString="{\"products\":"+productsString+"}";
-        	System.out.println("Proooducts");
-        	System.out.println(productsString);
 			StringEntity getpricejson=new StringEntity(jsonString) ;
 			total=Integer.valueOf(post(GetPriceUrl,getpricejson));
 		} catch (UnsupportedEncodingException e1) {
@@ -104,7 +101,6 @@ public class BuyService implements BuyServiceRemote, BuyServiceLocal {
 			e.printStackTrace();
 		}
     	
-    	System.out.println("Total: "+total);
     	succesfulPayment = true;
     	url = "http://localhost:8080/payments-web-0.0.1-SNAPSHOT/Pay"; 
     	FinancialInfo fi=new FinancialInfo(stripeToken.getId(),total,"description");

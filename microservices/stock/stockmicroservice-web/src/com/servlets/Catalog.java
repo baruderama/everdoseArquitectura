@@ -46,14 +46,12 @@ public class Catalog extends HttpServlet {
 		setAccessControlHeaders(response);
 		String keywords=request.getParameter("keywords");
 		String pageString = request.getParameter("page");
-		System.out.println("."+pageString+".");
 		int page = 1;
 		if (pageString != null) {
 			page=Integer.parseInt(pageString);
 		}
 		List<ProductAdapter> products = bean.getCatalog(keywords, page);
 		Gson gson = new Gson();
-		products.forEach(p -> System.out.println(p.getName()));
 		String productsJsonString = gson.toJson(products);
 		
 		response.setCharacterEncoding("utf-8");

@@ -58,9 +58,7 @@ public class Buy extends HttpServlet {
 		cookies = request.getCookies();
 		
 		String token = null;
-		System.out.println("Cookies");
 		for (int i = 0; i < cookies.length; i++) {
-			System.out.println("Cookie");
             cookie = cookies[i];
             
             if( cookie.getName().contentEquals("auth_token")) {
@@ -72,7 +70,6 @@ public class Buy extends HttpServlet {
 			
 	        Gson g = new Gson(); 
 	        JSONObject json = new JSONObject(body);
-	        System.out.println(json);
 	        String stripeToken_str = json.get("stripeToken").toString();
 	        String productsList_str = json.get("products").toString();
 	        String deliveryInformation_str = json.get("delivery_information").toString();
@@ -98,7 +95,6 @@ public class Buy extends HttpServlet {
 	  }
 	
 	  private void setAccessControlHeaders(HttpServletResponse resp) {
-		  System.out.println("Setting headers");
 	      resp.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
 	      resp.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
 	      resp.setHeader("Access-Control-Allow-Credentials", "true");

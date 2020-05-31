@@ -156,7 +156,6 @@ public class Product implements Serializable {
 		List<Product> products = null;
 		try {
 			products = tq.getResultList();
-			products.forEach( product -> System.out.println("Returning product "+product.getId()) );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

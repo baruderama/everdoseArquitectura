@@ -145,7 +145,6 @@ public class Drugstore implements Serializable {
 		List<Drugstore> drugstore = null;
 		try {
 			drugstore = tq.getResultList();
-			drugstore.forEach( product -> System.out.println("Product") );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

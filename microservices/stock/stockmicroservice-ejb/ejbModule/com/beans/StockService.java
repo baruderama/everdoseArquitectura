@@ -121,9 +121,6 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		
 		try {
 			StringEntity entity = new StringEntity(supplierOrderJson);
-			System.out.println("DeliveryOrder: ");
-			System.out.println(supplierOrderJson);
-			System.out.println(133);
 			boolean state = post(SUPPLYPRODUCT_URL, entity);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -177,7 +174,6 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 		}
 		final int PAGE_SIZE = 15;
 		page-= 1;
-		System.out.println("Page:" + page);
 		if(page == 0 && products.size() < PAGE_SIZE) {
 			return products;
 		}
@@ -251,7 +247,6 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 			if(p.getType().equals("drugstore")) {
 				ProductFromDrugstore product = ProductFromDrugstore.getProduct(p.getId());
 				if(product==null) {
-					System.out.println("no existe PD:"+p.getId());
 					return false;
 				}
 				pa=new ProductAdapter(product);
@@ -260,12 +255,11 @@ public class StockService implements StockServiceRemote, StockServiceLocal {
 			}else {
 				Product product=Product.getProduct(p.getId());
 				if(product==null) {
-					System.out.println("no existe P:"+p.getId());
 					return false;
 				}
 				int amount=product.getAmount()-p.getAmount();
 				if(amount<0) {
-					System.out.println("no suficiente P:"+p.getId());
+					System.out.println("No hay suficiente producto con id "+p.getId());
 					return false;
 				}
 				pa=new ProductAdapter(product);

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
     <wb-module deploy-name="deliverymicroservice-ear-0.0.1-SNAPSHOT">
+                
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+                
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
         <dependent-module archiveName="deliverymicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/deliverymicroservice-ejb/deliverymicroservice-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+<<<<<<< HEAD
         <dependent-module archiveName="javax.servlet-api-4.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/javax.servlet-api/4.0.1/javax.servlet-api-4.0.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+=======
+>>>>>>> origin/development
         <dependent-module archiveName="javaee-api-8.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/javaee-api/8.0.1/javaee-api-8.0.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -17,11 +23,25 @@
         <dependent-module archiveName="activation-1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/activation/activation/1.1/activation-1.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+<<<<<<< HEAD
+=======
+        <dependent-module archiveName="ejb-api-3.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/ejb/ejb-api/3.0/ejb-api-3.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+>>>>>>> origin/development
         <dependent-module archiveName="deliverymicroservice-jpa-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/deliverymicroservice-jpa/deliverymicroservice-jpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="persistence-api-1.0.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="deliverymicroservice-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/deliverymicroservice-web/deliverymicroservice-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="gson-2.8.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+            
     </wb-module>
+    
 </project-modules>

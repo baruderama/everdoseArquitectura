@@ -8,5 +8,5 @@ import com.entities.DeliveryProduct;
 
 @Local
 public interface DeliveryServiceLocal {
-	public boolean deliver( String originAddress, String destinAddress, List<DeliveryProduct> products );
+	public boolean deliver( String destinAddress, List<DeliveryProduct> products );
 }

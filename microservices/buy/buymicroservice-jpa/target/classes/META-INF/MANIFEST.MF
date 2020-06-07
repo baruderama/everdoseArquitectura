@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+<<<<<<< HEAD
+Built-By: vale
+Build-Jdk: 1.8.0_252
+=======
+Built-By: Sir Sebas
+Build-Jdk: 1.8.0_251
+>>>>>>> 2af0996759002119ac064539faca61ba6715c363
+Created-By: Maven Integration for Eclipse
+

@@ -7,15 +7,26 @@
   <name>deliverymicroservice-web</name>
   <dependencies>
   	<dependency>
+	    <groupId>commons-io</groupId>
+	    <artifactId>commons-io</artifactId>
+	    <version>2.6</version>
+	    <scope>compile</scope>
+	</dependency>
+  	<dependency>
   		<groupId>deliverymicroservice-ejb</groupId>
 		  <artifactId>deliverymicroservice-ejb</artifactId>
 		  <version>0.0.1-SNAPSHOT</version>
 		  <scope>compile</scope>
   	</dependency>
   	<dependency>
-    <groupId>com.google.code.gson</groupId>
-    <artifactId>gson</artifactId>
-    <version>2.8.6</version>
+	    <groupId>com.google.code.gson</groupId>
+	    <artifactId>gson</artifactId>
+	    <version>2.8.6</version>
+	</dependency>
+	<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20190722</version>
 </dependency>
   </dependencies>
   <build>

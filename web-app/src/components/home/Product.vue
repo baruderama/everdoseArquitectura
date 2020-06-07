@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="extra content">
-        <div class="ui button circular teal everdose" @click="add({id, name, image, description, price})" >
+        <div class="ui button circular teal everdose" @click="add({id, name, image, description, price, type})" >
           <i class="cart icon"></i>
           Add to cart</div>
       </div>
@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  props:['id','name','image','description','price', 'add']
+  props:['id','name','image','description','price', 'type', 'add']
 }
 </script>
 

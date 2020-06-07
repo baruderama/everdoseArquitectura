@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="stockmicroservice-ejb:ejb">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>stockmicroservice-ejb</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="stockmicroservice-ejb-0.0.1-SNAPSHOT.jar">
+      <element id="artifact" artifact-name="stockmicroservice-ejb:ejb exploded" />
+    </root>
+  </artifact>
+</component>

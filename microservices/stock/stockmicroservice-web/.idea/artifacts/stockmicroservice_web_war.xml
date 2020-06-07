@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="stockmicroservice-web:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>stockmicroservice-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="stockmicroservice-web-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="stockmicroservice-web:war exploded" />
+    </root>
+  </artifact>
+</component>

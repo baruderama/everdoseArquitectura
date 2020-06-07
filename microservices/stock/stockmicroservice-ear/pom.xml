@@ -12,6 +12,17 @@
       <version>0.0.1-SNAPSHOT</version>
       <type>ejb</type>
     </dependency>
+    <dependency>
+      <groupId>stockmicroservice-jpa</groupId>
+      <artifactId>stockmicroservice-jpa</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>stockmicroservice-web</groupId>
+      <artifactId>stockmicroservice-web</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

@@ -11,7 +11,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class DeliveryOrder implements Serializable {
 
 	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("deliverymicroservice-jpa");
@@ -22,7 +21,6 @@ public class DeliveryOrder implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String destin_address;
-	private String origin_address;
 
 	@OneToMany(mappedBy="deliveryOrder")
 	private List<DeliveryProduct> products;
@@ -47,14 +45,6 @@ public class DeliveryOrder implements Serializable {
 		this.destin_address = destin_address;
 	}
 
-	public String getOrigin_address() {
-		return origin_address;
-	}
-
-	public void setOrigin_address(String origin_address) {
-		this.origin_address = origin_address;
-	}
-	
 	public int save() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction et = null;
@@ -64,7 +54,6 @@ public class DeliveryOrder implements Serializable {
 			et = em.getTransaction();
 			et.begin();
 			DeliveryOrder deliveryOrder = new DeliveryOrder();
-			deliveryOrder.setOrigin_address(origin_address);
 			deliveryOrder.setDestin_address(destin_address);
 			em.persist( deliveryOrder );
 			em.flush();
@@ -110,7 +99,7 @@ public class DeliveryOrder implements Serializable {
 	public static List<DeliveryOrder> getDeliveryOrders() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT c FROM DeliveryOrder c WHERE c.id IS NOT NULL";
-		TypedQuery<DeliveryOrder> tq = em.createQuery(query, DeliveryOrder.class);
+		TypedQuery<DeliveryOrder> tq = em.createQuery(query,  DeliveryOrder.class);
 		List<DeliveryOrder> deliveryOrders = null;
 		try {
 			deliveryOrders = tq.getResultList();

@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>buymicroservice-web</groupId>
+  <artifactId>buymicroservice-web</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>buymicroservice-web</name>
+  <dependencies>
+  <!-- https://mvnrepository.com/artifact/org.json/json -->
+ 	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>4.0.1</version>
+	    <scope>compile</scope>
+	</dependency>
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.11.0</version>
+</dependency>
+
+ 	<dependency>
+		<groupId>buymicroservice-ejb</groupId>
+		<artifactId>buymicroservice-ejb</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		 <scope>compile</scope>
+	 </dependency>
+	
+	<dependency>
+		<groupId>buymicroservice-jpa</groupId>
+		<artifactId>buymicroservice-jpa</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		 <scope>compile</scope>
+	 </dependency>
+	
+	<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+	<dependency>
+	    <groupId>commons-io</groupId>
+	    <artifactId>commons-io</artifactId>
+	    <version>2.6</version>
+	</dependency>
+  </dependencies>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.2.3</version>
+        <configuration>
+          <warSourceDirectory>WebContent</warSourceDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

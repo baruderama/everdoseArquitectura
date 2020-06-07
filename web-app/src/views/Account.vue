@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="account">
-    <Nav account="true"/>
+    <Nav account="true" :username="username"/>
     <div class="container">
       <div class="ui grid">
         <div class="four wide column">
@@ -72,6 +72,8 @@
 
 <script>
 import Nav from '../components/Nav'
+import cookie from '../cookies'
+import axios from 'axios'
 
 export default {
   components:{
@@ -79,6 +81,7 @@ export default {
   },
   data(){
     return {
+      username:'',
       // Purchases viene de un request ajax
       purchases:[
         {
@@ -111,6 +114,28 @@ export default {
         },
       ]
     }
+  },
+  mounted(){
+    this.products_in_cart = cookie.getCookie('products')
+    var auth_token = cookie.getCookie('auth_token')
+    if( typeof auth_token == "string" ){
+      this.username = JSON.parse(auth_token).username;
+    }
+    const thisa = this;
+    const url = "http://localhost:8080/buymicroservice-web-0.0.1-SNAPSHOT/GetCarts"
+    const options = {
+      method: 'POST',
+      withCredentials: true,
+      url,
+    };
+    axios(options).then(function (response) {
+      console.log("Yes")
+      console.log(response)
+      thisa.purchases = response.data;
+    })
+    .catch(function (){
+      thisa.errorLogin = true;
+    })
   }
 }
 </script>

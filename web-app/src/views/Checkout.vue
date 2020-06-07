@@ -2,36 +2,38 @@
   <div class="checkout">
 
     <div class="panel">
-      <div class="delivery_panel">
+      <div class="delivery_panel" :class="{invisible: processing_payment}">
         <div class="title">
           <h1 class="ui header">Delivery</h1>
           <div class="ui divider"/>
         </div>
         <div class="delivery_form">
           <form class="ui form">
-            <div class="two fields">
-              <div class="field">
-                <label>First name</label>
-                <input type="text" name="shipping[first-name]" placeholder="First Name">
-              </div>
-              <div class="field">
-                <label>Last name</label>
-                <input type="text" name="shipping[last-name]" placeholder="Last Name">
+            <div class="field">
+              <div class="two fields">
+                <div class="field">
+                  <label>First name</label>
+                  <input v-model="first_name" type="text" name="shipping[first-name]" placeholder="First Name">
+                </div>
+                <div class="field">
+                  <label>Last name</label>
+                  <input v-model="last_name" type="text" name="shipping[first-name]" placeholder="First Name">
+                </div>
               </div>
             </div>
             <div class="field">
               <label>Address</label>
-              <input type="text" name="address" placeholder="Address">
+              <input v-model="address" type="text" name="address" placeholder="Address">
             </div>
             <div class="field">
               <label>More information</label>
-              <textarea name="name" rows="3" cols="80" placeholder="More information"></textarea>
+              <textarea v-model="more_information" name="name" rows="3" cols="80" placeholder="More information"></textarea>
             </div>
           </form>
         </div>
       </div>
 
-      <div class="payment_method_panel">
+      <div class="payment_method_panel" :class="{invisible: processing_payment}">
         <div class="title">
           <h1 class="ui header">Payment</h1>
           <div class="ui divider"/>
@@ -53,56 +55,16 @@
         </div>
       </div>
 
-
-      <div class="credit_card_form invisible" :class="{visible: credit_card_selected}">
+      <div class="credit_card_form invisible" :class="{visible: credit_card_selected && !processing_payment}">
         <form class="ui form">
+
           <h4 class="ui dividing header">Credit card information</h4>
-          <div class="two fields">
-            <div class="field">
-              <input type="text" name="shipping[first-name]" placeholder="First Name">
-            </div>
-            <div class="field">
-              <input type="text" name="shipping[last-name]" placeholder="Last Name">
-            </div>
-          </div>
           <div class="field">
-            <label>Credit card number</label>
-            <input type="text" name="first-name" placeholder="4242 4242 4242 4242">
+            <input v-model="name_cc" type="text" name="shipping[first-name]" placeholder="Name in card">
           </div>
-          <div class="two fields">
-            <div class="field">
-              <label>Date</label>
-              <input type="text" name="first-name" placeholder="MM/YY">
-            </div>
-            <div class="field">
-              <label>CCV</label>
-              <input type="text" name="last-name" placeholder="123">
-            </div>
+          <div ref="card"></div>
 
-          </div>
-          <!-- <div class="field">
-            <div class="ui checkbox">
-              <input type="checkbox" tabindex="0" class="hidden">
-              <label>I agree to the Terms and Conditions</label>
-            </div>
-          </div> -->
-          <div @click="pay" class="ui fluid green button">Validate information</div>
         </form>
-
-        <div class="ui positive message invisible">
-          <div class="header">
-            The validation was successful
-          </div>
-          <p>Go to your <b>special offers</b> page to see now.</p>
-        </div>
-
-        <div class="ui negative message invisible">
-          <div class="header">
-            The validation wasn't succesful
-          </div>
-            <p>That offer has expired
-          </p>
-        </div>
 
       </div>
 
@@ -113,8 +75,20 @@
       </div>
 
       <div class="proceed_panel">
-        <div class="ui fluid disabled green button">
-          Pay
+        <div @click="buy" class="ui fluid green button" :class="{invisible: processing_payment}">
+          Buy
+        </div>
+      </div>
+
+      <div class="on_delivery_panel invisible"  :class="{visible: succesfulPayment}">
+        <div class="ui success message">
+          Your payment was succesful.
+        </div>
+      </div>
+
+      <div class="on_delivery_panel invisible"  :class="{visible: unsuccesfulPayment}">
+        <div class="ui error message">
+          Your payment was unsuccesful.
         </div>
       </div>
 
@@ -152,13 +126,28 @@
 
 <script>
 import cookie from '../cookies'
+import axios from 'axios'
+
+/*eslint no-undef: 1*/
+let stripe = Stripe(`pk_test_SCFXDSEiX7vyfh3wYzR9aYaD00eIWW9bUD`),
+    elements = stripe.elements(),
+    card = undefined;
 
 export default {
   data(){
     return {
+      name: '',
+      address: '',
+      more_information: '',
+
       products: [],
       credit_card_selected: true,
       on_delivery_selected: false,
+      processing_payment: false,
+      name_cc: '',
+      succesfulPayment: false,
+      unsuccesfulPayment: false,
+
     }
   },
   computed:{
@@ -168,9 +157,53 @@ export default {
         total += product.price * product.amount;
       }
       return total;
+    },
+    financial_information(){
+      return {
+        credit_card: true,
+        cc: {
+          "name" : this.name_cc,
+        }
+      }
+    },
+    delivery_information(){
+      return {
+        "first_name" : this.first_name,
+        "last_name" : this.last_name,
+        "address" : this.address,
+        "more_information" : this.more_information
+      }
+    },
+    productsToCheckout(){
+      var temp = []
+      for (var product of this.products){
+        temp.push({
+          "id" : product.id,
+          "type" : product.type,
+          "amount" : product.amount
+        })
+      }
+      return temp;
     }
   },
   mounted(){
+
+    let style = {
+    base: {
+      border: '1px solid #D8D8D8',
+      borderRadius: '4px',
+      color: "#000",
+    },
+
+    invalid: {
+      // All of the error styles go inside of here.
+    }
+
+  };
+
+    card = elements.create('card', style);
+    card.mount(this.$refs.card);
+    // console.log(Stripe)
     this.products = cookie.getCookie('products');
   },
   methods:{
@@ -184,8 +217,32 @@ export default {
         this.on_delivery_selected = true;
       }
     },
-    pay(){
-
+    buy(){
+      var thisa = this;
+      // thisa.processing_payment = true;
+      stripe.createToken(card).then(function(result) {
+        axios.post('http://localhost:8080/buymicroservice-web-0.0.1-SNAPSHOT/Buy', {
+          stripeToken: result.token,
+          financial_information: thisa.financial_information,
+          delivery_information: thisa.delivery_information,
+          products: thisa.productsToCheckout,
+        },{
+          withCredentials: true,
+        }
+        )
+        .then(function () {
+          console.log("Done")
+          thisa.succesfulPayment = true;
+        })
+        .catch(function(){
+          console.log("Error")
+          thisa.unsuccesfulPayment = true;
+        })
+      }).catch(function (error) {
+        console.log(error)
+        console.log("Error")
+        thisa.unsuccesfulPayment = true;
+      });
     }
   }
 }

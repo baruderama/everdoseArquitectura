@@ -5,13 +5,16 @@
         <form class="ui form">
           <div class="field ui left icon input fluid">
             <i class="user icon"></i>
-            <input type="text" name="first-name" placeholder="Username">
+            <input v-model="username" type="text" name="username" placeholder="Username">
           </div>
           <div class="field ui left icon input fluid">
             <i class="lock icon"></i>
-            <input type="password" name="password" placeholder="Password">
+            <input v-model="password" type="password" name="password" placeholder="Password">
           </div>
-          <div class="ui large fluid black button" type="submit">Login</div>
+          <div class="ui large fluid black button" @click="login">Login</div>
+          <div class="ui error message" :class="{visible: errorLogin}">
+            Check your credentials
+          </div>
         </form>
       </div>
     </div>
@@ -19,15 +22,36 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data(){
      return {
-
+       username: '',
+       password: '',
+       errorLogin: false,
      }
   },
   methods:{
     login(){
-      console.log("Login in")
+      var thisa = this;
+      const url = 'http://localhost:8080/usersmicroservice-web-0.0.1-SNAPSHOT/GetToken';
+      const options = {
+        method: 'POST',
+        data: {
+          username: this.username,
+          password: this.password,
+        },
+        withCredentials: true,
+        url,
+      };
+      axios(options).then(function () {
+        thisa.processing_payment = true;
+        thisa.$router.push({name: 'home'});
+      })
+      .catch(function (){
+        thisa.errorLogin = true;
+      })
     }
   }
 }

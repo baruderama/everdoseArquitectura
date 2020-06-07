@@ -26,14 +26,12 @@ public class AddProductToDrugstore extends HttpServlet {
      */
     public AddProductToDrugstore() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Add product to drugstore!");
 	}
 
@@ -46,7 +44,6 @@ public class AddProductToDrugstore extends HttpServlet {
 		String keywords = request.getParameter("keywords");
 		String description = request.getParameter("description");
 		float price = Float.valueOf( request.getParameter("price"));
-		bean.addProductToDrugstore( drugstore, name, keywords, description, price);
 		doGet(request, response);
 	}
 

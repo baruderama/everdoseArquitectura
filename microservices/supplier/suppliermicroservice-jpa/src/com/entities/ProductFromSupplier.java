@@ -139,7 +139,7 @@ public class ProductFromSupplier implements Serializable {
 	public static List<ProductFromSupplier> getProductsFromSuppliers() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT c FROM ProductFromSupplier c WHERE c.id IS NOT NULL";
-		TypedQuery<ProductFromSupplier> tq = em.createQuery(query, ProductFromSupplier.class);
+		TypedQuery<ProductFromSupplier> tq = em.createQuery(query,  ProductFromSupplier.class);
 		List<ProductFromSupplier> products = null;
 		try {
 			products = tq.getResultList();

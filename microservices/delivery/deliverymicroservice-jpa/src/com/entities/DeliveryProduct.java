@@ -10,7 +10,6 @@ import javax.persistence.*;
  *
  */
 @Entity
-
 public class DeliveryProduct implements Serializable {
 
 	static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("deliverymicroservice-jpa");
@@ -21,10 +20,10 @@ public class DeliveryProduct implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	
 	private String name;
 	private String description;
 	private float price;
+	private String origin_address;
 	private int amount;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -137,7 +136,7 @@ public class DeliveryProduct implements Serializable {
 	public static List<DeliveryProduct> getDeliveryProducts() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT c FROM DeliveryProduct c WHERE c.id IS NOT NULL";
-		TypedQuery<DeliveryProduct> tq = em.createQuery(query, DeliveryProduct.class);
+		TypedQuery<DeliveryProduct> tq = em.createQuery(query,  DeliveryProduct.class);
 		List<DeliveryProduct> deliveryProducts = null;
 		try {
 			deliveryProducts = tq.getResultList();
@@ -168,6 +167,14 @@ public class DeliveryProduct implements Serializable {
 			em.close();
 		}
 		return deliveryProduct;
+	}
+
+	public String getOrigin_address() {
+		return origin_address;
+	}
+
+	public void setOrigin_address(String origin_address) {
+		this.origin_address = origin_address;
 	}
    
 }

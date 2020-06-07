@@ -55,11 +55,11 @@ public class Product implements Serializable {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 
@@ -90,7 +90,8 @@ public class Product implements Serializable {
 	private String name;
 	private String image;
 	private String description;
-	private double price;
+	private String keywords;
+	private float price;
 	private int threshold;
 	private int amount;
 	
@@ -108,15 +109,8 @@ public class Product implements Serializable {
 			
 			et = em.getTransaction();
 			et.begin();
-			Product product = new Product();
-			product.setName(name);
-			product.setDescription(description);
-			product.setAmount(amount);
-			product.setPrice(price);
-			product.setImage(image);
-			product.setThreshold(threshold);
-			product.setLocation(location);
-			em.persist(product);
+			if(Product.getProduct(this.id)==null)
+				em.persist(this);
 			et.commit();
 			succesfulltransaction = true;
 			
@@ -158,11 +152,10 @@ public class Product implements Serializable {
 	public static List<Product> getProducts() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		String query = "SELECT c FROM Product c WHERE c.id IS NOT NULL";
-		TypedQuery<Product> tq = em.createQuery(query, Product.class);
+		TypedQuery<Product> tq = em.createQuery(query,  Product.class);
 		List<Product> products = null;
 		try {
 			products = tq.getResultList();
-			products.forEach( product -> System.out.println("Product") );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -189,6 +182,37 @@ public class Product implements Serializable {
 			em.close();
 		}
 		return product;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public static boolean UpdateProductById(int id, String name2, String description2, String location2, String image2,
+			Float price2, Integer threshold2, Integer amount2, String keyword) {
+		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
+		try {
+			Product product=em.find(Product.class, id);
+			em.getTransaction().begin();
+			if(amount2!=null)product.setAmount(amount2);
+			if(description2!=null)product.setDescription(description2);
+			if(image2!=null)product.setImage(image2);
+			if(keyword!=null)product.setKeywords(keyword);
+			if(location2!=null)product.setLocation(location2);
+			if(name2!=null)product.setName(name2);
+			if(price2!=null)product.setPrice(price2);
+			if(threshold2!=null)product.setThreshold(threshold2);
+			em.getTransaction().commit();
+			return true;
+		}catch(Exception ignore) {
+			
+		}
+		
+		return false;
 	}
    
 }

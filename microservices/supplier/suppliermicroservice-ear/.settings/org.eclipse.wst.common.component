@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
     <wb-module deploy-name="suppliermicroservice-ear-0.0.1-SNAPSHOT">
+                
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+                
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
         <dependent-module archiveName="suppliermicroservice-web-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/suppliermicroservice-web/suppliermicroservice-web">
             <dependency-type>uses</dependency-type>
@@ -8,9 +11,13 @@
         <dependent-module archiveName="suppliermicroservice-jpa-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/suppliermicroservice-jpa/suppliermicroservice-jpa">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="persistence-api-1.0.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/persistence/persistence-api/1.0.2/persistence-api-1.0.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="suppliermicroservice-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/suppliermicroservice-ejb/suppliermicroservice-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+<<<<<<< HEAD
         <dependent-module archiveName="javax.servlet-api-4.0.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/servlet/javax.servlet-api/4.0.1/javax.servlet-api-4.0.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
@@ -23,5 +30,33 @@
         <dependent-module archiveName="activation-1.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/activation/activation/1.1/activation-1.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+=======
+        <dependent-module archiveName="httpclient-4.5.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpclient/4.5/httpclient-4.5.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="httpcore-4.4.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/httpcomponents/httpcore/4.4.1/httpcore-4.4.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-logging-1.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-codec-1.9.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.9/commons-codec-1.9.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ejb-api-3.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/javax/ejb/ejb-api/3.0/ejb-api-3.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gson-2.8.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-io-2.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-io/commons-io/2.6/commons-io-2.6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="json-20190722.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/json/json/20190722/json-20190722.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+            
+>>>>>>> origin/development
     </wb-module>
+    
 </project-modules>

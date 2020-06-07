@@ -6,16 +6,16 @@
           <div class="ui tiny header">Username</div>
           <div class="field ui left icon input fluid">
             <i class="user icon"></i>
-            <input type="text" name="first-name" placeholder="Username">
+            <input v-model="username" type="text" name="first-name" placeholder="Username">
           </div>
           <div class="ui tiny header">Password</div>
           <div class="field ui left icon input fluid">
             <i class="lock icon"></i>
-            <input type="password" name="last-name" placeholder="Password">
+            <input v-model="password" type="password" name="last-name" placeholder="Password">
           </div>
           <div class="field ui left icon input fluid">
             <i class="lock icon"></i>
-            <input type="password" name="last-name" placeholder="Repeat the password">
+            <input v-model="password2" type="password" name="last-name" placeholder="Repeat the password">
           </div>
           <div class="ui divider">
 
@@ -23,31 +23,68 @@
           <div class="ui tiny header">Name</div>
           <div class="ui two fields">
             <div class="field">
-              <input type="text" name="firstname" value="" placeholder="First name">
+              <input v-model="firstname" type="text" name="firstname" value="" placeholder="First name">
             </div>
             <div class="field">
-              <input type="text" name="lastname" value="" placeholder="Last name">
+              <input v-model="lastname" type="text" name="lastname" value="" placeholder="Last name">
             </div>
           </div>
           <div class="ui tiny header">Email</div>
           <div class="field ui left icon input fluid">
             <i class="at icon"></i>
-            <input type="text" name="first-name" placeholder="Email">
+            <input v-model="email" type="text" name="first-name" placeholder="Email">
           </div>
           <div class="ui tiny header">Phone</div>
           <div class="field ui left icon input fluid">
             <i class="phone icon"></i>
-            <input type="text" name="first-name" placeholder="Phone">
+            <input v-model="phone" type="text" name="first-name" placeholder="Phone">
           </div>
-          <button class="ui fluid blue button" type="submit">Sign up</button>
+          <div class="ui fluid blue button" @click="signup">Sign up</div>
         </form>
+        <div class="message error invisible" :class="{visible: errors}">
+          No se puede crear el usuario, revise los campos.
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+  data(){
+    return{
+      username: '',
+      password: '',
+      password2: '',
+      firstname: '',
+      lastname: '',
+      email: '',
+      phone:'',
+      errors: false,
+    }
+  },
+  methods:{
+    signup(){
+      var thisa = this;
+      axios.post('http://localhost:8080/usersmicroservice-web-0.0.1-SNAPSHOT/UserServlet', {
+        username: thisa.username,
+        password: thisa.password,
+        firstname: thisa.firstname,
+        lastname: thisa.lastname,
+        email: thisa.email,
+        phone: thisa.phone,
+      })
+      .then(function () {
+        thisa.$router.push('home');
+      })
+      .catch(function(error){
+        console.log(error)
+        thisa.errors = true;
+      })
+    }
+  }
+
 }
 </script>
 
@@ -71,5 +108,13 @@ export default {
   margin: 0px;
   font-weight: 500 !important;
   text-align: left;
+}
+.signup .message.error{
+  margin: 10px;
+  background-color: #ffcccc;
+  color: #662222;
+  padding: 15px;
+  border-radius: 10px;
+
 }
 </style>

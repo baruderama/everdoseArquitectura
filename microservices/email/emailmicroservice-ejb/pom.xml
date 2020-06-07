@@ -7,6 +7,14 @@
   <name>emailmicroservice-ejb</name>
   
   <dependencies>
+  <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+	<dependency>
+	    <groupId>javax</groupId>
+	    <artifactId>javaee-api</artifactId>
+	    <version>8.0.1</version>
+	    <scope>provided</scope>
+	</dependency>
+  
   	<dependency>
 	    <groupId>com.google.code.gson</groupId>
 	    <artifactId>gson</artifactId>
@@ -17,6 +25,7 @@
 		<artifactId>javax.mail</artifactId>
 		<version>1.6.2</version>
 	</dependency>
+<<<<<<< HEAD
 	<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 	<dependency>
 	    <groupId>javax.servlet</groupId>
@@ -28,6 +37,13 @@
 	    <groupId>javax</groupId>
 	    <artifactId>javaee-api</artifactId>
 	    <version>8.0.1</version>
+=======
+	
+	<dependency>
+	    <groupId>javax.ejb</groupId>
+	    <artifactId>ejb-api</artifactId>
+	    <version>3.0</version>
+>>>>>>> origin/development
 	    <scope>compile</scope>
 	</dependency>
   </dependencies>
